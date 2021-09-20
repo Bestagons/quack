@@ -59,9 +59,10 @@ University students who are on meal plans
 
 Trade-offs
 
-| | Fixed | Firm | Flexible | Fluid
-| Dates | X | | | 
-| Resources | X | | 
-| Scope | | | X |
-| Quality | X | |
+|           | Fixed | Firm | Flexible | Fluid |
+|-----------|-------|------|----------|-------|
+| Dates     | X     |      |          |       |
+| Resources |       | X    |          |       |
+| Scope     |       |      |          | X     |
+| Quality   |       |      | X        |       |
 
