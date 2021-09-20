@@ -10,7 +10,7 @@ Bestagons are a 6-person team dedicated to developing the experience and skills 
 
 ### Vision Statement:
 
-The Schedule-dine app on every Emory student phone, organizing the calendars of users & eliminating all frustrations with on-campus dining.
+The Quack Project on every Emory student phone, organizing the calendars of users & eliminating all frustrations with on-campus dining.
 
 ### Elevator Pitch:
 
