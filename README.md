@@ -61,8 +61,8 @@ Trade-offs
 
 |           | Fixed | Firm | Flexible | Fluid |
 |-----------|-------|------|----------|-------|
-| Dates     | X     |      |          |       |
-| Resources |       | X    |          |       |
-| Scope     |       |      |          | X     |
-| Quality   |       |      | X        |       |
+| Dates     |   X   |      |          |       |
+| Resources |       |  X   |          |       |
+| Scope     |       |      |          |   X   |
+| Quality   |       |      |     X    |       |
 
