@@ -1,0 +1,25 @@
+# Languages
+
+# Java
+*.java @RafaelPiloto10 @brendacano
+
+# Python
+*.py @RafaelPiloto10 @brendacano
+
+# Golang
+*.go @RafaelPiloto10
+
+# JavaScript
+*.js @RafaelPiloto10 @brendacano
+
+# Markdown
+*.md @RafaelPiloto10
+
+# TypeScript
+*.ts @brendacano
+
+# C#
+*.cs @brendacano
+
+# HTML
+*.html @RafaelPiloto10 @brendacano
