@@ -1,10 +1,10 @@
 # Languages
 
 # Java
-*.java @RafaelPiloto10 @brendacano
+*.java @RafaelPiloto10 @brendacano @MimiOlayeye
 
 # Python
-*.py @RafaelPiloto10 @brendacano
+*.py @RafaelPiloto10 @brendacano @MimiOlayeye
 
 # Golang
 *.go @RafaelPiloto10
@@ -23,3 +23,6 @@
 
 # HTML
 *.html @RafaelPiloto10 @brendacano
+
+# C
+*.c @MimiOlayeye
