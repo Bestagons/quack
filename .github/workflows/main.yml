@@ -10,6 +10,6 @@ jobs:
       - name: Create or Update Project Card
         uses: peter-evans/create-or-update-project-card@v1
         with:
-          project-name: My project
-          column-name: My column
+          project-name: Cheese & Quackers Board
+          column-name: Product Backlog
           token: ${{ secrets.GITHUB_TOKEN }}
