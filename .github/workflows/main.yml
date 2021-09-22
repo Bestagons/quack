@@ -18,3 +18,4 @@ jobs:
       if: github.event.action == 'opened'
       with:
         project: 'https://github.com/Bestagons/quack/projects/2'
+        column-name: "Product Backlog"
