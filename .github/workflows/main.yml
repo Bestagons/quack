@@ -3,13 +3,13 @@ name: Move new issues into Product Backlog
 on:
   issues:
     types: [opened]
-
 jobs:
-  automate-project-columns:
+  createCard:
     runs-on: ubuntu-latest
     steps:
-      - uses: alex-page/github-project-automation-plus@v0.8.1
+      - name: Create or Update Project Card
+        uses: peter-evans/create-or-update-project-card@v1
         with:
-          project: "Cheese & Quackers Board"
-          column: "Product Backlog"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          project-name: My project
+          column-name: My column
+          token: ${{ secrets.GITHUB_TOKEN }}
