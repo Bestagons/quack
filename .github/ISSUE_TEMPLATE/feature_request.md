@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Fill in the blanks**:
-As a **<type of user>**, I would like to **<feature>**, so that **<some value is created>**.
+As a TYPE_OF_USER, I would like to FEATURE, so that SOME_VALUE_IS_CREATED.
 
 **Describe the solution you'd like:**
 - [ ] A clear and concise description of what you want to happen.
