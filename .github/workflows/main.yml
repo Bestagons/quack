@@ -1,0 +1,15 @@
+name: Move new issues into Product Backlog
+
+on:
+  issues:
+    types: [opened]
+jobs:
+  createCard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or Update Project Card
+        uses: peter-evans/create-or-update-project-card@v1
+        with:
+          project-name: Cheese & Quackers Board
+          column-name: Product Backlog
+          token: ${{ secrets.GITHUB_TOKEN }}
