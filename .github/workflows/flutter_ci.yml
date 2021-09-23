@@ -29,6 +29,10 @@ jobs:
         working-directory: ./quack_app
         run: flutter pub get
         
+      - name: Analyze Code
+        working-directory: ./quack_app
+        run: dart analyze
+  
       - name: Run tests
         working-directory: ./quack_app
         run: flutter test  
