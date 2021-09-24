@@ -15,6 +15,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_STAGING_BACKEND_NAME }} #Must be unique in Heroku
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: "app_backend"
           justlogin: true
           
   dct:
@@ -26,4 +27,5 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_DCT_STAGING_BACKEND_NAME }} #Must be unique in Heroku
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: "dct_backend"
           justlogin: true
