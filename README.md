@@ -37,14 +37,14 @@ University students who are on meal plans
 
 ### Milestones:
 
-- Have an open-able app on Android
-- Have an open-able app on iOS
-- First test passes
-- First-time pair coding
-- Something to Demo every week
-- Have 90% done before December
-- Have 80% done before Thanksgiving
-- Setup organizational structures
+- [ ] Have an open-able app on Android
+- [ ] Have an open-able app on iOS
+- [ ] First test passes
+- [ ] First-time pair coding
+- [ ] Something to Demo every week
+- [ ] Have 90% done before December
+- [ ] Have 80% done before Thanksgiving
+- [ ] Setup organizational structures
 
 
 ### Risks (could derail):
@@ -57,7 +57,7 @@ University students who are on meal plans
 - Losing a key developer
 - Complexity too high
 
-Trade-offs
+### Trade-offs
 
 |           | Fixed | Firm | Flexible | Fluid |
 |-----------|-------|------|----------|-------|
@@ -66,3 +66,6 @@ Trade-offs
 | Scope     |       |      |          |   X   |
 | Quality   |       |      |     X    |       |
 
+### Contributors
+
+- Your Name (Your Role)
