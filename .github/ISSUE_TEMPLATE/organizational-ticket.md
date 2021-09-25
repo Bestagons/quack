@@ -11,5 +11,5 @@ assignees: ''
 This task will be complete when DEFENITION_OF_DONE.
 
 **How frequent is this task?**:
-- [ ] Weekly
-- [ ] Once
+- ( ) Weekly
+- ( ) Once
