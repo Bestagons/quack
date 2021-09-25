@@ -1,5 +1,8 @@
 # Bestagons Micro-Charter
 
+![example workflow](https://github.com/Bestagons/quack/actions/workflows/flutter_ci/badge.svg)
+![example workflow](https://github.com/Bestagons/quack/actions/workflows/deploy_prod/badge.svg)
+
 ### Code Name: 
 
 Quack
