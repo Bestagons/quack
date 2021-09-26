@@ -7,9 +7,9 @@ name: Flutter CI
 
 on:
   push:
-    branches: [ production, staging, development ]
+    branches:
+      [production, staging, dev]
   pull_request:
-    branches: [ production, staging, development ]
 
 jobs:
   build:
