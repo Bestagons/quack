@@ -1,16 +1,16 @@
 # Languages
 
 # Java
-*.java @RafaelPiloto10 @brendacano @MimiOlayeye @oreorz
+*.java @RafaelPiloto10 @brendacano @MimiOlayeye @oreorz @DDavid223
 
 # Python
-*.py @RafaelPiloto10 @brendacano @MimiOlayeye @oreorz
+*.py @RafaelPiloto10 @brendacano @MimiOlayeye @oreorz @DDavid223
 
 # Golang
 *.go @RafaelPiloto10
 
 # JavaScript
-*.js @RafaelPiloto10 @brendacano
+*.js @RafaelPiloto10 @brendacano @Foxworth22
 
 # Markdown
 *.md @RafaelPiloto10
@@ -26,3 +26,6 @@
 
 # C
 *.c @MimiOlayeye
+
+# Swift
+*.Swift @DDavid223
