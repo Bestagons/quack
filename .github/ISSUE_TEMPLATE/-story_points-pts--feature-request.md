@@ -1,7 +1,7 @@
 ---
 name: "[STORY_POINTS pts] Feature request"
 about: Create a story
-title: ''
+title: "[STORY_POINTS pts] NAME"
 labels: ''
 assignees: ''
 
@@ -16,7 +16,7 @@ As a TYPE_OF_USER, I would like to FEATURE, so that SOME_VALUE_IS_CREATED.
 **Describe alternatives you've considered:**
 - [ ] A clear and concise description of any alternative solutions or features you've considered.
 
-**Definition of Done - Check as you go!**\
+**Definition of Done - Check as you go!**
 - [ ] Tasks have been implemented
 - [ ] Documented
 - [ ] Passing Tests for each task
