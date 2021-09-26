@@ -72,3 +72,4 @@ University students who are on meal plans
 ### Contributors
 
 - Your Name (Your Role)
+- @RafaelPiloto10 (Scrum Master)
