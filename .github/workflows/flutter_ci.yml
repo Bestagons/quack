@@ -5,11 +5,7 @@
 
 name: Flutter CI
 
-on:
-  push:
-    branches: [ production, staging, development ]
-  pull_request:
-    branches: [ production, staging, development ]
+on: [push, pull_request]
 
 jobs:
   build:
