@@ -4,8 +4,8 @@ import 'package:quack_app/main.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 
 void main() {
-  var test1Name = 'Homepage';
-  group('HomepageTests', () {
+  var test1Name = 'homepage_test';
+  group(test1Name, () {
     testGoldens(test1Name, (WidgetTester tester) async {
       tester.binding.window.physicalSizeTestValue = const Size(1170, 2532);
       tester.binding.window.devicePixelRatioTestValue = 3.0;
