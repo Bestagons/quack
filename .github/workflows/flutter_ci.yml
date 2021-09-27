@@ -35,4 +35,18 @@ jobs:
   
       - name: Run tests
         working-directory: ./quack_app
-        run: flutter test  
+        run: flutter test --coverage
+        
+      - name: Install lcov
+        working-directory: ./quack_app
+        run: brew install lcov
+        
+      - name: Remove Misc. Code Coverage Files
+        working-directory: ./quack_app
+        run: lcov --remove coverage/lcov.info 'lib/*/*.freezed.dart' 'lib/*/*.g.dart' 'lib/*/*.part.dart' 'lib/generated/*.dart' 'lib/generated/*/*.dart' -o coverage/lcov.info
+        
+      - name: Upload Code Coverage
+        uses: codecov/codecov-action@1.2.1
+        with:
+          file: ./quack_app/coverage/lcov.info
+          token: "${{ secrets.CODECOV_TOKEN }}"
