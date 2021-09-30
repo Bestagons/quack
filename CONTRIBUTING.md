@@ -25,8 +25,8 @@
 
 1. Create a new branch from `dev`, which can be done with the following command: `git checkout dev & git pull & git checkout -b NAME_YOUR_BRANCH`
 2. Implement your changes and include the following:
-  - Documentation
-  - Unit Tests
+    - Documentation
+    - Unit Tests
 3. Create a pull request that merges your branch into `dev`
 4. Ensure all checks pass and then get 2 rounds of code review
 5. Once your pull request is ready for merge, merge your branch! 
@@ -38,13 +38,13 @@
 
 1. Install the Flutter SDK
 2. To run:
-  - First start the emulator of your choice (iOS or Android)
-  -  `flutter run`
+    - First start the emulator of your choice (iOS or Android)
+    -  `flutter run`
 3. To test:
-  - `flutter test`
-  -  To test and generate **ALL** golden files (don't do this unless everything changed!)
+    - `flutter test`
+    -  To test and generate **ALL** golden files (don't do this unless everything changed!)
     `flutter test --generate-goldens`
-  -  To test and generate **specific** golden files (new test or regen. a specific test)
+    -  To test and generate **specific** golden files (new test or regen. a specific test)
     `flutter test --generate-goldens --name=<Name of Group or Test Description>`
 
 #### DCT Backend
