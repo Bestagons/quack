@@ -14,8 +14,11 @@
 ## Development Flow
 
 |--> Production (Most Stable Release)
+
 |----> Staging (Quality Assurance Testing)
+
 |------> Development (Feature Changes)
+
 |--------> Feature Branch (Unique Feature Change)
 
 ## How to Contribute
