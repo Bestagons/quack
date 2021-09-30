@@ -2,7 +2,7 @@
 
 - [Development Flow](#Development-Flow)
 - [How to Contribute](#How-to-Contribute)
-  - [Installation & Setup](#Installation-&-Setup)
+  - [Installation & Setup](#Installation-and-Setup)
     - [Quack App](#Quack-App)
 	- [DCT Backend](#DCT-Backend)
 	- [App Backend](#App-Backend)
@@ -32,19 +32,19 @@
 5. Once your pull request is ready for merge, merge your branch! 
 6. Delete your branch if it is no longer re-usable
 
-### Installation & Setup
+### Installation and Setup
 
 #### Quack App
 
 1. Install the Flutter SDK
 2. To run:
-  1. First start the emulator of your choice (iOS or Android)
-  2. `flutter run`
+  - First start the emulator of your choice (iOS or Android)
+  -  `flutter run`
 3. To test:
-  1. `flutter test`
-  2. To test and generate **ALL** golden files (don't do this unless everything changed!)
+  - `flutter test`
+  -  To test and generate **ALL** golden files (don't do this unless everything changed!)
     `flutter test --generate-goldens`
-  3. To test and generate **specific** golden files (new test or regen. a specific test)
+  -  To test and generate **specific** golden files (new test or regen. a specific test)
     `flutter test --generate-goldens --name=<Name of Group or Test Description>`
 
 #### DCT Backend
