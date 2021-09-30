@@ -79,11 +79,11 @@ Keep commit messages as appropriately short as possible. Use the imparitive mood
 2. Take a quick glimpse to see what the user files the user has changed
 3. Review the Pull Request title, description, and commit messages to ensure the Pull Request implemented what it says it does
 4. Throughly review the code to verify implementation does what it set out to do
-  1. Remember to look for **unclear variable and method names**
-  2. Remember to look for **documentation** for medium/large methods that describe the method and parameters
-  3. Remember to look for **unreadable code**! The one liner solution isn't always the best!
-  4. Remember to look for **hardcoded** variables! They should be abstracted as much as possible!
+    1.  Remember to look for **unclear variable and method names**
+    2. Remember to look for **documentation** for medium/large methods that describe the method and parameters
+    3. Remember to look for **unreadable code**! The one liner solution isn't always the best!
+    4. Remember to look for **hardcoded** variables! They should be abstracted as much as possible!
       This includes UI styling, sizes, colors, etc!
-  5. Remember to look for thorough, passing unit tests! We don't want to test that X = X but that F(X) = Y for any known X
+    5. Remember to look for thorough, passing unit tests! We don't want to test that X = X but that F(X) = Y for any known X
 5. Leave comments that request changes and/or leave kuddos!
 6. Don't forget to submit your review!
