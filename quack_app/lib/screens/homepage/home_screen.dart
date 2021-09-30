@@ -18,9 +18,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() async {
+  void initState() {
     // Re-cache updated values on view
     super.initState();
+    loadData();
+  }
+
+  void loadData() async {
     await widget.menuData.getCurrentlyServing();
     await widget.menuData.getTodaysMenu();
   }
