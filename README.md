@@ -6,7 +6,7 @@
 [![App Backend CI](https://github.com/Bestagons/quack/actions/workflows/app_backend_CI.yml/badge.svg)](https://github.com/Bestagons/quack/actions/workflows/app_backend_CI.yml)
 [![DCT Backend CI](https://github.com/Bestagons/quack/actions/workflows/dct_backend_CI.yml/badge.svg)](https://github.com/Bestagons/quack/actions/workflows/dct_backend_CI.yml)
 
-### Code Name: 
+### Code Name:
 
 Quack
 
@@ -20,7 +20,7 @@ The Quack Project on every Emory student phone, organizing the calendars of user
 
 ### Elevator Pitch:
 
-An app that increases the quality of life of Emory students both by finding free time in your calendar to suggest events/activities to integrate into your schedule (i.e. when to study, eat, etc.) and by adding value to the experience of getting food at DCT (food locations, capacity, etc.). 
+An app that increases the quality of life of Emory students both by finding free time in your calendar to suggest events/activities to integrate into your schedule (i.e. when to study, eat, etc.) and by adding value to the experience of getting food at DCT (food locations, capacity, etc.).
 
 ### Business Value:
 
@@ -76,3 +76,4 @@ University students who are on meal plans
 
 - Your Name (Your Role)
 - @RafaelPiloto10 (Scrum Master)
+- @oreorz (Team Member)
