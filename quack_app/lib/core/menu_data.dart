@@ -12,14 +12,14 @@ class MenuData {
 
   // getCurrentlyServing returns what time-of-day meal is being served
   // (Breakfast, Lunch, Dinner, etc)
-  String getCurrentlyServing() {
+  Future<String> getCurrentlyServing() {
     // TODO: Implement DCT Backend
     currentlyServing = "Dinner";
-    return currentlyServing;
+    return Future.value(currentlyServing);
   }
 
   // getTodaysMenu returns a list of Items generated from today's menu
-  List<Item> getTodaysMenu() {
+  Future<List<Item>> getTodaysMenu() {
     var foods = [
       "Grilled Chicken",
       "Beyond Beef Burger",
@@ -36,6 +36,6 @@ class MenuData {
     // TODO: Implement DCT Backend
     menu = List.generate(foods.length,
         (index) => Item(name: foods[index], category: "", isFavorite: false));
-    return menu;
+    return Future.value(menu);
   }
 }

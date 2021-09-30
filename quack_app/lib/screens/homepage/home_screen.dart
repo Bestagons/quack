@@ -18,6 +18,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() async {
+    // Re-cache updated values on view
+    super.initState();
+    await widget.menuData.getCurrentlyServing();
+    await widget.menuData.getTodaysMenu();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text(widget.title) //
@@ -72,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Constants.kBackgroundGrey,
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    child: Column(children: listUserMenu(context)),
+                    child: Column(children: listUserMenu()),
                   )),
             ),
           ],
@@ -80,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: const NavBar());
   }
 
-  List<Widget> listUserMenu(BuildContext context) {
+  List<Widget> listUserMenu() {
     AutoSizeGroup _group = AutoSizeGroup();
     return List<Widget>.generate(widget.menuData.menu.length, (index) {
       return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
