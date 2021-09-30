@@ -6,14 +6,16 @@ class MenuData {
   late List<Item> menu;
 
   MenuData() {
-    currentlyServing = getCurrentlyServing();
-    menu = getTodaysMenu();
+    getCurrentlyServing();
+    getTodaysMenu();
   }
 
   // getCurrentlyServing returns what time-of-day meal is being served
   // (Breakfast, Lunch, Dinner, etc)
   String getCurrentlyServing() {
-    return "Dinner";
+    // TODO: Implement DCT Backend
+    currentlyServing = "Dinner";
+    return currentlyServing;
   }
 
   // getTodaysMenu returns a list of Items generated from today's menu
@@ -31,7 +33,9 @@ class MenuData {
       "Ceasar Salad"
     ];
 
-    return List.generate(foods.length,
+    // TODO: Implement DCT Backend
+    menu = List.generate(foods.length,
         (index) => Item(name: foods[index], category: "", isFavorite: false));
+    return menu;
   }
 }

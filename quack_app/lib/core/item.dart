@@ -14,6 +14,6 @@ class Item {
   // Toggle the item as a favorite or not
   void toggleFavorite() {
     isFavorite = !isFavorite;
-    // backend code to remember this decision
+    // TODO: write backend code to remember this decision
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:quack_app/components/navbar.dart';
 import 'package:quack_app/constants/constants.dart';
@@ -71,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Constants.kBackgroundGrey,
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    child: Column(children: listUserMenu()),
+                    child: Column(children: listUserMenu(context)),
                   )),
             ),
           ],
@@ -79,21 +80,26 @@ class _HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: const NavBar());
   }
 
-  List<Widget> listUserMenu() {
+  List<Widget> listUserMenu(BuildContext context) {
+    AutoSizeGroup _group = AutoSizeGroup();
     return List<Widget>.generate(widget.menuData.menu.length, (index) {
       return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 0, 0, 40),
-          child: Text(widget.menuData.menu[index].name,
-              style: const TextStyle(color: Colors.black, fontSize: 32)),
-        ),
+            padding: const EdgeInsets.fromLTRB(10, 0, 0, 40),
+            child: SizedBox(
+                width: 300,
+                height:
+                    30, // DO NOT CHANGE THIS - CAUSES JITTER IN AUTOSIZETEXT
+                child: AutoSizeText(widget.menuData.menu[index].name,
+                    style: const TextStyle(color: Colors.black, fontSize: 36),
+                    group: _group,
+                    maxFontSize: 36,
+                    maxLines: 1))),
         Expanded(
-          child: Text(" ." * 100,
-              style: const TextStyle(color: Colors.black, fontSize: 32),
-              maxLines: 1),
+          child: Text("" * 100),
         ),
         Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.center,
             child: Padding(
                 padding: const EdgeInsets.only(right: 5),
                 child: IconButton(
