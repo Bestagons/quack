@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:quack_app/core/menu_data.dart';
-import 'package:quack_app/screens/homepage/home_screen.dart';
 
-void main() {
-  MenuData data = MenuData();
-  runApp(MyApp(menuData: data));
+import 'components/navbar.dart';
+
+void main() async {
+  MenuData menuData = MenuData();
+  await menuData.getCurrentlyServing();
+  await menuData.getTodaysMenu();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final MenuData menuData;
-  const MyApp({Key? key, required this.menuData}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
