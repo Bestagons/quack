@@ -12,10 +12,39 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   // The current index of the highlighted icon
   int currentIndex = Constants.kNavBarDefaultIndex;
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // To implement the new page,
+  // change the Text() below to the page's class (i.e. HomeScreen())
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Settings',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: Dining',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: Favorites',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 4: Profile',
+      style: optionStyle,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
+    return Scaffold(
+        body: Center(
+        child: _widgetOptions.elementAt(currentIndex),
+    ),
+    bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -23,7 +52,6 @@ class _NavBarState extends State<NavBar> {
               // Updates the highlighted icon in the navbar
               setState(() {
                 currentIndex = index;
-                // need to update the page here
               })
             },
         items: const [
@@ -57,6 +85,7 @@ class _NavBarState extends State<NavBar> {
               label: 'Profile',
               activeIcon: Icon(Constants.kNavBarProfileActiveIcon,
                   color: Colors.black, size: Constants.kNavBarFontSize)),
-        ]);
+        ])
+    );
   }
 }
