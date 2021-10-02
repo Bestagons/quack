@@ -14,7 +14,7 @@ class _NavBarState extends State<NavBar> {
   int currentIndex = Constants.kNavBarDefaultIndex;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   // To implement the new page,
-  // change the Text() below to the pages class (i.e. HomeScreen())
+  // change the Text() below to the page's class (i.e. HomeScreen())
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Settings',
