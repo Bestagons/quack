@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
+
 class NotificationObject {
   String title;
   String description;
   DateTime postDate;
+  UniqueKey id = UniqueKey();
 
   NotificationObject(this.title, this.description, this.postDate);
 }
@@ -9,15 +12,23 @@ class NotificationObject {
 // Notification implements logic for menu related data
 class NotificationData {
   late List<NotificationObject> currentNotifications;
+  static final NotificationData _notificationData = NotificationData._internal();
 
-  NotificationData() {
-    getExistingNotifications();
+  factory NotificationData() {
+    return _notificationData;
   }
+
+  NotificationData._internal();
 
   // Fetches existing notifications from disk, and remove outdated notifications
   Future<List<NotificationObject>> getExistingNotifications() {
     currentNotifications = testData();
     return Future.value(currentNotifications);
+  }
+
+  List<NotificationObject> remove(UniqueKey id) {
+    currentNotifications.removeWhere((element) => element.id == id);
+    return currentNotifications;
   }
 
   List<NotificationObject> testData() {
