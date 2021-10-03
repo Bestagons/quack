@@ -9,7 +9,7 @@ class NavBar extends StatefulWidget {
   State<StatefulWidget> createState() => _NavBarState();
 }
 
-/// Implements the NavBar State
+// Implements the NavBar State
 class _NavBarState extends State<NavBar> {
   // The current index of the highlighted icon
   int currentIndex = Constants.kNavBarDefaultIndex;
