@@ -16,8 +16,8 @@ class Constants {
   static const IconData kNavBarNotificationsActiveIcon = Icons.notifications;
   static const IconData kNavBarDineIcon = Icons.dining_outlined;
   static const IconData kNavBarDineActiveIcon = Icons.dining;
-  static const IconData kNavBarFavoritesIcon = Icons.star_outline;
-  static const IconData kNavBarFavoritesActiveIcon = Icons.star;
+  static const IconData kNavBarFavoritesIcon = Icons.favorite_outline;
+  static const IconData kNavBarFavoritesActiveIcon = Icons.favorite;
   static const IconData kNavBarProfileIcon = Icons.person_outline;
   static const IconData kNavBarProfileActiveIcon = Icons.person;
 }
