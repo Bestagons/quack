@@ -9,7 +9,10 @@ import 'package:quack_app/screens/homepage/home_screen.dart';
 void main() {
   group("Home Screen Test", () {
     MenuData fakeMenuData = MenuData();
-    MyApp app = MyApp(menuData: fakeMenuData);
+    fakeMenuData.getCurrentlyServing();
+    fakeMenuData.getTodaysMenu();
+
+    MyApp app = const MyApp();
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
@@ -47,7 +50,8 @@ void main() {
       for (Item item in fakeMenuData.menu) {
         totalFavorited += item.isFavorite ? 1 : 0;
       }
-      expect(totalFavorited, 3);
+      // Liked 3 in the previous test
+      expect(totalFavorited, 4);
     });
 
     testGoldens("scroll", (WidgetTester tester) async {
@@ -70,7 +74,8 @@ void main() {
       for (Item item in fakeMenuData.menu) {
         totalFavorited += item.isFavorite ? 1 : 0;
       }
-      expect(totalFavorited, 1);
+      // Liked 4 in the previous test
+      expect(totalFavorited, 5);
     });
   });
 }

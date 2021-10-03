@@ -2,13 +2,15 @@ import 'package:quack_app/core/item.dart';
 
 // MenuData implements logic for menu related data
 class MenuData {
-  late String currentlyServing;
-  late List<Item> menu;
+  String currentlyServing = "";
+  List<Item> menu = List.empty();
+  static final MenuData _menuData = MenuData._internal();
 
-  MenuData() {
-    getCurrentlyServing();
-    getTodaysMenu();
+  factory MenuData() {
+    return _menuData;
   }
+
+  MenuData._internal();
 
   // getCurrentlyServing returns what time-of-day meal is being served
   // (Breakfast, Lunch, Dinner, etc)
