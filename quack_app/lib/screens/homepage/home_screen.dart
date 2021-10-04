@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        ItemScreen(name: menuData.menu[index].name)));
+                        ItemScreen(item: menuData.menu[index])));
           },
           title: AutoSizeText(menuData.menu[index].name,
               style: const TextStyle(color: Colors.black, fontSize: 25),
