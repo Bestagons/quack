@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
+import 'package:quack_app/screens/notification/notification_screen.dart';
 
 // Reuseable Navbar
 class NavBar extends StatefulWidget {
@@ -22,10 +23,7 @@ class _NavBarState extends State<NavBar> {
       'Index 0: Settings',
       style: optionStyle,
     ),
-    Text(
-      'Index 1: Home',
-      style: optionStyle,
-    ),
+    NotificationScreen(title: "Notifications"),
     HomeScreen(title: "Quack"),
     Text(
       'Index 3: Favorites',
