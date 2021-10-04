@@ -26,14 +26,15 @@ void main() {
       await tester.pumpWidget(app);
       await tester.tap(find.byIcon(Constants.kNavBarNotificationsIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));
+      var beforeCount = fakeNotificationData.currentNotifications.length;
 
       await tester.tap(find.text("Delete").first);
       await loadAppFonts();
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await expectLater(
           find.byType(NotificationScreen), matchesGoldenFile('goldens/delete_notification_1.png'));
-      int remaining = fakeNotificationData.currentNotifications.length;
-      expect(remaining, 2);
+      int remainingCount = fakeNotificationData.currentNotifications.length;
+      expect(beforeCount - remainingCount, 1);
     });
   });
 }
