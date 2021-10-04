@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class Constants {
+  // App Constants
+  static const Color kPrimaryColor = Color.fromARGB(255, 255, 199, 4);
+  static const Color kFavoritedColor = Colors.redAccent;
+  static const Color kBackgroundGrey = Color.fromARGB(5, 10, 10, 10);
+  static const IconData kFavorited = Icons.favorite;
+  static const IconData kFavorite = Icons.favorite_border_outlined;
   // NavBar Constants
   static const double kNavBarFontSize = 36;
   static const int kNavBarDefaultIndex = 2;

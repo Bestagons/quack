@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quack_app/constants/constants.dart';
+import 'package:quack_app/screens/homepage/home_screen.dart';
 
 // Reuseable Navbar
 class NavBar extends StatefulWidget {
@@ -25,10 +26,7 @@ class _NavBarState extends State<NavBar> {
       'Index 1: Home',
       style: optionStyle,
     ),
-    Text(
-      'Index 2: Dining',
-      style: optionStyle,
-    ),
+    HomeScreen(title: "Quack"),
     Text(
       'Index 3: Favorites',
       style: optionStyle,
@@ -42,6 +40,9 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+            leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+            title: const Text("Quack")),
         body: Center(
           child: _widgetOptions.elementAt(currentIndex),
         ),
