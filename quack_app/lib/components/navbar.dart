@@ -40,7 +40,9 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Quack")),
+        appBar: AppBar(
+            leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+            title: const Text("Quack")),
         body: Center(
           child: _widgetOptions.elementAt(currentIndex),
         ),

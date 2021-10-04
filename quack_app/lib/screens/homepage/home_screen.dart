@@ -2,9 +2,10 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:quack_app/components/navbar.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/core/menu_data.dart';
+
+import 'item_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -79,46 +80,44 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Constants.kBackgroundGrey,
               child: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
-                child: Column(children: listUserMenu()),
+                child: Column(children: listUserMenu(context)),
               )),
         ),
       ],
     ));
   }
 
-  List<Widget> listUserMenu() {
+  List<Widget> listUserMenu(BuildContext context) {
     AutoSizeGroup _group = AutoSizeGroup();
     return List<Widget>.generate(menuData.menu.length, (index) {
       return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 0, 40),
-            child: SizedBox(
-                width: 300,
-                height:
-                    30, // DO NOT CHANGE THIS - CAUSES JITTER IN AUTOSIZETEXT
-                child: AutoSizeText(menuData.menu[index].name,
-                    style: const TextStyle(color: Colors.black, fontSize: 36),
-                    group: _group,
-                    maxFontSize: 36,
-                    maxLines: 1))),
         Expanded(
-          child: Text("" * 100),
-        ),
-        Align(
-            alignment: Alignment.center,
-            child: Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: IconButton(
-                    icon: menuData.menu[index].isFavorite
-                        ? const Icon(Constants.kFavorited,
-                            color: Constants.kFavoritedColor)
-                        : const Icon(Constants.kFavorite),
-                    iconSize: 32,
-                    onPressed: () {
-                      setState(() {
-                        menuData.menu[index].toggleFavorite();
-                      });
-                    }))),
+            child: ListTile(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ItemScreen(name: menuData.menu[index].name)));
+          },
+          title: AutoSizeText(menuData.menu[index].name,
+              style: const TextStyle(color: Colors.black, fontSize: 25),
+              group: _group,
+              maxFontSize: 25,
+              maxLines: 1),
+          trailing: IconButton(
+              icon: menuData.menu[index].isFavorite
+                  ? const Icon(Constants.kFavorited,
+                      color: Constants.kFavoritedColor)
+                  : const Icon(Constants.kFavorite),
+              iconSize: 30,
+              splashRadius: 0.01,
+              onPressed: () {
+                setState(() {
+                  menuData.menu[index].toggleFavorite();
+                });
+              }),
+        )),
       ]);
     });
   }
