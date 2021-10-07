@@ -9,8 +9,7 @@ import 'package:quack_app/screens/homepage/home_screen.dart';
 void main() {
   group("Home Screen Test", () {
     MenuData fakeMenuData = MenuData();
-    fakeMenuData.getCurrentlyServing();
-    fakeMenuData.getTodaysMenu();
+    fakeMenuData.loadData();
 
     MyApp app = const MyApp();
     testGoldens("basic_view", (WidgetTester tester) async {
@@ -29,8 +28,8 @@ void main() {
       await expectLater(
           find.byType(HomeScreen), matchesGoldenFile('goldens/like_food.png'));
       int totalFavorited = 0;
-      for (Item item in fakeMenuData.menu) {
-        totalFavorited += item.isFavorite ? 1 : 0;
+      for (Item item in fakeMenuData.getCurrentMenu()) {
+        totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 1);
     });
@@ -47,8 +46,8 @@ void main() {
       await expectLater(find.byType(HomeScreen),
           matchesGoldenFile('goldens/like_three_food.png'));
       int totalFavorited = 0;
-      for (Item item in fakeMenuData.menu) {
-        totalFavorited += item.isFavorite ? 1 : 0;
+      for (Item item in fakeMenuData.getCurrentMenu()) {
+        totalFavorited += item.isFavorite() ? 1 : 0;
       }
       // Liked 3 in the previous test
       expect(totalFavorited, 4);
@@ -71,8 +70,8 @@ void main() {
       await expectLater(find.byType(HomeScreen),
           matchesGoldenFile('goldens/like_last_and_scroll.png'));
       int totalFavorited = 0;
-      for (Item item in fakeMenuData.menu) {
-        totalFavorited += item.isFavorite ? 1 : 0;
+      for (Item item in fakeMenuData.getCurrentMenu()) {
+        totalFavorited += item.isFavorite() ? 1 : 0;
       }
       // Liked 4 in the previous test
       expect(totalFavorited, 5);

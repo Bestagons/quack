@@ -9,15 +9,14 @@ import 'package:quack_app/screens/homepage/item_screen.dart';
 void main() {
   group("Item Screen Test", () {
     MenuData fakeMenuData = MenuData();
-    fakeMenuData.getCurrentlyServing();
-    fakeMenuData.getTodaysMenu();
+    fakeMenuData.loadData();
 
     MyApp app = const MyApp();
     testGoldens("item_screen_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
       await tester.tap(find.byType(ListTile).first);
-      await tester.pumpAndSettle(Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(seconds: 1));
       await expectLater(find.byType(ItemScreen),
           matchesGoldenFile('goldens/item_screen_view.png'));
     });
@@ -26,7 +25,7 @@ void main() {
       await loadAppFonts();
       await tester.pumpWidget(app);
       await tester.tap(find.byType(ListTile).first);
-      await tester.pumpAndSettle(Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.tap(find.byTooltip("Back"));
       await tester.pumpWidget(app);
       await expectLater(find.byType(HomeScreen),

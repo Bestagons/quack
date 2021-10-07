@@ -12,12 +12,12 @@ class ItemScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
             title: Text(
-          item.name,
+          item.getName(),
           overflow: TextOverflow.ellipsis,
         )),
         body: Center(
             child: AutoSizeText(
-          item.name,
+          item.getName(),
           style: const TextStyle(fontSize: 38),
           maxLines: 1,
         )));

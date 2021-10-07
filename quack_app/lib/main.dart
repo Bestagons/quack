@@ -5,8 +5,7 @@ import 'components/navbar.dart';
 
 void main() async {
   MenuData menuData = MenuData();
-  await menuData.getCurrentlyServing();
-  await menuData.getTodaysMenu();
+  await menuData.loadData();
   runApp(const MyApp());
 }
 
