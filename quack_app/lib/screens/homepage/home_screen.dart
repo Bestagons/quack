@@ -35,10 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
           // white space
           height: 30,
         ),
+
         Row(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(5.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Currently Serving: ${menuData.getServeTime()}",
@@ -47,7 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 22,
                         fontWeight: FontWeight.bold)),
               ),
-            )
+            ),
+            Expanded(
+                child: Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: const Icon(Icons.filter_alt_outlined),
+                      color: Colors.blueAccent,
+                      iconSize: 32,
+                      onPressed: () {},
+                    )))
           ],
         ),
         SizedBox(
