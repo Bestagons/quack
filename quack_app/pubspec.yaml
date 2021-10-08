@@ -68,11 +68,19 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
+  # To add assets to your application, add an assets section, like th/a_dot_burr.jpeg
+  assets:
+    - android/app/src/main/res/drawable-hdpi/splash.png
+    - android/app/src/main/res/drawable-mdpi/splash.png
+    - android/app/src/main/res/drawable-v21/background.png
+    - android/app/src/main/res/drawable-xhdpi/splash.png
+    - android/app/src/main/res/drawable-xxhdpi/splash.png
+    - android/app/src/main/res/drawable-xxxhdpi/splash.png
+    - android/app/src/main/res/drawable/background.png
+    - ios/Runner/Assets.xcassets/LaunchBackground.imageset/background.png
+    - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png
+    - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png
+    - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
