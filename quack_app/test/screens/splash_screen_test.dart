@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
-bool allLoaded = true;
 var assetPaths = [
   'android/app/src/main/res/drawable-hdpi/splash.png',
   'android/app/src/main/res/drawable-mdpi/splash.png',
@@ -21,10 +20,11 @@ bool checkPath(String path) {
 }
 
 void main() {
-  test('All splash screen asset files exist', () {
-    for(var assetPath in assetPaths) {
-      allLoaded = checkPath(assetPath);
-  }
-  expect(allLoaded, true);
-  }); 
+  group("splash test", () {
+      for(var assetPath in assetPaths) {
+            test(assetPath, () {
+                   expect(checkPath(assetPath), true);     
+            });
+      }
+  });
 }
