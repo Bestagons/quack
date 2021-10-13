@@ -6,7 +6,7 @@ void main() {
   group("Main", () {
     testGoldens("app", (WidgetTester tester) async {
       await loadAppFonts();
-      await tester.pumpWidget(MyApp());
+      await tester.pumpWidget(const MyApp());
       await expectLater(
           find.byType(MyApp), matchesGoldenFile('goldens/app.png'));
     });
