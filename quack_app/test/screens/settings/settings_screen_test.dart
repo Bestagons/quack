@@ -9,7 +9,7 @@ import 'package:quack_app/screens/settings/settings_screen.dart';
 void main() {
   group("Settings Screen Test", () {
     MyApp app = const MyApp();
-    testGoldens("item_screen_view", (WidgetTester tester) async {
+    testGoldens("settings_screen_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
       await tester.tap(find.byIcon(Constants.kNavBarSettingsIcon));
