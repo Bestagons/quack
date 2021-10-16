@@ -6,7 +6,7 @@ import 'package:quack_app/screens/profile/subscreens/calendar_screen.dart';
 import 'package:quack_app/screens/profile/subscreens/email_screen.dart';
 import 'package:quack_app/screens/profile/subscreens/friends_screen.dart';
 
-// Settings screen implements the screen for the settings page
+// Profile screen implements the screen for the profile page
 class ProfileScreen extends StatefulWidget {
   final String title;
   const ProfileScreen({Key? key, required this.title}) : super(key: key);
