@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/menu_data.dart';
 import 'package:quack_app/screens/settings/subscreens/about_screen.dart';
 import 'package:quack_app/screens/settings/subscreens/account_prefrences_screen.dart';
 import 'package:quack_app/screens/settings/subscreens/food_prefrences_screen.dart';
@@ -20,14 +19,12 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late MenuData menuData;
   final TextStyle _style = const TextStyle(color: Colors.black, fontSize: 24);
   final AutoSizeGroup _group = AutoSizeGroup();
   @override
   void initState() {
     // Re-cache updated values on view
     super.initState();
-    menuData = MenuData();
   }
 
   @override

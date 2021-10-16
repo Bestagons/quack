@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/menu_data.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/settings/settings_screen.dart';
 
