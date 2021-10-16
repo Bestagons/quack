@@ -28,6 +28,6 @@ def test_new_friend():
         fuuid_q = f"fuuid={test_case.fuuid}" if test_case.fuuid is not None else ""
         query = f"/new-friend/?{uuid_q}&{fuuid_q}"
         print("Testing: " + query)
-        response = client.get(query)
+        response = client.post(query)
         assert response.status_code == test_case.expected_status_code
         assert ("err" in response.json()) == test_case.expects_err

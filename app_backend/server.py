@@ -25,7 +25,7 @@ async def root():
         Response.status: int
             The status code for the request
 """
-@app.get("/new-friend/", status_code=status.HTTP_201_CREATED)
+@app.post("/new-friend/", status_code=status.HTTP_201_CREATED)
 async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
     # check if the uuid exists
     if uuid is None or not isinstance(uuid, str) or uuid == "":
