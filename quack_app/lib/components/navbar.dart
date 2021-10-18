@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
 import 'package:quack_app/screens/notification/notification_screen.dart';
+import 'package:quack_app/screens/profile/profile_screen.dart';
 
 // Reuseable Navbar
 class NavBar extends StatefulWidget {
@@ -29,10 +30,7 @@ class _NavBarState extends State<NavBar> {
       'Index 3: Favorites',
       style: optionStyle,
     ),
-    Text(
-      'Index 4: Profile',
-      style: optionStyle,
-    ),
+    ProfileScreen(title: "Profile")
   ];
 
   @override
