@@ -8,7 +8,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 class FoodSummary extends StatefulWidget {
   final Item item;
   final AutoSizeGroup group;
-  const FoodSummary({Key? key, required this.item, required this.group}) :
+  final Function() onFavoritePressed;
+  const FoodSummary({Key? key,
+    required this.item, required this.group, required this.onFavoritePressed}) :
         super(key: key);
   @override
   State<StatefulWidget> createState() => _FoodSummaryState();
@@ -42,6 +44,7 @@ class _FoodSummaryState extends State<FoodSummary> {
                 onPressed: () {
                   setState(() {
                     widget.item.toggleFavorite();
+                    widget.onFavoritePressed();
                   });
                 }),
           )),
