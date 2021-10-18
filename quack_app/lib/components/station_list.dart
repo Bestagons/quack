@@ -25,6 +25,15 @@ class StationList extends StatefulWidget {
 }
 
 class _StationListState extends State<StationList> {
+  List<Widget> stationList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    stationList = getStationList();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -33,16 +42,15 @@ class _StationListState extends State<StationList> {
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
             child: Column(
-                children: getStationList(
-              context,
-            )),
+                children: stationList),
           )),
     );
   }
 
+
   // getStationList - generates the list of items dynamically based on the passed in
   // widget parameters
-  List<Widget> getStationList(BuildContext context) {
+  List<Widget> getStationList() {
     AutoSizeGroup _group = AutoSizeGroup();
     MenuData menuData = MenuData();
     List<Widget> list = List.empty(growable: true);
@@ -72,6 +80,11 @@ class _StationListState extends State<StationList> {
         List<Item> stationCurrentItems = menuData
             .menuFilteredBy((item) => mainFilter(item) && widget.filter(item));
 
+        if (stationCurrentItems.isEmpty) {
+          // If the station does not contain anything, don't add header.
+          continue;
+        }
+
         // Station subheader
         list.add(Container(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -81,7 +94,12 @@ class _StationListState extends State<StationList> {
 
         // All food items
         for (Item item in stationCurrentItems) {
-          list.add(FoodSummary(item: item, group: _group));
+          list.add(FoodSummary(item: item, group: _group,
+              onFavoritePressed: () {
+                setState(() {
+                  stationList = getStationList();
+                });
+              }));
         }
       }
     }
