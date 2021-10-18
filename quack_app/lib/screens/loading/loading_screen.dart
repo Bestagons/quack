@@ -12,6 +12,7 @@ class LoadingScreen extends StatefulWidget {
 class LoadingScreenState extends State<LoadingScreen> {
 
   void getMenuData() async {
+    //await Future.delayed(const Duration(seconds: 1), () {});
     MenuData menuData = MenuData();
     await menuData.loadData();
     Navigator.pushReplacementNamed(context, '/home', arguments: {
