@@ -27,8 +27,8 @@ class _NavBarState extends State<NavBar> {
     ),
     NotificationScreen(title: "Notifications"),
     HomeScreen(title: "Quack"),
-    FavoriteScreen(title: "Favorite"),,
-    ProfileScreen(title: "Profile")
+    FavoriteScreen(title: "Favorite"),
+    ProfileScreen(title: "Profile"),
   ];
 
   @override
