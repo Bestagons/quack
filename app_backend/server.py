@@ -51,4 +51,4 @@ async def registeruser(login: UserLogin, resp: Response):
     username = login.username
     email = login.email
     password = login.password.encode("utf-8")
-    return {"msg": "Successfully registered new user " + username + " with their email " + email}
+    return {"msg": "Successfully registered new user."}
