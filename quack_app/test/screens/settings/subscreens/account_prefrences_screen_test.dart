@@ -3,12 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/main.dart';
-import 'package:quack_app/screens/settings/subscreens/account_prefrences_screen.dart';
+import 'package:quack_app/screens/settings/subscreens/account_preferences_screen.dart';
 
 void main() {
-  group("Account Prefrences Screen Test", () {
+  group("Account Preferences Screen Test", () {
     MyApp app = const MyApp();
-    testGoldens("settings_account_prefrences_screen",
+    testGoldens("settings_account_preferences_screen",
         (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
@@ -16,8 +16,8 @@ void main() {
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.tap(find.byIcon(Icons.account_circle_outlined));
       await tester.pumpAndSettle(const Duration(seconds: 1));
-      await expectLater(find.byType(AccountPrefrencesScreen),
-          matchesGoldenFile('goldens/settings_account_prefrences_screen.png'));
+      await expectLater(find.byType(AccountPreferencesScreen),
+          matchesGoldenFile('goldens/settings_account_preferences_screen.png'));
     });
   });
 }

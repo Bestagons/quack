@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/screens/settings/subscreens/about_screen.dart';
-import 'package:quack_app/screens/settings/subscreens/account_prefrences_screen.dart';
-import 'package:quack_app/screens/settings/subscreens/food_prefrences_screen.dart';
+import 'package:quack_app/screens/settings/subscreens/account_preferences_screen.dart';
+import 'package:quack_app/screens/settings/subscreens/food_preferences_screen.dart';
 import 'package:quack_app/screens/settings/subscreens/help_and_support_screen.dart';
-import 'package:quack_app/screens/settings/subscreens/notifications_prefrences_screen.dart';
+import 'package:quack_app/screens/settings/subscreens/notifications_preferences_screen.dart';
 import 'package:quack_app/screens/settings/subscreens/your_calendar_screen.dart';
 
 // Settings screen implements the screen for the settings page
@@ -40,14 +40,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Column(children: <Widget>[
                     _getTile(
                         context, //
-                        "Food Prefrences", //
+                        "Food Preferences", //
                         Icons.food_bank_outlined, //
-                        const FoodPrefrencesScreen()), //
+                        const FoodPreferencesScreen()), //
                     _getTile(
                         context,
-                        "Notification Prefrences",
+                        "Notification Preferences",
                         Icons.notifications_active_outlined,
-                        const NotificationsPrefrencesScreen()),
+                        const NotificationsPreferencesScreen()),
                     _getTile(
                         context,
                         "Your Calendar",
@@ -55,9 +55,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         const YourCalendarScreen()),
                     _getTile(
                         context,
-                        "Account Prefrences",
+                        "Account Preferences",
                         Icons.account_circle_outlined,
-                        const AccountPrefrencesScreen()),
+                        const AccountPreferencesScreen()),
                     _getTile(
                         context, //
                         "Help and Support",
