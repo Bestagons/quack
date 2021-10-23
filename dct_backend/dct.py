@@ -15,13 +15,14 @@ class DCT():
         meal_time: str
             The meal time the food item will be served
 
-        category: str
+        categories: list
             The categories the food item can be found in
 
         returns: FoodItem
             The food item added to the menu
     """
-    def save_food_item(self, name: str, station: str, meal_time: str, category: str) -> FoodItem:
-        item = FoodItem(name, station, meal_time, category)
+    def save_food_item(self, name: str, station: str, meal_time: str,
+            categories: list) -> FoodItem:
+        item = FoodItem(name, station, meal_time, categories)
         self.menu.append(item)
         return item
