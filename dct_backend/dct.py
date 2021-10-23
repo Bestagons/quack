@@ -18,11 +18,14 @@ class DCT():
         categories: list
             The categories the food item can be found in
 
+        calories: int
+            The amount of calories the food item has
+
         returns: FoodItem
             The food item added to the menu
     """
     def save_food_item(self, name: str, station: str, meal_time: str,
-            categories: list) -> FoodItem:
-        item = FoodItem(name, station, meal_time, categories)
+            calories: int, categories: list) -> FoodItem:
+        item = FoodItem(name, station, meal_time, calories, categories)
         self.menu.append(item)
         return item
