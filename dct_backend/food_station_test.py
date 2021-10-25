@@ -16,4 +16,5 @@ def test_food_station():
     for test_case in test_cases:
         station = food_station.FoodStation(test_case)
 
-        assert station.name == test_case                  
+        assert station.name == test_case   
+                       

@@ -35,4 +35,5 @@ def test_save_food_station():
     for test_case in test_cases:
         station = DCT.save_food_station(test_case)
         total_stations += 1
-        assert total_stations == len(DCT.stations)         
+        assert total_stations == len(DCT.stations) 
+                
