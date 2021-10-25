@@ -43,5 +43,5 @@ class DCT():
     """
     def save_food_station(self, name: str) -> FoodStation:
         station = FoodStation(name)
-        self.station.append(station)
+        self.stations.append(station)
         return station
