@@ -1,11 +1,6 @@
-from fastapi import FastAPI, Response, status
+from fastapi import APIRouter, Response, status
 
-app = FastAPI()
-
-@app.get("/")
-async def root():
-    return {"msg": "This is the App Backend!"}
-
+router = APIRouter(prefix="/friends")
 
 """
     add_friend implements the /new-friend route
@@ -25,7 +20,7 @@ async def root():
         Response.status: int
             The status code for the request
 """
-@app.post("/new-friend/", status_code=status.HTTP_201_CREATED)
+@router.post("/new-friend/", status_code=status.HTTP_201_CREATED)
 async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
     # check if the uuid exists
     if uuid is None or not isinstance(uuid, str) or uuid == "":
@@ -33,7 +28,7 @@ async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
         return {"err": "Invalid UUID"}
     if fuuid is None or not isinstance(fuuid, str) or fuuid == "":
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err" : "Invalid Friend UUID"}
+        return {"err": "Invalid Friend UUID"}
 
     # check if the uuid does not already contain fuuid
     if uuid == fuuid:
@@ -47,4 +42,4 @@ async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
 
     # add fuuid
     uuid_friends.append(fuuid)
-    return {"msg" : "FUUID has been successfully linked to UUID"} 
+    return {"msg" : "FUUID has been successfully linked to UUID"}
