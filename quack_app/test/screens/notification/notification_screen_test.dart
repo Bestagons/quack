@@ -14,6 +14,7 @@ void main() {
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kNavBarNotificationsIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));
 
@@ -24,6 +25,7 @@ void main() {
 
     testGoldens("delete_notification", (WidgetTester tester) async {
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kNavBarNotificationsIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));
       var beforeCount = fakeNotificationData.currentNotifications.length;
