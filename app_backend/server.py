@@ -9,28 +9,59 @@ app = FastAPI()
 async def root():
     return {"message": "This is the App Backend!"}
 
-# login section
-# user login model with username, email, and password
+
+"""
+    UserLogin model keeps track of the user login information
+
+    username: str
+        The username of the user
+
+    email: str
+        The email of the user
+
+    password: str
+        The password of the user
+"""
 class UserLogin(BaseModel):
     username: str
     email: str
     password: str
-    
+
+
+"""
+    getuser implements the route /login/
+
+    returns message
+"""
 # TODO: Once attached to database will be able to retreive
 # specific user information and to log them in
 @app.get("/login/")
 async def getuser():
     return {"msg": "This is the login page!"}
 
-# register a user
-# TODO: Once attached to database will be able to add user
+
+"""
+    registeruser implements the /register/ route
+
+    login: UserLogin
+        The UserLogin model that includes the username, email, and password
+
+    resp: Response
+        The response to send back to the user which contains the status code and body
+
+    returns Response
+        Response.body: dict
+            Provides any msgs/errs for the request
+        Response.status: int
+            The status code for the request        
+"""
 @app.post("/register/", status_code=status.HTTP_201_CREATED)
 async def registeruser(login: UserLogin, resp: Response):
     validUsername = r'^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$'
     validEmail = r'\b[A-Za-z0-9._%+-]+@emory.edu\b'
     validPassword = r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])[\w\d@#$]{8,20}'
 
-    # TODO: check if username already exists in database
+    # TODO: check if username or email already exists in database
     
     # check if username is a valid username
     if not (re.search(validUsername, login.username)):
