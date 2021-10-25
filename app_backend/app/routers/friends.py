@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response, status
+from fastapi import APIRouter, Response, status
 from dotenv import load_dotenv
 import os
 from database import Database
@@ -10,12 +10,8 @@ load_dotenv()
 db = Database(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
 db.connect()
 print("Starting server...")
-app = FastAPI()
 
-@app.get("/")
-async def root():
-    return {"msg": "This is the App Backend!"}
-
+router = APIRouter(prefix="/friends")
 
 """
     add_friend implements the /new-friend route
@@ -35,7 +31,7 @@ async def root():
         Response.status: int
             The status code for the request
 """
-@app.post("/new-friend/", status_code=status.HTTP_201_CREATED)
+@router.post("/new-friend/", status_code=status.HTTP_201_CREATED)
 async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
     # check if the uuid exists
     if uuid is None or not isinstance(uuid, str) or uuid == "":
@@ -43,7 +39,7 @@ async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
         return {"err": "Invalid UUID"}
     if fuuid is None or not isinstance(fuuid, str) or fuuid == "":
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err" : "Invalid Friend UUID"}
+        return {"err": "Invalid Friend UUID"}
 
     # check if the uuid does not already contain fuuid
     if uuid == fuuid:
@@ -57,7 +53,7 @@ async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
 
     # add fuuid
     uuid_friends.append(fuuid)
-    return {"msg" : "FUUID has been successfully linked to UUID"}
+    return {"msg": "FUUID has been successfully linked to UUID"}
 
 """
     UserLogin model keeps track of the user login information
@@ -80,7 +76,7 @@ class UserLogin(BaseModel):
 """
 # TODO: Once attached to database will be able to retreive
 # specific user information and to log them in
-@app.get("/login/")
+@router.get("/login/")
 async def getuser():
     return {"msg": "This is the login page!"}
 
@@ -97,7 +93,7 @@ async def getuser():
         Response.status: int
             The status code for the request        
 """
-@app.post("/register/", status_code=status.HTTP_201_CREATED)
+@router.post("/register/", status_code=status.HTTP_201_CREATED)
 async def registeruser(login: UserLogin, resp: Response):
 
     username = login.username
