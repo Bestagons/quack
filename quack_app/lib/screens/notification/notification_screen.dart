@@ -35,11 +35,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
       mainAxisAlignment: MainAxisAlignment.start, //
       children: <Widget>[
         Expanded(
-          child: Container(
-              child: SingleChildScrollView(
+          child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
             child: Column(children: listNotifications()),
-          )),
+          ),
         ),
       ],
     );
@@ -91,7 +90,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                   onPressed: () {
                     setState(() {
-                      notificationData.remove(notificationData.currentNotifications[index].id);
+                      notificationData.remove(
+                          notificationData.currentNotifications[index].id);
                     });
                   },
                   child: const Text('Delete'),
