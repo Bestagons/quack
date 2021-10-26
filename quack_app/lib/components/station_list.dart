@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/core/item.dart';
 import 'package:quack_app/core/menu_data.dart';
-import 'package:quack_app/screens/homepage/item_screen.dart';
+import 'package:quack_app/components/food_summary.dart';
 
 // StationList returns a list of Items with a couple of configurations
 // byServeTime: creates main headers that organizes each item by the time they are served
@@ -25,6 +25,15 @@ class StationList extends StatefulWidget {
 }
 
 class _StationListState extends State<StationList> {
+  List<Widget> stationList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    stationList = getStationList();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -33,16 +42,15 @@ class _StationListState extends State<StationList> {
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
             child: Column(
-                children: getStationList(
-              context,
-            )),
+                children: stationList),
           )),
     );
   }
 
+
   // getStationList - generates the list of items dynamically based on the passed in
   // widget parameters
-  List<Widget> getStationList(BuildContext context) {
+  List<Widget> getStationList() {
     AutoSizeGroup _group = AutoSizeGroup();
     MenuData menuData = MenuData();
     List<Widget> list = List.empty(growable: true);
@@ -72,6 +80,11 @@ class _StationListState extends State<StationList> {
         List<Item> stationCurrentItems = menuData
             .menuFilteredBy((item) => mainFilter(item) && widget.filter(item));
 
+        if (stationCurrentItems.isEmpty) {
+          // If the station does not contain anything, don't add header.
+          continue;
+        }
+
         // Station subheader
         list.add(Container(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -81,33 +94,12 @@ class _StationListState extends State<StationList> {
 
         // All food items
         for (Item item in stationCurrentItems) {
-          list.add(Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-                child: ListTile(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ItemScreen(item: item);
-                }));
-              },
-              title: AutoSizeText(item.getName(),
-                  style: const TextStyle(color: Colors.black, fontSize: 25),
-                  group: _group,
-                  maxFontSize: 25,
-                  maxLines: 1),
-              trailing: IconButton(
-                  icon: item.isFavorite()
-                      ? const Icon(Constants.kFavorited,
-                          color: Constants.kFavoritedColor)
-                      : const Icon(Constants.kFavorite),
-                  iconSize: 30,
-                  splashRadius: 0.01,
-                  onPressed: () {
-                    setState(() {
-                      item.toggleFavorite();
-                    });
-                  }),
-            )),
-          ]));
+          list.add(FoodSummary(item: item, group: _group,
+              onFavoritePressed: () {
+                setState(() {
+                  stationList = getStationList();
+                });
+              }));
         }
       }
     }
