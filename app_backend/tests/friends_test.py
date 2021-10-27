@@ -15,16 +15,21 @@ def test_new_friend():
             self.expects_err = expects_err
 
     test_cases = [Params("", "", status.HTTP_400_BAD_REQUEST, True),
-                  Params(None, None, status.HTTP_400_BAD_REQUEST, True),
+                  Params(None, None, status.HTTP_422_UNPROCESSABLE_ENTITY, True),
+                  Params("", None, status.HTTP_422_UNPROCESSABLE_ENTITY, True),
+                  Params(None, "", status.HTTP_422_UNPROCESSABLE_ENTITY, True),
                   Params("uuid1", "uuid1", status.HTTP_406_NOT_ACCEPTABLE, True),
                   Params("uuid1", "test_uuid", status.HTTP_412_PRECONDITION_FAILED, True),
                   Params("uuid1", "uuid2", status.HTTP_201_CREATED, False)]
 
     for test_case in test_cases:
-        uuid_q = f"uuid={test_case.uuid}" if test_case.uuid is not None else ""
-        fuuid_q = f"fuuid={test_case.fuuid}" if test_case.fuuid is not None else ""
-        query = f"/friends/new-friend/?{uuid_q}&{fuuid_q}"
-        print("Testing: " + query)
-        response = client.post(query)
+        payload = dict()
+        if test_case.uuid is not None:
+            payload["uuid"] = test_case.uuid
+        if test_case.fuuid is not None:
+            payload["fuuid"] = test_case.fuuid
+        query = f"/friends/new-friend/"
+        print("Testing: " + payload.__str__())
+        response = client.post(query, json=payload)
         assert response.status_code == test_case.expected_status_code
-        assert ("err" in response.json()) == test_case.expects_err
+        assert ("err" in response.json() or 'detail' in response.json()) == test_case.expects_err
