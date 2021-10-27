@@ -8,7 +8,7 @@ Make sure you have python +3.7 installed. It is recommended that you have Anacon
 
 Make sure you have all dependencies installed by running `python -m pip install -r requirements.txt`
 
-Then, run `uvicorn server:app` to start the localhost server.
+Then, run `uvicorn app.app:app --reload` to start the localhost server.
 
 ## Routes
 
