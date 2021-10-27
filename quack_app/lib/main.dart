@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/screens/loading/loading_screen.dart';
 
 import 'components/navbar.dart';
 
 void main() async {
-  MenuData menuData = MenuData();
-  await menuData.loadData();
   runApp(const MyApp());
 }
 
@@ -20,7 +18,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: const MyHomePage(title: 'Quack'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LoadingScreen(),
+        '/home': (context) => const MyHomePage(title: 'Quack'),
+      },
     );
   }
 }

@@ -15,6 +15,7 @@ void main() {
     testGoldens("empty_favorites", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.pumpAndSettle(const Duration(seconds: 2));
       await tester.tap(find.byIcon(Constants.kNavBarFavoritesIcon));
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -25,6 +26,7 @@ void main() {
     testGoldens("like_pita", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byIcon(Constants.kFavorite).last);
@@ -44,6 +46,7 @@ void main() {
     testGoldens("remove_like", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kNavBarFavoritesIcon));
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byIcon(Constants.kFavorited).first);

@@ -17,6 +17,7 @@ void main() {
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
@@ -28,6 +29,7 @@ void main() {
     testGoldens("like_food", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
@@ -46,6 +48,7 @@ void main() {
     testGoldens("like_three_food", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
@@ -62,13 +65,13 @@ void main() {
       for (Item item in fakeMenuData.getAllMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
-      // Liked 3 in the previous test
-      expect(totalFavorited, 4);
+      expect(totalFavorited, 3);
     });
 
     testGoldens("scroll", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
@@ -81,6 +84,7 @@ void main() {
     testGoldens("like_last_and_scroll", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
@@ -95,13 +99,13 @@ void main() {
       for (Item item in fakeMenuData.getAllMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
-      // Liked 4 in the previous test
-      expect(totalFavorited, 5);
+      expect(totalFavorited, 1);
     });
 
     testGoldens("verify_like_persistance", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await expectLater(find.byType(HomeScreen).last,
