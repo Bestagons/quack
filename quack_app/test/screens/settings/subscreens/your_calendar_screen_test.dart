@@ -12,11 +12,10 @@ void main() {
         (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.tap(find.byIcon(Constants.kNavBarSettingsIcon));
-
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.tap(find.byIcon(Icons.calendar_today_outlined));
-
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await expectLater(find.byType(YourCalendarScreen),
           matchesGoldenFile('goldens/settings_your_calendar_screen_view.png'));
