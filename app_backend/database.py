@@ -14,7 +14,6 @@ class Database():
             self.db = self.client["QuackCluster"]
         else:
            raise Exception("Parameters passed may be None; ensure your .env file is setup!")
-        return
 
     def has_client(self):
         return self.client is not None
