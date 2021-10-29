@@ -9,7 +9,7 @@ def test_station_creation():
         "station_name3"]
 
     for test_case in test_cases:
-        station = station.Station(test_case)
+        station = Station(test_case)
 
         assert station.name == test_case[0]
         assert station.menu == [] 
