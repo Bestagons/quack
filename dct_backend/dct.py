@@ -40,6 +40,9 @@ class DCT():
     def save_food_item(self, name: str, station: str, meal_time: str,
             calories: int, categories: list) -> FoodItem:
         item = FoodItem(name, station, meal_time, calories, categories)
+
+        # Checks to see whether the station of the food item has been created and adds item to the station
+        # If not, creates then add item to station
         if self.stations.has_key(name):
             self.stations[station].add_food_item(item)
         else:
