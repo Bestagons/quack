@@ -1,4 +1,5 @@
 from food_item import FoodItem
+from food_station import FoodStation
 
 class DCT():
     def __init__(self):
@@ -30,3 +31,21 @@ class DCT():
         item = FoodItem(name, station, meal_time, calories, categories)
         self.menu.append(item)
         return item
+
+    """
+        save_food_station adds a food station to the list of stations
+        name: str
+            The name of the food station
+        
+        returns: FoodStation
+            The food station that was added to the list of food stations
+    """
+    def save_food_station(self, name: str) -> FoodStation:
+        station = FoodStation(name)
+        exists = False
+        for s in self.stations:
+            if (station.name == s.name):
+                exists = True
+        if (exists == False):
+            self.stations.append(station)
+        return station
