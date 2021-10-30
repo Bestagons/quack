@@ -15,7 +15,7 @@ void main() {
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
-
+      await tester.pumpAndSettle();
       await expectLater(
           find.byType(HomeScreen), matchesGoldenFile('goldens/basic_view.png'));
     });
@@ -23,6 +23,7 @@ void main() {
     testGoldens("like_food", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kFavorite).first);
       await tester.pumpAndSettle(const Duration(seconds: 2));
       await expectLater(
@@ -37,6 +38,7 @@ void main() {
     testGoldens("like_three_food", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kFavorite).first);
       await tester.pump();
       await tester.tap(find.byIcon(Constants.kFavorite).first);
@@ -49,13 +51,13 @@ void main() {
       for (Item item in fakeMenuData.getCurrentMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
-      // Liked 3 in the previous test
-      expect(totalFavorited, 4);
+      expect(totalFavorited, 3);
     });
 
     testGoldens("scroll", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Ceasar Salad"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 2));
       await expectLater(
@@ -64,6 +66,7 @@ void main() {
     testGoldens("like_last_and_scroll", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Ceasar Salad"), 10);
       await tester.tap(find.byIcon(Constants.kFavorite).last);
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -73,8 +76,7 @@ void main() {
       for (Item item in fakeMenuData.getCurrentMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
-      // Liked 4 in the previous test
-      expect(totalFavorited, 5);
+      expect(totalFavorited, 1);
     });
   });
 }

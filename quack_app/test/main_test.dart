@@ -7,6 +7,7 @@ void main() {
     testGoldens("app", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(const MyApp());
+      await tester.pumpAndSettle();
       await expectLater(
           find.byType(MyApp), matchesGoldenFile('goldens/app.png'));
     });

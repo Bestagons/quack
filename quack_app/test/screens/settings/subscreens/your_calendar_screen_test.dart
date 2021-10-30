@@ -3,21 +3,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/main.dart';
-import 'package:quack_app/screens/profile/subscreens/calendar_screen.dart';
+import 'package:quack_app/screens/settings/subscreens/your_calendar_screen.dart';
 
 void main() {
-  group("Calendar Screen Test", () {
+  group("Your Calendar Screen Test", () {
     MyApp app = const MyApp();
-    testGoldens("profile_calendar_screen_view", (WidgetTester tester) async {
+    testGoldens("settings_your_calendar_screen_view",
+        (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
-      await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Constants.kNavBarProfileIcon));
+      await tester.tap(find.byIcon(Constants.kNavBarSettingsIcon));
+
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.tap(find.byIcon(Icons.calendar_today_outlined));
+
       await tester.pumpAndSettle(const Duration(seconds: 1));
-      await expectLater(find.byType(CalendarScreen),
-          matchesGoldenFile('goldens/profile_calendar_screen_view.png'));
+      await expectLater(find.byType(YourCalendarScreen),
+          matchesGoldenFile('goldens/settings_your_calendar_screen_view.png'));
     });
   });
 }

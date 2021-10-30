@@ -43,5 +43,10 @@ class DCT():
     """
     def save_food_station(self, name: str) -> FoodStation:
         station = FoodStation(name)
-        self.stations.append(station)
+        exists = False
+        for s in self.stations:
+            if (station.name == s.name):
+                exists = True
+        if (exists == False):
+            self.stations.append(station)
         return station

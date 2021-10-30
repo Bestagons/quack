@@ -15,6 +15,7 @@ void main() {
     testGoldens("item_screen_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.tap(find.byType(ListTile).first);
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await expectLater(find.byType(ItemScreen),
@@ -24,6 +25,7 @@ void main() {
     testGoldens("back_click", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.tap(find.byType(ListTile).first);
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.tap(find.byTooltip("Back"));
