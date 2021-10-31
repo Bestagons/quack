@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/constants/constants.dart';
+import 'package:quack_app/core/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/settings/subscreens/about_screen.dart';
 
@@ -11,6 +12,8 @@ void main() {
     testGoldens("settings_about_screen_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      List<String> creds = await TestAuth().getAuthCredentials();
+      await TestAuth().authenticateTest(tester, creds);
       await tester.tap(find.byIcon(Constants.kNavBarSettingsIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.tap(find.byIcon(Icons.accessibility_outlined));

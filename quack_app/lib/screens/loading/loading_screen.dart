@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:quack_app/core/menu_data.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+  final Future<String> Function() waitOn;
+  final String routeTo;
+
+  const LoadingScreen({Key? key, required this.waitOn, required this.routeTo})
+      : super(key: key);
 
   @override
   LoadingScreenState createState() => LoadingScreenState();
 }
- 
+
 class LoadingScreenState extends State<LoadingScreen> {
-
-  void getMenuData() async {
-    //await Future.delayed(const Duration(seconds: 1), () {});
-    MenuData menuData = MenuData();
-    await menuData.loadData();
-    Navigator.pushReplacementNamed(context, '/home', arguments: {
-
-    });
+  void runWaitOn() async {
+    await widget.waitOn();
+    Navigator.pushReplacementNamed(context, widget.routeTo, arguments: {});
   }
 
   @override
   void initState() {
     super.initState();
-    getMenuData();
+    runWaitOn();
   }
 
   @override
