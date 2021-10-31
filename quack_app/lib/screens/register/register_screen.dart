@@ -1,49 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:quack_app/core/auth.dart';
-import 'package:quack_app/core/menu_data.dart';
+
 import 'package:quack_app/screens/loading/loading_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _LoginScreenState();
+    return _RegisterScreenState();
   }
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  void authenticate() async {
-    String auth = await Auth().getAuth();
-    if (auth != "") {
-      // Try to auto login with saved creds
-      bool isAuth = await Auth().authenticate(auth);
-      if (isAuth) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoadingScreen(
-              routeTo: "/home",
-              waitOn: () async {
-                MenuData().loadData();
-                await Future.delayed(const Duration(seconds: 2), () {});
-                return Future.value("");
-              },
-            ),
-          ),
-        );
-      }
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    authenticate();
-  }
-
+class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   String? validateEmail(String? value) {
     if (value == null || value == "") {
@@ -64,13 +35,21 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
+  String? validateConfirmPassword(String? value) {
+    if (value != passwordController.text) {
+      return "Passwords do not match";
+    }
+
+    return validatePassword(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
+      appBar: AppBar(title: const Text("Register")),
       body: SizedBox(
         height: height,
         width: width,
@@ -94,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(children: [
                   Row(children: const [
                     Text(
-                      'Login',
+                      'Sign Up',
                       style: TextStyle(
                           fontSize: 25.0, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
@@ -132,73 +111,73 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(
+                    height: 10.0,
+                  ),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    obscureText: true,
+                    validator: validateConfirmPassword,
+                    controller: confirmPasswordController,
+                    decoration: InputDecoration(
+                      hintText: 'Confirm Password',
+                      suffixIcon: const Icon(Icons.visibility_off),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
                     height: 30.0,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: const Text.rich(
-                            TextSpan(
-                              text: ' Forgot Password',
-                              style: TextStyle(color: Color(0xffEE7B23)),
-                            ),
-                          ),
-                        ),
-                        ElevatedButton(
-                          child: const Text('Login'),
-                          onPressed: () async {
-                            if (validateEmail(emailController.text) != null ||
-                                validatePassword(passwordController.text) !=
-                                    null) {
-                              return;
-                            }
+                        SizedBox(
+                          height: 50,
+                          child: ElevatedButton(
+                            child: const Text('Sign Up'),
+                            onPressed: () async {
+                              if (validateEmail(emailController.text) != null ||
+                                  validatePassword(passwordController.text) !=
+                                      null ||
+                                  validateConfirmPassword(
+                                          confirmPasswordController.text) !=
+                                      null) {
+                                return;
+                              }
 
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoadingScreen(
-                                  routeTo: "/home",
-                                  waitOn: () async {
-                                    Auth().saveAuth(emailController.text,
-                                        passwordController.text);
-                                    MenuData().loadData();
-                                    await Future.delayed(
-                                        const Duration(seconds: 2), () {});
-                                    return Future.value("");
-                                  },
+                              // TODO: Register account and do email verification here
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoadingScreen(
+                                    routeTo: "/login",
+                                    waitOn: () async {
+                                      await Future.delayed(
+                                          const Duration(seconds: 2), () {});
+                                      return Future.value("");
+                                    },
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
+                              );
+                            },
+                          ),
+                        )
                       ],
                     ),
                   ),
                   const SizedBox(height: 20.0),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoadingScreen(
-                            routeTo: "/register",
-                            waitOn: () async {
-                              await Future.delayed(
-                                  const Duration(milliseconds: 50), () {});
-                              return Future.value("");
-                            },
-                          ),
-                        ),
-                      );
+                      Navigator.pop(context);
                     },
                     child: const Text.rich(
-                      TextSpan(text: 'Don\'t have an account?', children: [
+                      TextSpan(text: 'Already have an account?', children: [
                         TextSpan(
-                          text: ' Sign Up',
+                          text: ' Login',
                           style: TextStyle(color: Color(0xffEE7B23)),
                         ),
                       ]),

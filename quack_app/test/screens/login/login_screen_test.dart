@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
-import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/notification_data.dart';
-import 'package:quack_app/core/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/login/login_screen.dart';
-import 'package:quack_app/screens/notification/notification_screen.dart';
 
 void main() async {
-  TestWidgetsFlutterBinding.ensureInitialized();
-  List<String> creds = await TestAuth().getAuthCredentials();
-
   group("Login Screen Test", () {
     testGoldens("basic_view", (WidgetTester tester) async {
       MyApp app = const MyApp();

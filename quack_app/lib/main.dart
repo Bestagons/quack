@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quack_app/screens/loading/loading_screen.dart';
 import 'package:quack_app/screens/login/login_screen.dart';
+import 'package:quack_app/screens/register/register_screen.dart';
 
 import 'components/navbar.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
               },
             ),
         '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
         '/home': (context) => const MyHomePage(title: 'Quack'),
       },
     );

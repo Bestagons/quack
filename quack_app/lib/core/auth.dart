@@ -43,8 +43,10 @@ class Auth {
       List<String> creds = credentials.split(",");
       String email = creds[0];
       String password = creds[1];
-      // TODO: Send get request with email & password -- load user data
-      return Future.value(true);
+      if (email != "" && password != "") {
+        // TODO: Send get request with email & password -- load user data
+        return Future.value(true);
+      }
     }
     return Future.value(false);
   }
@@ -56,5 +58,10 @@ class Auth {
     final file = await _authFile;
     // Write the file
     file.writeAsString('$email,$password');
+  }
+
+  Future<void> destroy() async {
+    // TODO: Delete any user data on destroy
+    await saveAuth("", "");
   }
 }

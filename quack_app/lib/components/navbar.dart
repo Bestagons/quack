@@ -17,8 +17,7 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   // The current index of the highlighted icon
   int currentIndex = Constants.kNavBarDefaultIndex;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   // To implement the new page,
   // change the Text() below to the page's class (i.e. HomeScreen())
   static const List<Widget> _widgetOptions = <Widget>[
