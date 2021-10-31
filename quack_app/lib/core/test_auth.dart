@@ -14,7 +14,7 @@ class TestAuth {
   TestAuth._internal();
 
   Future<List<String>> getAuthCredentials() async {
-    await dotenv.load(fileName: ".env");
+    await dotenv.load(fileName: "test.env");
     String email = dotenv.get('TEST_EMAIL', fallback: "");
     String password = dotenv.get('TEST_PASSWORD', fallback: "");
     return [email, password];
