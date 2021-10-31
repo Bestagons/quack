@@ -198,6 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text.rich(
                       TextSpan(text: 'Don\'t have an account?', children: [
                         TextSpan(
+                          semanticsLabel: "Sign Up",
                           text: ' Sign Up',
                           style: TextStyle(color: Color(0xffEE7B23)),
                         ),
