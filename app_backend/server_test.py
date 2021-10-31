@@ -32,3 +32,31 @@ def test_new_friend():
         response = client.post(query)
         assert response.status_code == test_case.expected_status_code
         assert ("err" in response.json()) == test_case.expects_err
+
+
+def test_getuser():
+    response = client.get("/login/")
+    assert response.status_code == 200
+    assert response.json() == {"msg": "This is the login page!"}
+
+def test_registeruser():
+    class Params:
+        def __init__(self, username: str, email: str, password: str, expects_err: bool, expects_err_msg: dict):
+            self.username = username
+            self.email = email
+            self.password = password
+            self.expects_err = expects_err
+            self.expects_err_msg = expects_err_msg
+        def to_json(self):
+            return {"username": self.username, "email": self.email, "password": self.password}
+    test_cases = [
+        Params('test000', 'test0@emory.edu', 'Test0000', status.HTTP_400_BAD_REQUEST, {"err" : "Invalid username. It must be 8 to 20 characters with no special characters."}),
+        Params('test0000', 'test0@gmail.com', 'Test0000', status.HTTP_400_BAD_REQUEST, {"err" : "Invalid email address. It must be an emory.edu email."}),
+        Params('test0000', 'test0@emory.edu', 'test0000', status.HTTP_400_BAD_REQUEST, {"err" : "Invalid password. It must be 8 to 20 characters and have at least one upper case letter, one lower case letter, and one digit."}),
+        Params('test0000', 'test@emory.edu', 'Test0000', status.HTTP_201_CREATED, {"msg": "Successfully registered new user."})
+    ]
+
+    for test_case in test_cases:
+        response = client.post("/register/", json=test_case.to_json())
+        assert response.status_code == test_case.expects_err 
+        assert response.json() == test_case.expects_err_msg
