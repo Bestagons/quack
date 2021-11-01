@@ -14,7 +14,7 @@ class User():
 
     """
 
-    def __init__(self, UUID, dooley_dollars, meal_swipes):
-        self.name = UUID  # will change to user ID after future refactoring and development
+    def __init__(self, uuid, dooley_dollars, meal_swipes):
+        self.name = uuid  # will change to user ID after future refactoring and development
         self.meal_swipes = meal_swipes  # Meal swipe quanity
         self.dooley_dollars = dooley_dollars  # Dooley Dollar Balance

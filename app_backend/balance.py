@@ -2,8 +2,8 @@ from user import User
 
 
 class BalanceTracker(User):
-    def __init__(self, UUID: str, dooley_dollars: float, meal_swipes: int):
-        super().__init__(UUID, dooley_dollars, meal_swipes)
+    def __init__(self, uuid: str, dooley_dollars: float, meal_swipes: int):
+        super().__init__(uuid, dooley_dollars, meal_swipes)
         """
 
         name: str
