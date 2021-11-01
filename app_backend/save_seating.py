@@ -23,7 +23,7 @@ class SaveSeating():
         """
         if 0 < section <= 9:
             self.section = section
-            self.color = Sections.section_dict.get(self.section)
+            self.color = Sections.color_dict.get(self.section)
             return True
         else:
             return False
