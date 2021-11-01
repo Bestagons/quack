@@ -18,7 +18,7 @@ class SaveSeating():
         This function updates the object with the section number and respective color
 
         section: The seating section number (based off of @BrendaCano 's Map)
-        return: Void (None)
+        return: True or False (error handling)
 
         """
         if 0 < section <= 9:
