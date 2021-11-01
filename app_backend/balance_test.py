@@ -30,7 +30,7 @@ def test_update_balance():
     ]
 
     swipe_deposit = [ # test deposit
-        3.3, 30, 25, 10, -40, 0, 1, -3.4
+        3, 30, 25, 10, -40, 0, 1, -3
     ]
     # -------- test 1: dooley spending --------
     for test_case in test_cases:
