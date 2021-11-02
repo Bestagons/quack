@@ -11,7 +11,7 @@ def test_station_creation():
     for test_case in test_cases:
         station = Station(test_case)
 
-        assert station.name == test_case[0]
+        assert station.name == test_case
         assert station.menu == [] 
         assert station.line_speed == 0
 
