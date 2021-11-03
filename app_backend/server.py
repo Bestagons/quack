@@ -4,7 +4,7 @@ import os
 from database import Database
 from pydantic import BaseModel
 import re
-import pymongo
+from user import User
 
 load_dotenv()
 db = Database(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
@@ -99,8 +99,6 @@ async def getuser():
 """
 @app.post("/register/", status_code=status.HTTP_201_CREATED)
 async def registeruser(login: UserLogin, resp: Response):
-    user_db = db.client["user"]
-    userinfo_collection = user_db["userlogininfo"]
 
     username = login.username
     email = login.email
@@ -109,12 +107,6 @@ async def registeruser(login: UserLogin, resp: Response):
     validUsername = r'^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$'
     validEmail = r'\b[A-Za-z0-9._%+-]+@emory.edu\b'
     validPassword = r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])[\w\d@#$]{8,20}'
-
-    # check if email already exists in database
-    for eml in userinfo_collection.find({}, {"_id": 0, "username": 0, "password": 0}):
-        if email == eml['email']:
-            resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err" : "Email already exists. Use a different email."}
 
     # check if username is a valid username
     if not (re.search(validUsername, username)):
@@ -138,7 +130,5 @@ async def registeruser(login: UserLogin, resp: Response):
         "password": password
     }
 
-    userinfo_collection.insert_one(new_user)
-
-    return {"msg": "Successfully registered new user."}
+    return User.save_user_in_db(new_user)
 
