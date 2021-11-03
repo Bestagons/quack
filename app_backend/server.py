@@ -1,5 +1,12 @@
 from fastapi import FastAPI, Response, status
+from dotenv import load_dotenv
+import os
+from database import Database
 
+load_dotenv()
+db = Database(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
+db.connect()
+print("Starting server...")
 app = FastAPI()
 
 @app.get("/")
@@ -47,4 +54,7 @@ async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
 
     # add fuuid
     uuid_friends.append(fuuid)
-    return {"msg" : "FUUID has been successfully linked to UUID"} 
+    return {"msg" : "FUUID has been successfully linked to UUID"}
+
+
+

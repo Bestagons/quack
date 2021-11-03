@@ -11,6 +11,7 @@ void main() {
     testGoldens("profile_email_screen_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kNavBarProfileIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.tap(find.byIcon(Icons.alternate_email));

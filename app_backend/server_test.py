@@ -9,6 +9,7 @@ def test_root():
     assert response.status_code == 200
     assert response.json() == {"msg": "This is the App Backend!"}
 
+# Tests the /new-friend route
 def test_new_friend():
     class Params():
         def __init__(self, uuid: str, fuuid: str, expected_status_code: int, expects_err: bool):
