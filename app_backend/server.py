@@ -4,6 +4,7 @@ import os
 from database import Database
 from pydantic import BaseModel
 import re
+import pymongo
 
 load_dotenv()
 db = Database(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
@@ -98,30 +99,46 @@ async def getuser():
 """
 @app.post("/register/", status_code=status.HTTP_201_CREATED)
 async def registeruser(login: UserLogin, resp: Response):
+    user_db = db.client["user"]
+    userinfo_collection = user_db["userlogininfo"]
+
+    username = login.username
+    email = login.email
+    password = login.password
+
     validUsername = r'^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$'
     validEmail = r'\b[A-Za-z0-9._%+-]+@emory.edu\b'
     validPassword = r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])[\w\d@#$]{8,20}'
 
-    # TODO: check if username or email already exists in database
+    # check if email already exists in database
+    for eml in userinfo_collection.find({}, {"_id": 0, "username": 0, "password": 0}):
+        if email == eml['email']:
+            resp.status_code = status.HTTP_400_BAD_REQUEST
+            return {"err" : "Email already exists. Use a different email."}
 
     # check if username is a valid username
-    if not (re.search(validUsername, login.username)):
+    if not (re.search(validUsername, username)):
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err" : "Invalid username. It must be 8 to 20 characters with no special characters."}
 
     # check if email is a valid emory email
-    if not (re.search(validEmail, login.email)):
+    if not (re.search(validEmail, email)):
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err" : "Invalid email address. It must be an emory.edu email."}
 
     # check if password is a valid password
-    if not (re.search(validPassword, login.password)):
+    if not (re.search(validPassword, password)):
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err" : "Invalid password. It must be 8 to 20 characters and have at least one upper case letter, one lower case letter, and one digit."}
 
-    # TODO: register user and add them to the database
-    username = login.username
-    email = login.email
-    password = login.password.encode("utf-8")
+    # adds user to the database
+    new_user = {
+        "username": username,
+        "email": email,
+        "password": password
+    }
+
+    userinfo_collection.insert_one(new_user)
+
     return {"msg": "Successfully registered new user."}
 
