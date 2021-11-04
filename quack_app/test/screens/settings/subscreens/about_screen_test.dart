@@ -14,6 +14,7 @@ void main() {
       await tester.pumpWidget(app);
       List<String> creds = await TestAuth().getAuthCredentials();
       await TestAuth().authenticateTest(tester, creds);
+      await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kNavBarSettingsIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await tester.tap(find.byIcon(Icons.accessibility_outlined));
