@@ -104,8 +104,14 @@ async def registeruser(login: UserLogin, resp: Response):
     email = login.email
     password = login.password
 
+    # valid username is the regular expression of the valid format the username should be
+    # params are 8 to 20 character length and no special characters
     validUsername = r'^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$'
+    # valid email is the regular expression of the valid format the email should be
+    # params are it must end with @emory.edu
     validEmail = r'\b[A-Za-z0-9._%+-]+@emory.edu\b'
+    # valid password is the regular expression of the valid format the password should be
+    # params are 8 to 20 character length, contain one upper case, one lower case, and one digit
     validPassword = r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])[\w\d@#$]{8,20}'
 
     # check if username is a valid username
