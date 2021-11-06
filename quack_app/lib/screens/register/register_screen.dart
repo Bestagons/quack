@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quack_app/core/auth.dart';
 
 import 'package:quack_app/screens/loading/loading_screen.dart';
 
@@ -148,16 +149,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return;
                               }
 
-                              // TODO: Register account and do email verification here
-
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => LoadingScreen(
                                     routeTo: "/login",
                                     waitOn: () async {
-                                      await Future.delayed(
-                                          const Duration(seconds: 2), () {});
+                                      await Auth().register(
+                                          emailController.text,
+                                          passwordController.text);
                                       return Future.value("");
                                     },
                                   ),

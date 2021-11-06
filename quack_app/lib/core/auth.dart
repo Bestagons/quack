@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 
 class Auth {
   static final Auth _auth = Auth._internal();
@@ -38,14 +39,38 @@ class Auth {
     }
   }
 
+  Future<bool> register(String email, password) async {
+    // TODO: verify
+    final queryParams = {
+      "email": email,
+      "password": password,
+    };
+
+    final uri = Uri.https("http://127.0.0.1", "/login", queryParams);
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      return Future.value(true);
+    }
+    return Future.value(false);
+  }
+
   Future<bool> authenticate(String credentials) async {
     if (credentials.contains(",")) {
       List<String> creds = credentials.split(",");
       String email = creds[0];
       String password = creds[1];
       if (email != "" && password != "") {
-        // TODO: Send get request with email & password -- load user data
-        return Future.value(true);
+        // TODO: verify
+        final queryParams = {
+          "email": email,
+          "password": password,
+        };
+
+        final uri = Uri.https("http://127.0.0.1", "/login", queryParams);
+        final response = await http.get(uri);
+        if (response.statusCode == 200) {
+          return Future.value(true);
+        }
       }
     }
     return Future.value(false);
