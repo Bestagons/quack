@@ -32,11 +32,8 @@ def test_incoming_dct_traffic():
         takeout_c += test_case[0]
         dinein_c += test_case[1]
         total_c += test_case[2]
-        capacity = DCT.incoming_dct_traffic(test_case[0], 
+        DCT.incoming_dct_traffic(test_case[0], 
                                 test_case[1])
-        assert capacity.takeout == test_case[0]
-        assert capacity.dinein == test_case[1]
-        assert capacity.totalcapacity == test_case[2]
         assert DCT.takeout_capacity == takeout_c
         assert DCT.dinein_capacity == dinein_c
         assert DCT.total_capacity == total_c
@@ -64,11 +61,8 @@ def test_outgoing_dct_traffic():
             dinein_c = 0
         if (total_c < 0):
             total_c = 0
-        capacity = DCT.outgoing_dct_traffic(test_case[0], 
+        DCT.outgoing_dct_traffic(test_case[0], 
                                 test_case[1])
-        assert capacity.takeout == test_case[0]
-        assert capacity.dinein == test_case[1]
-        assert capacity.totalcapacity == test_case[2]
         assert DCT.takeout_capacity == takeout_c
         assert DCT.dinein_capacity == dinein_c
         assert DCT.total_capacity == total_c

@@ -1,6 +1,5 @@
 from food_item import FoodItem
 from station import Station 
-from dct_capacity import Capacity
 
 class DCT():
     def __init__(self):
@@ -73,17 +72,15 @@ class DCT():
             The current number of takeout scanning in
         dinein: int
             The current number of dinein scanning in
-        returns: Capacity
-            The total number of takeout, dineine, and total capacity
-            of takeout + dinein
+        returns: 
+            self.takeout_capacity, self.dinein_capacity, self.total_capacity
     """
-    def incoming_dct_traffic(self, takeout: int, dinein: int) -> Capacity:
+    def incoming_dct_traffic(self, takeout: int, dinein: int):
         self.takeout_capacity += takeout
         self.dinein_capacity += dinein
         incomingtraffic = takeout + dinein
         self.total_capacity += incomingtraffic
-        capacity = Capacity(takeout, dinein, incomingtraffic)
-        return capacity
+        return self.takeout_capacity, self.dinein_capacity, self.total_capacity
 
     """
         outgoing_dct_traffic subtracts people who are leaving the dct
@@ -91,24 +88,13 @@ class DCT():
             The current number of takeout leaving
         dinein: int
             The current number of dinein leaving
-        returns: Capacity
-            The total number of takeout, dineine, and total capacity
-            of takeout + dinein
+        returns: 
+            self.takeout_capacity, self.dinein_capacity, self.total_capacity
     """
-    def outgoing_dct_traffic(self, takeout: int, dinein: int) -> Capacity:
-        if (self.takeout_capacity - takeout < 0):
-            self.takeout_capacity = 0
-        else:
-            self.takeout_capacity -= takeout
-        if (self.dinein_capacity - dinein < 0):
-            self.dinein_capacity = 0
-        else:
-            self.dinein_capacity -= dinein
+    def outgoing_dct_traffic(self, takeout: int, dinein: int):
+        self.takeout_capacity = max(self.takeout_capacity - takeout, 0)
+        self.dinein_capacity = max(self.dinein_capacity - dinein, 0)
         outgoingtraffic = takeout + dinein
-        if (self.total_capacity - outgoingtraffic < 0):
-            self.total_capacity = 0
-        else:
-            self.total_capacity -= outgoingtraffic
-        capacity = Capacity(takeout, dinein, outgoingtraffic)
-        return capacity
+        self.total_capacity = max(self.total_capacity - outgoingtraffic, 0)
+        return self.takeout_capacity, self.dinein_capacity, self.total_capacity
         
