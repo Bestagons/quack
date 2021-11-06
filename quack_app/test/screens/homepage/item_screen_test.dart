@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/core/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
 import 'package:quack_app/screens/homepage/item_screen.dart';
 
-void main() {
+Future<void> main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  List<String> creds = await TestAuth().getAuthCredentials();
   group("Item Screen Test", () {
-    MenuData fakeMenuData = MenuData();
-    fakeMenuData.loadData();
-
-    MyApp app = const MyApp();
     testGoldens("item_screen_view", (WidgetTester tester) async {
       await loadAppFonts();
+      MyApp app = const MyApp();
       await tester.pumpWidget(app);
+      await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
       await tester.tap(find.byType(ListTile).first);
       await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -24,7 +24,9 @@ void main() {
 
     testGoldens("back_click", (WidgetTester tester) async {
       await loadAppFonts();
+      MyApp app = const MyApp();
       await tester.pumpWidget(app);
+      await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
       await tester.tap(find.byType(ListTile).first);
       await tester.pumpAndSettle(const Duration(seconds: 1));
