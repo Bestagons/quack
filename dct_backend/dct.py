@@ -55,19 +55,20 @@ class DCT():
         self.menu.append(item)
         return item
 
-    """
-        incoming_dct_traffic adds people who are scanning into the dct
+     """
+        update_line_speed updates the line speed of the given station
 
-        takeout: int
-            The current number of takeout scanning in
-
-        dinein: int
+        station: str 
+            The station to update the line speed property
+        line_speed: float
+            The new speed of the station line
     """
     def update_line_speed(self, station: str, line_speed: float):
         self.stations[station].update_line_speed(line_speed)
 
     """
         incoming_dct_traffic adds people who are scanning into the dct
+
         takeout: int
             The current number of takeout scanning in
         dinein: int
@@ -84,6 +85,7 @@ class DCT():
 
     """
         outgoing_dct_traffic subtracts people who are leaving the dct
+        
         takeout: int
             The current number of takeout leaving
         dinein: int
