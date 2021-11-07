@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:async';
@@ -7,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 class Auth {
   static final Auth _auth = Auth._internal();
-
+  static const String baseUrl = "127.0.0.1:8000";
   factory Auth() {
     return _auth;
   }
@@ -24,6 +25,8 @@ class Auth {
     return File('$path/auth.txt');
   }
 
+  get json => null;
+
   Future<String> getAuth() async {
     try {
       final file = await _authFile;
@@ -39,18 +42,22 @@ class Auth {
     }
   }
 
-  Future<bool> register(String email, password) async {
+  Future<bool> register(String name, email, password) async {
     // TODO: verify
-    final queryParams = {
+    var body = jsonEncode({
+      "name": name,
       "email": email,
       "password": password,
-    };
+    });
 
-    final uri = Uri.https("http://127.0.0.1", "/login", queryParams);
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
+    final uri = Uri.http(baseUrl, "/register");
+    final response = await http.post(uri,
+        headers: {"Content-Type": "application/json"}, body: body);
+    if (response.statusCode == 201) {
+      print("[core/auth] Successfully registered user ${response.body}");
       return Future.value(true);
     }
+    print("[core/auth] Failed to register user ${response.body}");
     return Future.value(false);
   }
 
@@ -66,11 +73,13 @@ class Auth {
           "password": password,
         };
 
-        final uri = Uri.https("http://127.0.0.1", "/login", queryParams);
+        final uri = Uri.http(baseUrl, "/login", queryParams);
         final response = await http.get(uri);
         if (response.statusCode == 200) {
+          print("[core/auth] Successfully logged in");
           return Future.value(true);
         }
+        print("[core/auth] Failed to login ${response.body}");
       }
     }
     return Future.value(false);

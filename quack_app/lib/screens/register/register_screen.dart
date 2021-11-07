@@ -14,6 +14,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
@@ -80,6 +81,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textAlign: TextAlign.left,
                     ),
                   ]),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      hintText: 'Name',
+                      suffixIcon: const Icon(Icons.email),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     height: 10.0,
                   ),
@@ -156,6 +171,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     routeTo: "/login",
                                     waitOn: () async {
                                       await Auth().register(
+                                          nameController.text,
                                           emailController.text,
                                           passwordController.text);
                                       return Future.value("");
