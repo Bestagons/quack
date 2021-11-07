@@ -47,3 +47,5 @@ app.*.map.json
 
 # Ignore failed golden tests
 **/failures/*.png
+.env
+auth.txt

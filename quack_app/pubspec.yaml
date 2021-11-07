@@ -36,11 +36,13 @@ dependencies:
   golden_toolkit: ^0.10.0
   auto_size_text: ^3.0.0-nullsafety.0
   flutter_spinkit: ^5.1.0
+  path_provider: ^2.0.6
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
   flutter_native_splash: ^1.2.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -51,14 +53,13 @@ dev_dependencies:
   flutter_lints: ^1.0.0
 
 flutter_native_splash:
-
   android: true
   ios: true
   web: false
 
   color: "#FFC702"
   image: assets/splash_image.png
-  
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -82,6 +83,8 @@ flutter:
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png
+    - assets/logo.png
+    - test.env
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quack_app/screens/loading/loading_screen.dart';
+import 'package:quack_app/screens/login/login_screen.dart';
+import 'package:quack_app/screens/register/register_screen.dart';
 
 import 'components/navbar.dart';
 
@@ -14,13 +16,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Quack App',
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const LoadingScreen(),
+        '/': (context) => LoadingScreen(
+              routeTo: "/login",
+              waitOn: () {
+                return Future.value(""); //  Don't load anything on app boot up
+              },
+            ),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
         '/home': (context) => const MyHomePage(title: 'Quack'),
       },
     );
