@@ -11,6 +11,7 @@ class BalanceTest():
         self.meal_swipes_deposit = meal_swipes_deposit
         self.test = test  # true or false
 
+
 def test_set_balance():
     test_cases = [
         ("name1", 3000, 50),

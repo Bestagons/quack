@@ -15,7 +15,6 @@ class BalanceTracker():
             The current amount of remaining meal swipes
 
         """
-
     # ------------ Decrementing Balances (for spending) -------------
 
     def dooley_sub(self, spent: float):
