@@ -16,7 +16,7 @@ def test_toggle_favorite():
     test_cases = [Params("", 0, status.HTTP_400_BAD_REQUEST, True),
                   Params("food_id1", 2, status.HTTP_400_BAD_REQUEST, True),
                   Params("food_id1", -1, status.HTTP_400_BAD_REQUEST, True),
-                  Params("food_id1", 0, status.HTTP_412_PRECONDITION_FAILED, True),
+                  Params("food_id1", 0, status.HTTP_200_OK, False),
                   Params("food_id1", 1, status.HTTP_200_OK, False)]
 
     for test_case in test_cases:
