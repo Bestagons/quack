@@ -3,7 +3,7 @@ from food_item import FoodItem
 import food_item_test
 
 class ReviewTest():
-    def __init__(self, fooditem:FoodItem, review: str, rating: int, test: bool):
+    def __init__(self, fooditem: FoodItem, review: str, rating: int, test: bool):
         self.fooditem = fooditem
         self.review = review
         self.rating = rating
