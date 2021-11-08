@@ -1,9 +1,8 @@
-from user import User
-
-
-class BalanceTracker(User):
+class BalanceTracker():
     def __init__(self, uuid: str, dooley_dollars: float, meal_swipes: int):
-        super().__init__(uuid, dooley_dollars, meal_swipes)
+        self.uuid = uuid  # will change to user ID after future refactoring and development
+        self.meal_swipes = meal_swipes  # Meal swipe quanity
+        self.dooley_dollars = dooley_dollars  # Dooley Dollar Balance
         """
 
         name: str

@@ -1,5 +1,5 @@
 from balance import BalanceTracker
-from user import User
+
 
 class BalanceTest():
     def __init__(self, dooley_balance: float, swipe_balance: int, dooley_deposit: float, dooley_spent: float,
