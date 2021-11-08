@@ -1,5 +1,15 @@
 from balance import BalanceTracker
+from user import User
 
+class BalanceTest():
+    def __init__(self, dooley_balance: float, swipe_balance: int, dooley_deposit: float, dooley_spent: float,
+                 meal_swipes_deposit: int, test: bool):
+        self.dooley_balance = dooley_balance
+        self.swipe_balance = swipe_balance
+        self.dooley_deposit = dooley_deposit
+        self.dooley_spent = dooley_spent
+        self.meal_swipes_deposit = meal_swipes_deposit
+        self.test = test  # true or false
 
 def test_set_balance():
     test_cases = [
@@ -9,89 +19,56 @@ def test_set_balance():
     ]
 
     for user_info in test_cases:
-        Tester = BalanceTracker(user_info[0], user_info[1], user_info[2])
-        assert Tester.name  == user_info[0]
-        assert Tester.dooley_dollars == user_info[1]
-        assert Tester.meal_swipes == user_info [2]
+        tester = BalanceTracker(user_info[0], user_info[1], user_info[2])
+        assert tester.name  == user_info[0]
+        assert tester.dooley_dollars == user_info[1]
+        assert tester.meal_swipes == user_info [2]
 
 def test_update_balance():
-    test_cases = [
-        ("name1", 3000, 50),
-        ("name2", 4000, 60),
-        ("name3", 2000, -3)
-    ]
 
-    dooley_deposit = [ # test deposit
-        500, 60, 450, 44.34, -50, -235
-    ]
+    #D balance 0, S balance 1, D deposit 2, D spent 3, S deposit 4, Test result 5
 
-    dooley_spending = [
-        3, 13.99, 2.50, 5.55, 300.25, 74.39, 4000, 1.99, -78.5 #test spending
-    ]
-
-    swipe_deposit = [ # test deposit
-        3, 30, 25, 10, -40, 0, 1, -3
-    ]
     # -------- test 1: dooley spending --------
-    for test_case in test_cases:
-        tester = BalanceTracker(test_case[0], test_case[1], test_case[2])
-        dooley_dollars_current = test_case[1]
+    test_cases_dooley_spending = [ # Only check Dooley spending cases
+        (1000, 100, None, 20, None, True), # spending 20, balance 1000
+        (100, 100, None, 200, None, False), # spending 200, balance 100 FAIL
+        (1000, 100, None, 200, None, True), # spending 200 balance 1000
+        (1000, 100, None, -20, None, False), # spending -20 balance 1000 FAIL
+        (1000, 100, None, 0, None, False), # spending 0 balance 1000 FAIL
+    ]
 
-        for dooleys_spent in dooley_spending:
-            test = tester.dooley_sub(dooleys_spent)
-            if( 0 < dooleys_spent <= tester.dooley_dollars):
+    for test_case in test_cases_dooley_spending:
+        tester = BalanceTest(test_case[0],test_case[1], test_case[2], test_case[3],test_case[4], test_case[5])
+        tester2 = BalanceTracker("name", test_case[0], test_case[1])
+        test_check = tester2.dooley_sub(test_case[3])
+        assert tester.test == test_check
 
-                assert test == True # No Error
-                assert tester.dooley_dollars == (dooley_dollars_current - abs(dooleys_spent))
-                assert tester.name == test_case[0]
-                assert tester.meal_swipes == test_case[2]
-                dooley_dollars_current = dooley_dollars_current - dooleys_spent # updating
+    # -------- test 2: swipe deposit --------
+    test_cases_swipe_deposit = [ # Only check swipe deposit cases
+        (1000, 100, None, None, 20, True), # deposit 20 swipes
+        (100, 100, None, None, -20, False), # deposit -20  Fail
+        (1000, 100, None, None, 1, True), # deposit 1 swipe
+        (1000, 100, None, None, 0, False), # deposit 0 swipes FAIL
+        (1000, 100, None, None, -1, False), # deposit -1 swipes FAIL
+    ]
 
-            elif (dooleys_spent > tester.dooley_dollars or dooleys_spent < 0):
+    for test_case in test_cases_swipe_deposit:
+        tester = BalanceTest(test_case[0],test_case[1], test_case[2], test_case[3],test_case[4], test_case[5])
+        tester2 = BalanceTracker("name", test_case[0], test_case[1])
+        test_check = tester2.mealswipe_add(test_case[4])
+        assert tester.test == test_check
 
-                assert test == False # Error
-                assert tester.dooley_dollars == dooley_dollars_current
-                assert tester.name == test_case[0]
-                assert tester.meal_swipes == test_case[2]
+    # -------- test 3: dooley deposit --------
+    test_cases_swipe_deposit = [ # Only check dooley deposit cases
+        (1000, 100, 20, None, None, True), # deposit 20
+        (100, 100, -20, None, None, False), # deposit -20  Fail
+        (1000, 100, 1, None, None, True), # deposit 1
+        (1000, 100, 0, None, None, False), # deposit 0 FAIL
+        (1000, 100, -1, None, None, False), # deposit -1  FAIL
+    ]
 
-        # -------- test 2: swipe deposit --------
-    for test_case in test_cases:
-        tester = BalanceTracker(test_case[0], test_case[1], test_case[2])
-        meal_swipe_current = test_case[2]
-
-        for swipes in swipe_deposit:
-            test = tester.mealswipe_add(swipes)
-            if (swipes <= 0 ):
-                assert test == False
-                assert tester.meal_swipes == meal_swipe_current
-                assert tester.name == test_case[0]
-                assert tester.dooley_dollars == test_case[1]
-
-            elif (swipes > 0 ):
-                assert test == True
-                assert tester.meal_swipes == meal_swipe_current + swipes
-                assert tester.name == test_case[0]
-                assert tester.dooley_dollars == test_case[1]
-                meal_swipe_current = meal_swipe_current+swipes # Update
-            # print("SWIPES: ", tester.meal_swipes)
-
-        # -------- test 3: dooley deposit --------
-    for test_case in test_cases:
-        tester = BalanceTracker(test_case[0], test_case[1], test_case[2])
-        dooley_dollars_current = test_case[1]
-
-        for dooleys_added in dooley_deposit:
-            test = tester.dooley_add(dooleys_added)
-
-            if (dooleys_added <= 0 ):
-                assert test == False
-                assert tester.dooley_dollars == dooley_dollars_current
-                assert tester.name == test_case[0]
-                assert tester.meal_swipes == test_case[2]
-
-            elif (dooleys_added > 0):
-                assert test == True
-                assert tester.dooley_dollars == dooley_dollars_current + dooleys_added
-                assert tester.name == test_case[0]
-                assert tester.meal_swipes == test_case[2]
-                dooley_dollars_current = dooley_dollars_current + dooleys_added
+    for test_case in test_cases_swipe_deposit:
+        tester = BalanceTest(test_case[0],test_case[1], test_case[2], test_case[3],test_case[4], test_case[5])
+        tester2 = BalanceTracker("name", test_case[0], test_case[1])
+        test_check = tester2.dooley_add(test_case[2])
+        assert tester.test == test_check
