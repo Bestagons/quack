@@ -24,7 +24,7 @@ class BalanceTracker(User):
         spent: The amount of dooley dollars spent
         return: True or False (whether operation succeeds or fails)
         """
-        if (spent < 0 ): # Error (negative value)
+        if (spent <= 0 ): # Error (negative values and 0)
             return False
         if (spent <= self.dooley_dollars): # No error (possible value)
             self.dooley_dollars = self.dooley_dollars - spent
@@ -52,7 +52,7 @@ class BalanceTracker(User):
         additional: The amount of extra dooley dollars added
         return: True or False (whether operation succeeds or fails)
         """
-        if (additional <= 0):
+        if (additional <= 0): # Error (negative values and 0)
             return False
         elif(additional > 0):
             self.dooley_dollars = self.dooley_dollars + additional
@@ -63,7 +63,7 @@ class BalanceTracker(User):
         additional: The amount of extra swipes added
         return: True or False (whether operation succeeds or fails)
         """
-        if (additional <= 0 ):
+        if (additional <= 0 ):# Error (negative values and 0)
             return False
         elif (additional > 0 ):
             self.meal_swipes = self.meal_swipes + additional
