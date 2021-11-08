@@ -20,7 +20,7 @@ def test_set_balance():
 
     for user_info in test_cases:
         tester = BalanceTracker(user_info[0], user_info[1], user_info[2])
-        assert tester.name  == user_info[0]
+        assert tester.uuid == user_info[0]
         assert tester.dooley_dollars == user_info[1]
         assert tester.meal_swipes == user_info [2]
 
