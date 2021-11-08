@@ -31,3 +31,4 @@ typing-extensions==3.10.0.2
 urllib3==1.26.7
 uvicorn==0.15.0
 wrapt==1.12.1
+firebase-admin==5.1.0
