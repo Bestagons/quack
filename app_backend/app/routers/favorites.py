@@ -40,8 +40,8 @@ async def toggle_favorite(resp: Response, favorite: Favorite):
 
     existing_food_state = 0  # TODO: get food_id's state here
     if existing_food_state == favorite.state:
-        resp.status_code = status.HTTP_412_PRECONDITION_FAILED
-        return {"err": "Food ID already in that state"}
+        resp.status_code = status.HTTP_200_OK
+        return {"msg": "No row is affected."}
 
     # toggle food_id
     return {"msg": "Food ID has been successfully toggled"}
