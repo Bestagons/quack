@@ -3,7 +3,6 @@ from station import Station
 
 class DCT():
     def __init__(self):
-        self.menu = []
         self.stations = {}
 
     """
@@ -49,7 +48,6 @@ class DCT():
             self.save_station(station)
             self.stations[station].add_food_item(item)
 
-        self.menu.append(item)
         return item
 
     """
