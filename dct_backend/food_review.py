@@ -1,5 +1,6 @@
 from food_item import FoodItem
 
+
 class FoodReview ():
     """
     uuid: str
@@ -18,8 +19,8 @@ class FoodReview ():
     def __init__(self, uuid: str, fooditem: FoodItem, review: str, rating: int):
         self.uuid = uuid
         self.fooditem = fooditem
-        # self.rating = rating
-        # self.review = review
+        self.rating = None
+        self.review = None
 
     # SETTERS:
     def set_review(self, review: str):
