@@ -4,7 +4,7 @@ import food_item_test
 
 class ReviewTest():
     def __init__(self, fooditem:FoodItem, review: str, rating: int, test: bool):
-        self.fooditem = FoodItem
+        self.fooditem = fooditem
         self.review = review
         self.rating = rating
         self.test = test  # true or false
