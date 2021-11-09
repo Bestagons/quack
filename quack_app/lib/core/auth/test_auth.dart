@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:quack_app/core/auth.dart';
+import 'package:quack_app/core/auth/auth.dart';
 
 class TestAuth {
   static final TestAuth _auth = TestAuth._internal();

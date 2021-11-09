@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/auth.dart';
+import 'package:quack_app/core/auth/auth.dart';
 import 'package:quack_app/screens/loading/loading_screen.dart';
 import 'package:quack_app/screens/settings/subscreens/about_screen.dart';
 import 'package:quack_app/screens/settings/subscreens/account_preferences_screen.dart';

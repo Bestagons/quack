@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:quack_app/core/item.dart';
+import 'package:quack_app/core/food/food_item.dart';
 
 class ItemScreen extends StatelessWidget {
-  final Item item;
+  final FoodItem item;
 
   const ItemScreen({Key? key, required this.item}) : super(key: key);
 
