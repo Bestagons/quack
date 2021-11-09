@@ -9,11 +9,12 @@ class Database():
 
     def connect(self):
         print("Connecting to database...")
-        if self.client is None and self.username is not None and self.password is not None:
+        if self.username is not None and self.password is not None:
             self.client = MongoClient(f"mongodb+srv://{self.username}:{self.password}@quackcluster.kbete.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-            self.db = self.client["QuackCluster"]
+            self.db = self.client["user"]
         else:
-           raise Exception("Parameters passed may be None; ensure your .env file is setup!")
+            print("Error trying to connect to DB")
+            raise Exception("Parameters passed may be None; ensure your .env file is setup!")
 
     def has_client(self):
         return self.client is not None
@@ -26,3 +27,15 @@ class Database():
             raise Exception("No client has been connected yet or a database was not found!")
         return self.db.command(cmd)
 
+    def save_user_in_db(self, login_info: dict, dry_run = False):
+        users = self.db["users"]
+
+        if users.count_documents({"email": login_info['email']}, limit = 1) > 0:
+            return {"err" : "Email already exists. Use a different email."}
+
+        if not dry_run:
+            print("[Database.py] Dry run not updating database")
+            login_info["verified"] = False
+            users.insert_one(login_info)
+
+        return {"msg": "Successfully registered new user."}

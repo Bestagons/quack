@@ -25,7 +25,7 @@ void main() async {
       await tester.tap(find.textContaining("Sign Up"));
       await tester.pumpAndSettle();
       await tester.enterText(
-          find.byType(TextFormField).first, "bademail@gt.edu");
+          find.byType(TextFormField).at(1), "bademail@gt.edu");
       await tester.pumpAndSettle();
       await expectLater(find.byType(RegisterScreen),
           matchesGoldenFile('goldens/invalid_email.png'));
@@ -38,7 +38,7 @@ void main() async {
       await tester.pumpAndSettle();
       await tester.tap(find.textContaining("Sign Up"));
       await tester.pumpAndSettle();
-      await tester.enterText(find.byType(TextFormField).at(1), "badpass");
+      await tester.enterText(find.byType(TextFormField).at(2), "badpass");
       await tester.pumpAndSettle();
       await expectLater(find.byType(RegisterScreen),
           matchesGoldenFile('goldens/invalid_password.png'));
@@ -65,7 +65,7 @@ void main() async {
       await tester.pumpAndSettle();
       await tester.enterText(
           find.byType(TextFormField).first, "test@emory.edu");
-      await tester.enterText(find.byType(TextFormField).at(1), "test1234");
+      await tester.enterText(find.byType(TextFormField).at(2), "test1234");
       await tester.enterText(find.byType(TextFormField).last, "test1234");
       await tester.pumpAndSettle();
       await expectLater(find.byType(RegisterScreen),
