@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:quack_app/core/food/food_item.dart';
 import 'package:quack_app/core/seating/seating_locations.dart';
 
 class UserData {
@@ -65,6 +64,10 @@ class UserData {
 
   SeatingLocation getSeatingLoc() {
     return _currentLoc;
+  }
+
+  String getSeatingLocString() {
+    return _currentLoc.toShortString();
   }
 
   String getEmail() {
