@@ -51,12 +51,30 @@ def test_new_friend():
 
 
 def test_login():
-    response = client.get("/login")
-    assert response.status_code == 200
-    assert response.json() == {"msg": "This is the login page!"}
+    class Params:
+        def __init__(self, name: str, email: str, password: str, expects_err: bool, expects_err_msg: dict):
+            self.name = name
+            self.email = email
+            self.password = password
+            self.expects_err = expects_err
+            self.expects_err_msg = expects_err_msg
+        def to_json(self):
+            return {"name": self.name, "email": self.email, "password": self.password}
+    test_cases = [
+        Params('Bruce Lee', 'bruce.lee@emory.edu', 'Password1!', status.HTTP_200_OK, {"msg": "Successfully logged in"}),
+        Params('Bruce Lee', 'DNE@emory.edu', 'Password1!', status.HTTP_400_BAD_REQUEST, {"err": "This user does not exist. Please try different credentials."}),
+        Params('Bruce Lee', 'bruce.lee@emory.edu', 'Password1', status.HTTP_400_BAD_REQUEST, {"err": "Password does not match. Please try a different password."})
+    ]
+
+    for test_case in test_cases:
+        print(test_case.to_json())
+        response = client.post("/login", json=test_case.to_json())
+        print(response.json())
+        assert response.status_code == test_case.expects_err
+        assert response.json() == test_case.expects_err_msg
+   
 
 def test_register():
-
     class Params:
         def __init__(self, name: str, email: str, password: str, expects_err: bool, expects_err_msg: dict):
             self.name = name
@@ -75,7 +93,7 @@ def test_register():
         Params('test0000', 'test0@emory.edu', '', status.HTTP_400_BAD_REQUEST, {"err" : "Invalid password. It must be 8 to 20 characters and have at least one upper case letter, one lower case letter, and one digit."}),
         Params('Test. 500', 'test.emory.edu', 'Test0000', status.HTTP_400_BAD_REQUEST, {"err" : "Invalid email address. It must be an emory.edu email."}),
         Params('test0000', 'test0@emory.edu', 'TEST@123', status.HTTP_400_BAD_REQUEST, {"err" : "Invalid password. It must be 8 to 20 characters and have at least one upper case letter, one lower case letter, and one digit."}),
-         Params('User Test', 'test@emory.edu', 'Test0000', status.HTTP_400_BAD_REQUEST, {"err": "Email already exists. Use a different email."}),
+        Params('User Test', 'test@emory.edu', 'Test0000', status.HTTP_400_BAD_REQUEST, {"err": "Email already exists. Use a different email."}),
         Params('Test User', 'unique@emory.edu', 'Test0000', status.HTTP_201_CREATED, {"msg": "Successfully registered new user."})
     ]
 

@@ -39,3 +39,8 @@ class Database():
             users.insert_one(login_info)
 
         return {"msg": "Successfully registered new user."}
+
+    def get_user_by_email(self, loginInfo: dict):
+        users = self.db["users"]
+        return users.find_one({"email": loginInfo['email']})
+    

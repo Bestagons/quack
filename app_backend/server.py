@@ -71,6 +71,7 @@ async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
 
 """
     UserLogin model keeps track of the user login information
+
     username: str
         The username of the user
     email: str
@@ -85,18 +86,45 @@ class User(BaseModel):
 
 
 """
-    getuser implements the route /login/
-    returns message
-"""
-# TODO: Once attached to database will be able to retreive
-# specific user information and to log them in
-@app.get("/login")
-async def login():
-    return {"msg": "This is the login page!"}
+    login implements the route /login/
 
+    login: User
+        The UserLogin model that includes the username, email, and password
+    resp: Response
+        The response to send back to the user which contains the status code and body
+    returns Response
+        Response.body: dict
+            Provides any msgs/errs for the request
+        Response.status: int
+            The status code for the request
+"""
+@app.post("/login")
+async def login(login: User, resp: Response):
+    name = login.name
+    email = login.email
+    password = login.password
+
+    user = {
+        "name": name,
+        "email": email,
+        "password": password
+    }
+
+    db_user = db.get_user_by_email(user)
+
+    if db_user is None:
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+        return {"err": "This user does not exist. Please try different credentials."}
+    
+    if password != db_user['password']:
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+        return {"err": "Password does not match. Please try a different password."}
+        
+    return {"msg": "Successfully logged in"}
 
 """
     registeruser implements the /register/ route
+
     login: User
         The UserLogin model that includes the username, email, and password
     resp: Response
