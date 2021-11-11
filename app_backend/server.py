@@ -115,10 +115,6 @@ async def login(login: User, resp: Response):
     if db_user is None:
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "This user does not exist. Please try different credentials."}
-    
-    if password != db_user['password']:
-        resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err": "Password does not match. Please try a different password."}
         
     return {"msg": "Successfully logged in"}
 

@@ -42,5 +42,5 @@ class Database():
 
     def get_user(self, loginInfo: dict):
         users = self.db["users"]
-        return users.find_one({"email": loginInfo['email']})
+        return users.find_one({"email": loginInfo['email'], "password": loginInfo['password']})
     

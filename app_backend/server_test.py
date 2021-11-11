@@ -63,7 +63,7 @@ def test_login():
     test_cases = [
         Params('Bruce Lee', 'bruce.lee@emory.edu', 'Password1!', status.HTTP_200_OK, {"msg": "Successfully logged in"}),
         Params('Bruce Lee', 'DNE@emory.edu', 'Password1!', status.HTTP_400_BAD_REQUEST, {"err": "This user does not exist. Please try different credentials."}),
-        Params('Bruce Lee', 'bruce.lee@emory.edu', 'Password1', status.HTTP_400_BAD_REQUEST, {"err": "Password does not match. Please try a different password."})
+        Params('Bruce Lee', 'bruce.lee@emory.edu', 'Password1', status.HTTP_400_BAD_REQUEST, {"err": "This user does not exist. Please try different credentials."})
     ]
 
     for test_case in test_cases:
