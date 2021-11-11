@@ -15,7 +15,7 @@ def test_station_creation():
         assert station.menu == [] 
         assert station.line_speed == 0
 
-def test_add_foot_item():
+def test_add_food_item():
     test_station = Station("station_name")
     test_cases = [
             FoodItem("test_name", "station_name", "meal_time", 100, ["category1", "category5"]),

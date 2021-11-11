@@ -5,13 +5,12 @@ import 'package:http/http.dart' as http;
 // MenuData implements logic for menu related data as a Singleton
 class MenuData {
   String _currentServeTime = "";
-  List<Item> _allMenu = List.empty();
+  final List<Item> _allMenu = [];
   List<Item> _currentMenu = List.empty();
   List<String> _stations = List.empty();
   List<String> _serveTimes = List.empty();
   Map<String, dynamic> _data = {};
   static const String baseUrl = "127.0.0.1:8000";
-
   static final MenuData _menuData = MenuData._internal();
 
   factory MenuData() {
@@ -21,14 +20,18 @@ class MenuData {
   MenuData._internal();
 
   Future getDCTData() async {
+    print("entered");
     final url = Uri.http(baseUrl, "/dct-data");
     var response = await http.get(url);
     if (response.statusCode == 200) {
       _data =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
+          await convert.jsonDecode(response.body) as Map<String, dynamic>;
 
+      print("DCT Data received");
+      // print(_data['stations']);
       return Future.value(true);
     } else {
+        print("DCT Data not received");
       return Future.value(false);
     }
   }
@@ -41,9 +44,10 @@ class MenuData {
 
   // loadTodaysMenu loads the menu for the entire day
   Future loadTodaysMenu() async {
-
-    for (var stations in _data.keys) {
-      List menu = _data[stations]['menu'];
+    print(_data);
+    var stations = _data['stations'];
+    for (var s in stations.keys) {
+      List menu = stations[s]['menu'];
       for(var item in menu){
               _allMenu.add(Item(
                 item['name'],
@@ -54,24 +58,7 @@ class MenuData {
                 item['station']));
       }
     }
-
-    var foods = [
-      "Pancakes",
-      "Bagel",
-      "Cereal",
-      "Sandwhich",
-      "Wings",
-      "Grilled Chicken",
-      "Beyond Beef Burger",
-      "Portobello Mushrooms",
-      "Macaroni & Cheese",
-      "Veggie Fried Rice",
-      "Avocado Grilled Cheese",
-      "Mediterranean Pita",
-      "Pasta",
-      "French Fries",
-      "Ceasar Salad"
-    ];
+    print(_allMenu);
 
     _serveTimes = _data['serve_times'].keys.toList();
 

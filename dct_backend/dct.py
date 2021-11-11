@@ -3,8 +3,9 @@ from station import Station
 
 class DCT():
     def __init__(self):
+        self.menu = []
         self.stations = {}
-
+        self.serve_times = {}
     """
         save_station adds a station to the tracked station list
 
@@ -14,6 +15,7 @@ class DCT():
     def save_station(self, name: str):
         station = Station(name)
         self.stations[name] = station
+        return station
 
     """
         save_food_item adds a food item to the tracked menu of a specific station
@@ -48,7 +50,12 @@ class DCT():
             self.save_station(station)
             self.stations[station].add_food_item(item)
 
+        if item not in self.menu:
+            self.menu.append(item)
         return item
+
+    def save_serve_time(self, period: str, time: str):
+        self.serve_times[period] = time
 
     """
         update_line_speed updates the line speed of the given station
@@ -60,4 +67,5 @@ class DCT():
             The new speed of the station line
     """
     def update_line_speed(self, station: str, line_speed: float):
-        self.stations[station].update_line_speed(line_speed)
+        if station in self.stations:
+            self.stations[station].update_line_speed(line_speed)

@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late MenuData menuData;
   void authenticate() async {
     String auth = await Auth().getAuth();
     if (auth != "") {
@@ -25,7 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
             builder: (context) => LoadingScreen(
               routeTo: "/home",
               waitOn: () async {
-                MenuData().loadData();
+                await MenuData().getDCTData();
+                await MenuData().loadData();
                 await Future.delayed(const Duration(seconds: 2), () {});
                 return Future.value("");
               },
@@ -39,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    //menuData = MenuData();
     authenticate();
   }
 
@@ -165,7 +168,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   waitOn: () async {
                                     Auth().saveAuth(emailController.text,
                                         passwordController.text);
-                                    MenuData().loadData();
+                                    await MenuData().getDCTData();
+                                    await MenuData().loadData();
                                     await Future.delayed(
                                         const Duration(seconds: 2), () {});
                                     return Future.value("");
