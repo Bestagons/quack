@@ -69,8 +69,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     : "Not sharing location",
                 style: const TextStyle(color: Colors.black)),
             tileColor: Colors.white,
-            trailing: AutoSizeText("${Random.secure().nextInt(58) + 1} min ago",
-                style: const TextStyle(color: Colors.grey)),
+            trailing: const AutoSizeText("5 min ago",
+                style: TextStyle(color: Colors.grey)),
           ),
         ),
       );
