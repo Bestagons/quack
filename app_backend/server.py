@@ -110,7 +110,7 @@ async def login(login: User, resp: Response):
         "password": password
     }
 
-    db_user = db.get_user_by_email(user)
+    db_user = db.get_user(user)
 
     if db_user is None:
         resp.status_code = status.HTTP_400_BAD_REQUEST
