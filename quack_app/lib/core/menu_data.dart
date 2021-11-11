@@ -1,4 +1,6 @@
 import 'package:quack_app/core/item.dart';
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 
 // MenuData implements logic for menu related data as a Singleton
 class MenuData {
@@ -7,6 +9,8 @@ class MenuData {
   List<Item> _currentMenu = List.empty();
   List<String> _stations = List.empty();
   List<String> _serveTimes = List.empty();
+  Map<String, dynamic> _data = {};
+  static const String baseUrl = "127.0.0.1:8000";
 
   static final MenuData _menuData = MenuData._internal();
 
@@ -16,6 +20,19 @@ class MenuData {
 
   MenuData._internal();
 
+  Future getDCTData() async {
+    final url = Uri.http(baseUrl, "/dct-data");
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      _data =
+          convert.jsonDecode(response.body) as Map<String, dynamic>;
+
+      return Future.value(true);
+    } else {
+      return Future.value(false);
+    }
+  }
+
   // loadCurrentlyServing loads the current serve time
   Future loadCurrentServeTime() async {
     // TODO: Implement DCT Backend
@@ -24,6 +41,20 @@ class MenuData {
 
   // loadTodaysMenu loads the menu for the entire day
   Future loadTodaysMenu() async {
+
+    for (var stations in _data.keys) {
+      List menu = _data[stations]['menu'];
+      for(var item in menu){
+              _allMenu.add(Item(
+                item['name'],
+                item['categories'], 
+                false, // TODO: Implement checking user database for if item is favorited 
+                item['meal_time'].compareTo(getServeTime()) == 0, 
+                item['meal_time'], 
+                item['station']));
+      }
+    }
+
     var foods = [
       "Pancakes",
       "Bagel",
@@ -41,29 +72,11 @@ class MenuData {
       "French Fries",
       "Ceasar Salad"
     ];
-    _serveTimes = [
-      "Breakfast",
-      "Lunch",
-      "Dinner"
-    ]; // Serve times will be parsed here from backend
-    _stations = [
-      "Stem To Root",
-      "605 Kitchen",
-      "Spice",
-      "Luncheonnette"
-    ]; // Stations will be parsed here from backend
 
-    // TODO: Implement DCT Backend
-    _allMenu = List.generate(foods.length, (index) {
-      return Item(
-          foods[index],
-          "",
-          false,
-          _serveTimes[index % _serveTimes.length].compareTo(getServeTime()) ==
-              0,
-          _serveTimes[index % _serveTimes.length],
-          _stations[index % _stations.length]);
-    });
+    _serveTimes = _data['serve_times'].keys.toList();
+
+    _stations = _data['stations'].keys.toList();
+
   }
 
   // loadCurrentMenu loads the current menu

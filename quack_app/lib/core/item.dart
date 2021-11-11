@@ -1,7 +1,7 @@
 // Implements a food item and data associated with that item
 class Item {
   final String _name;
-  final String _category;
+  final List _category;
   bool _isFavorite;
   final bool _isCurrentlyBeingServed;
   final String _serveTime;
@@ -25,7 +25,7 @@ class Item {
     return _name;
   }
 
-  String getCategory() {
+  List getCategory() {
     return _category;
   }
 
