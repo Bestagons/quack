@@ -1,10 +1,12 @@
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from fastapi import APIRouter, Response, status
 from dotenv import load_dotenv
-import os
-from database import Database
-from pydantic import BaseModel
+
 import re
-from user import User
+import os
+
+from database import Database
 
 load_dotenv()
 db = Database(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
@@ -13,6 +15,17 @@ print("Starting server...")
 
 router = APIRouter(prefix="/friends")
 
+router.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@router.get("/")
+async def root():
+    return {"msg": "This is the App Backend!"}
 
 class AddFriend(BaseModel):
     uuid: str
@@ -72,8 +85,8 @@ async def add_friend(resp: Response, friend: AddFriend):
     password: str
         The password of the user
 """
-class UserLogin(BaseModel):
-    username: str
+class User(BaseModel):
+    name: str
     email: str
     password: str
 
@@ -85,13 +98,13 @@ class UserLogin(BaseModel):
 # TODO: Once attached to database will be able to retreive
 # specific user information and to log them in
 @router.get("/login/")
-async def getuser():
+async def login():
     return {"msg": "This is the login page!"}
 
 
 """
     registeruser implements the /register/ route
-    login: UserLogin
+    login: User
         The UserLogin model that includes the username, email, and password
     resp: Response
         The response to send back to the user which contains the status code and body
@@ -99,29 +112,24 @@ async def getuser():
         Response.body: dict
             Provides any msgs/errs for the request
         Response.status: int
-            The status code for the request        
+            The status code for the request
 """
-@router.post("/register/", status_code=status.HTTP_201_CREATED)
-async def registeruser(login: UserLogin, resp: Response):
+@router.post("/register", status_code=status.HTTP_201_CREATED)
+async def register(login: User, resp: Response):
 
-    username = login.username
+    name = login.name
     email = login.email
     password = login.password
 
-    # valid username is the regular expression of the valid format the username should be
-    # params are 8 to 20 character length and no special characters
-    validUsername = r'^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$'
-    # valid email is the regular expression of the valid format the email should be
     # params are it must end with @emory.edu
     validEmail = r'\b[A-Za-z0-9._%+-]+@emory.edu\b'
     # valid password is the regular expression of the valid format the password should be
     # params are 8 to 20 character length, contain one upper case, one lower case, and one digit
     validPassword = r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])[\w\d@#$]{8,20}'
 
-    # check if username is a valid username
-    if not (re.search(validUsername, username)):
+    if name.strip() == "":
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err" : "Invalid username. It must be 8 to 20 characters with no special characters."}
+        return {"err" : "Invalid name. Cannot be empty."}
 
     # check if email is a valid emory email
     if not (re.search(validEmail, email)):
@@ -135,9 +143,14 @@ async def registeruser(login: UserLogin, resp: Response):
 
     # adds user to the database
     new_user = {
-        "username": username,
+        "name": name,
         "email": email,
         "password": password
     }
 
-    return User.save_user_in_db(new_user)
+    msg = db.save_user_in_db(new_user)
+    if "err" in msg:
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+
+    return msg
+
