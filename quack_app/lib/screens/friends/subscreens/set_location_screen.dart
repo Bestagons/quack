@@ -5,7 +5,9 @@ import 'package:image_pixels/image_pixels.dart';
 import 'package:quack_app/core/seating/seating_locations.dart';
 import 'package:quack_app/core/user/user.dart';
 
-// Profile screen implements the screen for the profile page
+// RafaelPiloto10:
+//Cannot be tested (https://flutter.dev/docs/release/breaking-changes/rendereditable-layout-before-hit-test)
+
 class SetLocationScreen extends StatefulWidget {
   const SetLocationScreen({Key? key}) : super(key: key);
 
