@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 
+
 class Database():
     def __init__(self, username: str, password: str):
         self.client = None
@@ -31,7 +32,7 @@ class Database():
         users = self.db["users"]
 
         if users.count_documents({"email": login_info['email']}, limit = 1) > 0:
-            return {"err" : "Email already exists. Use a different email."}
+            return {"err": "Email already exists. Use a different email."}
 
         if not dry_run:
             print("[Database.py] Dry run not updating database")

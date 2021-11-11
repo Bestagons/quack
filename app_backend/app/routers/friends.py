@@ -27,6 +27,7 @@ router.add_middleware(
 async def root():
     return {"msg": "This is the App Backend!"}
 
+
 class AddFriend(BaseModel):
     uuid: str
     fuuid: str
