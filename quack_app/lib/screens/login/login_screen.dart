@@ -13,7 +13,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late MenuData menuData;
   void authenticate() async {
     String auth = await Auth().getAuth();
     if (auth != "") {
@@ -40,7 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    //menuData = MenuData();
     authenticate();
   }
 
