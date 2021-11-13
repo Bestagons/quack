@@ -2,6 +2,7 @@ import dct
 
 def test_dct_creation():
     DCT = dct.DCT()
+    assert len(DCT.menu) == 0
     assert len(DCT.stations) == 0
     assert len(DCT.serve_times) == 0
 
