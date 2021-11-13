@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from dct import DCT
-import json
 
 app = FastAPI()
 dct = DCT()
@@ -17,7 +16,6 @@ dct.save_food_item('Avacado Grilled Cheese', '605 Kitchen','Dinner','102',['vega
 dct.save_food_item('French Fries', 'Spice','Dinner','102',['vegan', 'carbs'])
 dct.save_food_item('Veggie Fried Rice', 'Luncheonnette','Dinner','102',['vegan', 'carbs'])
 dct.save_food_item('Portobello Mushrooms', 'Luncheonnette','Dinner','102',['vegan', 'carbs'])
-
 
 dct.save_serve_time('Breakfast', '7am - 10am')
 dct.save_serve_time('Lunch', '11am - 2pm')
