@@ -75,6 +75,7 @@ class MenuData {
 
   // loadData loads all data that needs to be fetched from the server at once
   Future loadData() async {
+    await getDCTData();
     await loadCurrentServeTime();
     await loadTodaysMenu().then((_) {
       loadCurrentMenu();

@@ -26,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
             builder: (context) => LoadingScreen(
               routeTo: "/home",
               waitOn: () async {
-                await MenuData().getDCTData();
                 await MenuData().loadData();
                 await Future.delayed(const Duration(seconds: 2), () {});
                 return Future.value("");
@@ -168,7 +167,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   waitOn: () async {
                                     Auth().saveAuth(emailController.text,
                                         passwordController.text);
-                                    await MenuData().getDCTData();
                                     await MenuData().loadData();
                                     await Future.delayed(
                                         const Duration(seconds: 2), () {});
