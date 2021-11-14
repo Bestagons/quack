@@ -19,10 +19,3 @@ class Reviews():
         resp.status_code = status.HTTP_201_CREATED
         return {"msg": "Review has been successfully created."}
 
-    def delete_review_in_db(review_rating: dict):
-        if review_collection.count_documents({"_id": review_rating['_id']}, limit = 1) == 0: # review does not exist
-            resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err": "Review does not exist"}
-        review_collection.delete_one(review_rating)
-        resp.status_code = status.HTTP_201_CREATED
-        return {"msg": "Review has been successfully deleted."}
