@@ -12,11 +12,27 @@ app = FastAPI()
 resp = Response
 
 class Reviews():
-    def save_review_in_db(review_rating: dict):
-        if review_collection.count_documents({"_id": review_rating['_id']}, limit = 1) > 0: # each user can add one review per food item
+    @app.post("/reviews/", status_code=status.HTTP_201_CREATED)
+    async def save_review_in_db(review_rating: dict):
+        if review_collection.count_documents({"username": review_rating['username']}, limit = 1) > 0: # each user can add one review per food item
             resp.status_code = status.HTTP_400_BAD_REQUEST
             return {"err": "User has already made a review."}
         review_collection.insert_one(review_rating)
         resp.status_code = status.HTTP_201_CREATED
         return {"msg": "Review has been successfully created."}
+    
+    @app.post("/reviews/", status_code=status.HTTP_201_CREATED)
+    async def edit_review_in_db(review_rating: dict):
+        if review_collection.count_documents({"username": review_rating['username']}, limit = 1) == 0: # review does not exist
+            resp.status_code = status.HTTP_400_BAD_REQUEST
+            return {"err": "User's review does not exist"}
+        
+        review_collection.delete_one({"username": review_rating['username'] }) # delete
+        review_collection.insert_one(review_rating) # replacement
+        resp.status_code = status.HTTP_201_CREATED
+        return {"msg": "Review has been successfully edited."}
+
+    @app.get("/reviews/")
+    async def get_review_in_db(review_rating: dict):
+        
 
