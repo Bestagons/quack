@@ -27,15 +27,4 @@ class Database():
             raise Exception("No client has been connected yet or a database was not found!")
         return self.db.command(cmd)
 
-    def save_user_in_db(self, login_info: dict, dry_run = False): #change name
-        reviews = self.db["reviews"]
-
-        if reviews.count_documents({"email": login_info['email']}, limit = 1) > 0: # todo delete
-            return {"err" : "Email already exists. Use a different email."}
-
-        if not dry_run:
-            print("[Database.py] Dry run not updating database")
-            login_info["verified"] = False
-            reviews.insert_one(login_info) # enter info in db
-
-        return {"msg": "Successfully registered new user."}
+    
