@@ -1,0 +1,41 @@
+from pymongo import MongoClient
+
+class Database():
+    def __init__(self, username: str, password: str):
+        self.client = None
+        self.db = None
+        self.username = username
+        self.password = password
+
+    def connect(self):
+        print("Connecting to database...")
+        if self.username is not None and self.password is not None:
+            self.client = MongoClient(f"mongodb+srv://{self.username}:{self.password}@quackcluster.kbete.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+            self.db = self.client["food"]
+        else:
+            print("Error trying to connect to DB")
+            raise Exception("Parameters passed may be None; ensure your .env file is setup!")
+
+    def has_client(self):
+        return self.client is not None
+
+    def has_db(self):
+        return self.db is not None
+
+    def command(self, cmd: str):
+        if not self.has_db():
+            raise Exception("No client has been connected yet or a database was not found!")
+        return self.db.command(cmd)
+
+    def save_user_in_db(self, login_info: dict, dry_run = False): #change name
+        reviews = self.db["reviews"]
+
+        if reviews.count_documents({"email": login_info['email']}, limit = 1) > 0: # todo delete
+            return {"err" : "Email already exists. Use a different email."}
+
+        if not dry_run:
+            print("[Database.py] Dry run not updating database")
+            login_info["verified"] = False
+            reviews.insert_one(login_info) # enter info in db
+
+        return {"msg": "Successfully registered new user."}
