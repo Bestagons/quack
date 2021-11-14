@@ -8,6 +8,7 @@ db = Database(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
 db.connect()
 food_db = db.client["food"]
 review_collection = food_db["reviews"]
+app = FastAPI()
 resp = Response
 
 class Reviews():
