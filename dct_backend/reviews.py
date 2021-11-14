@@ -20,6 +20,7 @@ class Reviews():
         review_collection.insert_one(review_rating)
         resp.status_code = status.HTTP_201_CREATED
         return {"msg": "Review has been successfully created."}
+        
     
     @app.post("/reviews/", status_code=status.HTTP_201_CREATED)
     async def edit_review_in_db(review_rating: dict):
@@ -32,7 +33,6 @@ class Reviews():
         resp.status_code = status.HTTP_201_CREATED
         return {"msg": "Review has been successfully edited."}
 
-    @app.get("/reviews/")
-    async def get_review_in_db(review_rating: dict):
-        
-
+    # @app.get("/reviews/")
+    # async def get_review_in_db(review_rating: dict):
+    #  TODO: GET REVIEW: don't know how to do that yet.
