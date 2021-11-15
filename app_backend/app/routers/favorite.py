@@ -1,28 +1,25 @@
-from pydantic import BaseModel
 from fastapi import APIRouter, Response, status
+from pydantic import BaseModel
+
+router = APIRouter(prefix="/favorites")
 
 
-print("Starting server...")
-
-router = APIRouter(prefix="/friends")
-
-
-class AddFriend(BaseModel):
-    uuid: str
-    fuuid: str
-
+class Favorite(BaseModel):
+    food_id: str
+    state: int
 
 """
-    add_friend implements the /new-friend route
+    toggle_favorite implements the /toggle_favorite route
 
     resp: Response
         The response to send back to the user which contains the status code and body
 
-    uuid: str
-        The UUID of the user who is adding the new friend
+    food_id: str
+        The UUID of the food to be toggled
 
-    fuuid: str
-        The UUID of the friend to be added
+    state: int
+        The new state of the food. 0 for unfavorited, 1 for favorited. 
+        Repeating the same state will not change the state.
 
     returns Response
         Response.body: dict
@@ -30,26 +27,21 @@ class AddFriend(BaseModel):
         Response.status: int
             The status code for the request
 """
-@router.post("/new-friend/", status_code=status.HTTP_201_CREATED)
-async def add_friend(resp: Response, friend: AddFriend):
-    # check if the uuid exists
-    if friend.uuid == "":
+@router.post("/toggle-favorite/", status_code=status.HTTP_200_OK)
+async def toggle_favorite(resp: Response, favorite: Favorite):
+    # check if state is valid
+    if favorite.state not in [0, 1]:
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err": "Invalid UUID"}
-    if friend.fuuid == "":
+        return {"err": "Invalid state"}
+    # check if food_id is empty
+    if favorite.food_id == "":
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err": "Invalid Friend UUID"}
+        return {"err": "Empty food_id"}
 
-    # check if the uuid does not already contain fuuid
-    if friend.uuid == friend.fuuid:
-        resp.status_code = status.HTTP_406_NOT_ACCEPTABLE
-        return {"err" : "Invalid combination of UUIDs"}
+    existing_food_state = 0  # TODO: get food_id's state here
+    if existing_food_state == favorite.state:
+        resp.status_code = status.HTTP_200_OK
+        return {"msg": "No row is affected."}
 
-    uuid_friends = ["test_uuid"]  # TODO: get uuid's friends here
-    if friend.fuuid in uuid_friends:
-        resp.status_code = status.HTTP_412_PRECONDITION_FAILED
-        return {"err" : "FUUID already linked to UUID"}
-
-    # add fuuid
-    uuid_friends.append(friend.fuuid)
-    return {"msg" : "FUUID has been successfully linked to UUID"}
+    # toggle food_id
+    return {"msg": "Food ID has been successfully toggled"}
