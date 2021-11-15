@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from models.user import User
 from dotenv import load_dotenv
+from app.routers import notification
 
 import re
 import os
@@ -21,6 +22,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(notification.router)
+
 
 @app.get("/")
 async def root():
@@ -68,20 +72,6 @@ async def add_friend(resp: Response, uuid: str = None, fuuid: str = None):
     # add fuuid
     uuid_friends.append(fuuid)
     return {"msg" : "FUUID has been successfully linked to UUID"}
-
-"""
-    UserLogin model keeps track of the user login information
-    username: str
-        The username of the user
-    email: str
-        The email of the user
-    password: str
-        The password of the user
-"""
-class User(BaseModel):
-    name: str
-    email: str
-    password: str
 
 
 """
