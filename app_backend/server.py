@@ -2,6 +2,8 @@ from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
+from auth_bearer import JWTBearer
+from auth_handler import signJWT
 
 import re
 import os
@@ -116,7 +118,7 @@ async def login(login: User, resp: Response):
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "This user does not exist. Please try different credentials."}
         
-    return {"msg": "Successfully logged in"}
+    return {"msg": "Successfully logged in"}, signJWT(user["email"])
 
 """
     registeruser implements the /register/ route
@@ -168,6 +170,8 @@ async def register(login: User, resp: Response):
     msg = db.save_user_in_db(new_user)
     if "err" in msg:
         resp.status_code = status.HTTP_400_BAD_REQUEST
+    else:
+        return msg, signJWT(new_user["email"])
 
     return msg
 
