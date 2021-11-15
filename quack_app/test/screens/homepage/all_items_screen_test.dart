@@ -12,6 +12,7 @@ import 'package:quack_app/screens/homepage/home_screen.dart';
 Future<void> main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   List<String> creds = await TestAuth().getAuthCredentials();
+  MenuData().isTest = true;
   group("All Items Screen", () {
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
