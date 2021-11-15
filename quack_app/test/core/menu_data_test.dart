@@ -3,6 +3,7 @@ import 'package:quack_app/core/item.dart';
 import 'package:quack_app/core/menu_data.dart';
 
 void main() {
+  MenuData().isTest = true;
   group("MenuData", () {
     MenuData menuData = MenuData();
 
