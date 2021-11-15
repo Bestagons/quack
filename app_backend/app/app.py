@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import favorites, friends
+from .routers import favorites, friends, user
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -16,6 +16,7 @@ app.add_middleware(
 
 app.include_router(favorites.router)
 app.include_router(friends.router)
+app.include_router(user.router)
 
 
 @app.get("/")

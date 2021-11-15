@@ -9,6 +9,7 @@ client = TestClient(app)
 
 load_dotenv()
 
+
 class TestDatabase(database.Database):
     def __init__(self, username, password):
         super().__init__(username, password)
@@ -43,7 +44,7 @@ def test_new_friend():
     for test_case in test_cases:
         uuid_q = f"uuid={test_case.uuid}" if test_case.uuid is not None else ""
         fuuid_q = f"fuuid={test_case.fuuid}" if test_case.fuuid is not None else ""
-        query = f"/new-friend?{uuid_q}&{fuuid_q}"
+        query = f"/friends/new-friend?{uuid_q}&{fuuid_q}"
         print("Testing: " + query)
         response = client.post(query)
         assert response.status_code == test_case.expected_status_code
@@ -51,7 +52,7 @@ def test_new_friend():
 
 
 def test_login():
-    response = client.get("/login")
+    response = client.get("/user/login")
     assert response.status_code == 200
     assert response.json() == {"msg": "This is the login page!"}
 
@@ -81,7 +82,7 @@ def test_register():
 
     for test_case in test_cases:
         print(test_case.to_json())
-        response = client.post("/register", json=test_case.to_json())
+        response = client.post("/user/register", json=test_case.to_json())
         print(response.json())
         assert response.status_code == test_case.expects_err
         # temporarily will not check success json response because
