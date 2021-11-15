@@ -6,6 +6,10 @@ class DCT():
         self.menu = []
         self.stations = {}
         self.serve_times = {}
+        self.takeout_capacity = 0
+        self.dinein_capacity = 0
+        self.total_capacity = 0
+
     """
         save_station adds a station to the tracked station list
 
@@ -67,10 +71,9 @@ class DCT():
 
     """
         update_line_speed updates the line speed of the given station
-        
+
         station: str 
             The station to update the line speed property
-
         line_speed: float
             The new speed of the station line
     """
@@ -78,3 +81,36 @@ class DCT():
         if station in self.stations:
             self.stations[station].update_line_speed(line_speed)
             
+    """
+        incoming_dct_traffic adds people who are scanning into the dct
+
+        takeout: int
+            The current number of takeout scanning in
+        dinein: int
+            The current number of dinein scanning in
+        returns: 
+            self.takeout_capacity, self.dinein_capacity, self.total_capacity
+    """
+    def incoming_dct_traffic(self, takeout: int, dinein: int):
+        self.takeout_capacity += takeout
+        self.dinein_capacity += dinein
+        incomingtraffic = takeout + dinein
+        self.total_capacity += incomingtraffic
+        return self.takeout_capacity, self.dinein_capacity, self.total_capacity
+
+    """
+        outgoing_dct_traffic subtracts people who are leaving the dct
+        
+        takeout: int
+            The current number of takeout leaving
+        dinein: int
+            The current number of dinein leaving
+        returns: 
+            self.takeout_capacity, self.dinein_capacity, self.total_capacity
+    """
+    def outgoing_dct_traffic(self, takeout: int, dinein: int):
+        self.takeout_capacity = max(self.takeout_capacity - takeout, 0)
+        self.dinein_capacity = max(self.dinein_capacity - dinein, 0)
+        outgoingtraffic = takeout + dinein
+        self.total_capacity = max(self.total_capacity - outgoingtraffic, 0)
+        return self.takeout_capacity, self.dinein_capacity, self.total_capacity
