@@ -53,7 +53,7 @@ class DCT():
         if item not in self.menu:
             self.menu.append(item)
         return item
-        
+
     """
         save_serve_time saves a serving period and the time associated with it
         period: str
@@ -77,3 +77,4 @@ class DCT():
     def update_line_speed(self, station: str, line_speed: float):
         if station in self.stations:
             self.stations[station].update_line_speed(line_speed)
+            
