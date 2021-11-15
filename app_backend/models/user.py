@@ -1,5 +1,6 @@
 from bson import ObjectId
 from pydantic import BaseModel, Field
+from typing import Optional
 
 
 class PyObjectId(ObjectId):
@@ -30,4 +31,4 @@ class User(BaseModel):
     name: str
     email: str
     password: str
-    devices: list
+    devices: Optional[list]
