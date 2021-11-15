@@ -1,27 +1,12 @@
-from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi import APIRouter, Response, status
-from dotenv import load_dotenv
+from app.dependencies import db
 
 import re
-import os
 
-from database import Database
-
-load_dotenv()
-db = Database(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
-db.connect()
 print("Starting server...")
 
 router = APIRouter(prefix="/friends")
-
-router.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 @router.get("/")
 async def root():

@@ -1,11 +1,11 @@
-import server
+from app.app import app
 import database
 from fastapi.testclient import TestClient
 from fastapi import status
 from dotenv import load_dotenv
 import os
 
-client = TestClient(server.app)
+client = TestClient(app)
 
 load_dotenv()
 
@@ -18,7 +18,7 @@ class TestDatabase(database.Database):
 
 test_db = TestDatabase(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
 test_db.connect()
-server.db = test_db
+app.db = test_db
 
 def test_root():
     response = client.get("/")
