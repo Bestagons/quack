@@ -53,7 +53,15 @@ class DCT():
         if item not in self.menu:
             self.menu.append(item)
         return item
+        
+    """
+        save_serve_time saves a serving period and the time associated with it
+        period: str
+            A period of time (Ex: Breakfast)
 
+        time: str
+            The actual specified time of the period (Ex: 7am - 10am)
+    """
     def save_serve_time(self, period: str, time: str):
         self.serve_times[period] = time
 
