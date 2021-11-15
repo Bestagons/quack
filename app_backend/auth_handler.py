@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import os
 
 import jwt
-# from decouple import config
 
 JWT_SECRET = os.getenv("SECRET")
 JWT_ALGORITHM = os.getenv("ALGORITHM")
