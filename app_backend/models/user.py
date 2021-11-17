@@ -1,6 +1,6 @@
 from bson import ObjectId
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
 
 
 class PyObjectId(ObjectId):
@@ -31,4 +31,7 @@ class User(BaseModel):
     name: str
     email: str
     password: str
-    devices: Optional[list]
+    devices: List[str] = []
+    friends: List[PyObjectId] = []
+    favorites: List[str] = []
+    is_sharing_location: bool = False
