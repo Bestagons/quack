@@ -76,6 +76,7 @@ University students who are on meal plans
 
 - Your Name (Your Role)
 - @RafaelPiloto10 (Scrum Master)
+- @foxworth22 (Product Owner)
 - @oreorz (Team Member)
 - @brendacano (Team Member)
 - @MimiOlayeye (Team Member)
