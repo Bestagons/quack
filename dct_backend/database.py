@@ -10,17 +10,17 @@ class Database():
     def connect(self):
         print("Connecting to database...")
         if self.username is not None and self.password is not None:
-            self.client = MongoClient(f"mongodb+srv://{self.username}:{self.password}@quackcluster.kbete.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-            self.db = self.client["food"]
+            self.client = MongoClient(f"mongodb+srv://{self.username}:{self.password}@quackcluster.kbete.mongodb.net/myFirstDatabase?retryWrites=true&w=majority") # client with the unique username and password
+            self.db = self.client["food"] # connecting database to the food collection
         else:
             print("Error trying to connect to DB")
             raise Exception("Parameters passed may be None; ensure your .env file is setup!")
 
     def has_client(self):
-        return self.client is not None
+        return self.client is not None # returns client if available ("not None")
 
     def has_db(self):
-        return self.db is not None
+        return self.db is not None # returns food collection if available ("not None")
 
     def command(self, cmd: str):
         if not self.has_db():
