@@ -1,7 +1,7 @@
-from app.dependencies import db
 from pydantic import BaseModel
 from fastapi import APIRouter, status, Response
 import re
+from database import db
 
 router = APIRouter(prefix="/user")
 

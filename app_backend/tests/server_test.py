@@ -7,19 +7,19 @@ import os
 
 client = TestClient(app)
 
-load_dotenv()
-
-
-class TestDatabase(database.Database):
-    def __init__(self, username, password):
-        super().__init__(username, password)
-
-    def save_user_in_db(self, login_info):
-        return super().save_user_in_db(login_info, dry_run=True)
-
-test_db = TestDatabase(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
-test_db.connect()
-app.db = test_db
+# load_dotenv()
+#
+#
+# class TestDatabase(database.Database):
+#     def __init__(self, username, password):
+#         super().__init__(username, password)
+#
+#     def save_user_in_db(self, login_info):
+#         return super().save_user_in_db(login_info, dry_run=True)
+#
+# test_db = TestDatabase(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
+# test_db.connect()
+# database.db = test_db
 
 def test_root():
     response = client.get("/")
@@ -31,6 +31,7 @@ def test_login():
     response = client.get("/user/login")
     assert response.status_code == 200
     assert response.json() == {"msg": "This is the login page!"}
+
 
 def test_register():
 
