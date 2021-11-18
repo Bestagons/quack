@@ -14,21 +14,21 @@ title = soup.title
 # print(title.prettify()) #prettify() can be a useful beautifulsoup method
 title = title.get_text()
 
-def scrapeFood(mealtime, mealname, station):
+def scrapeFood(mealtime, mealname, station_soup):
     # finish up from 'for each station'
-    stationName = station.find('h3', attrs = {'class':'site-panel__daypart-station-title'}).get_text()
+    stationName = station_soup.find('h3', attrs = {'class':'site-panel__daypart-station-title'}).get_text()
     # food frames
-    foodFrames = station.findAll('div', attrs = {'class':'site-panel__daypart-item site-panel__daypart-item--has-well-being'})
-    foodFrames.extend(station.findAll('div', attrs = {'class':'site-panel__daypart-item'}))
-    for item in foodFrames:
+    foodFrames_soup = station_soup.findAll('div', attrs = {'class':'site-panel__daypart-item site-panel__daypart-item--has-well-being'})
+    foodFrames_soup.extend(station_soup.findAll('div', attrs = {'class':'site-panel__daypart-item'}))
+    for item_soup in foodFrames_soup:
         # # scraping
-        foodname = item.find('button', attrs = {'class':'h4 site-panel__daypart-item-title'}).get_text().strip()
-        foodcats = item.find('span', attrs = {'class':'site-panel__daypart-item-cor-icons'})
+        foodname = item_soup.find('button', attrs = {'class':'h4 site-panel__daypart-item-title'}).get_text().strip()
+        foodcats = item_soup.find('span', attrs = {'class':'site-panel__daypart-item-cor-icons'})
         if foodcats:
-            foodcats = item.find('span', attrs = {'class':'site-panel__daypart-item-cor-icons'}).findAll('img')
-        foodcal = item.find('div', attrs = {'class':'site-panel__daypart-item-calories'}).get_text().replace('cal.','').strip()
+            foodcats = item_soup.find('span', attrs = {'class':'site-panel__daypart-item-cor-icons'}).findAll('img')
+        foodcal = item_soup.find('div', attrs = {'class':'site-panel__daypart-item-calories'}).get_text().replace('cal.','').strip()
         if foodcal:
-            foodcal = int(item.find('div', attrs = {'class':'site-panel__daypart-item-calories'}).get_text().replace('cal.','').strip())
+            foodcal = int(item_soup.find('div', attrs = {'class':'site-panel__daypart-item-calories'}).get_text().replace('cal.','').strip())
         else:
             foodcal = -1
         # # printing
@@ -51,20 +51,23 @@ def scrapeFood(mealtime, mealname, station):
         # return statement for logging purposes
         return "At " + str(stationName) + " from " + str(mealtime) + ", " + str(foodname) + " is served."  
 
-# MAIN
+def scrapeFrame():
+    log = []
+    frames_soup = soup.findAll('section', attrs = {'class':'panel s-wrapper site-panel site-panel--daypart'})
+    frames_soup.extend(soup.findAll('section', attrs = {'class':'panel s-wrapper site-panel site-panel--daypart site-panel--daypart-even'}))
+    for frame_soup in frames_soup:
+        mealtime = frame_soup.find('div', attrs = {'class':'site-panel__daypart-time'}).get_text()
+        mealname = frame_soup.find('h2', class_='panel__title site-panel__daypart-panel-title').get_text()
+        stationFrames_soup = frame_soup.findAll('div', attrs = {'class':'station-title-inline-block'})
+        for station_soup in stationFrames_soup:
+            log.append(scrapeFood(mealtime, mealname, station_soup))
+    return log
 
-# frames
-frames = soup.findAll('section', attrs = {'class':'panel s-wrapper site-panel site-panel--daypart'})
-frames.extend(soup.findAll('section', attrs = {'class':'panel s-wrapper site-panel site-panel--daypart site-panel--daypart-even'}))
-for frame in frames:
-    mealtime = frame.find('div', attrs = {'class':'site-panel__daypart-time'}).get_text()
-    mealname = frame.find('h2', class_='panel__title site-panel__daypart-panel-title').get_text()
-    stationFrames = frame.findAll('div', attrs = {'class':'station-title-inline-block'})
-    for station in stationFrames:
-        scrapeFood(mealtime, mealname, station)
-# end frames
+# MAIN
+output = scrapeFrame()
 
 # printing
+print(len(output))
 # print(DCT.menu)
 # print('food served today:')
 # for item in DCT.menu:
