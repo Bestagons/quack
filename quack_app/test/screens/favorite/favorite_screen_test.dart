@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/item.dart';
-import 'package:quack_app/core/menu_data.dart';
-import 'package:quack_app/core/test_auth.dart';
+import 'package:quack_app/core/food/food_item.dart';
+import 'package:quack_app/core/food/menu_data.dart';
+import 'package:quack_app/core/auth/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/favorite/favorite_screen.dart';
 
@@ -39,7 +39,7 @@ void main() async {
       await expectLater(find.byType(FavoriteScreen),
           matchesGoldenFile('goldens/favorite_like_pita.png'));
       int totalFavorited = 0;
-      for (Item item in MenuData().getAllMenu()) {
+      for (FoodItem item in MenuData().getAllMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 1);
@@ -57,7 +57,7 @@ void main() async {
       await tester.tap(find.byIcon(Constants.kFavorited).first);
       await tester.pumpAndSettle(const Duration(seconds: 2));
       int totalFavorited = 0;
-      for (Item item in MenuData().getAllMenu()) {
+      for (FoodItem item in MenuData().getAllMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(find.text("Mediterranean Pita"), findsNothing);

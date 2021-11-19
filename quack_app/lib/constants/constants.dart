@@ -20,4 +20,25 @@ class Constants {
   static const IconData kNavBarFavoritesActiveIcon = Icons.favorite;
   static const IconData kNavBarProfileIcon = Icons.person_outline;
   static const IconData kNavBarProfileActiveIcon = Icons.person;
+
+  static const Color kSeatingSectionOne = Color(0xffff0505);
+  static const Color kSeatingSectionTwo = Color(0xffff8305);
+  static const Color kSeatingSectionThree = Color(0xfff4ff05);
+  static const Color kSeatingSectionFour = Color(0xff0eff05);
+  static const Color kSeatingSectionFive = Color(0xff058bff);
+  static const Color kSeatingSectionSix = Color(0xff05fff8);
+  static const Color kSeatingSectionSeven = Color(0xff8d05ff);
+  static const Color kSeatingSectionEight = Color(0xff2d05ff);
+  static const Color kSeatingSectionNine = Color(0xffff05de);
+  static const List<Color> kSeatingSections = [
+    kSeatingSectionOne,
+    kSeatingSectionTwo,
+    kSeatingSectionThree,
+    kSeatingSectionFour,
+    kSeatingSectionFive,
+    kSeatingSectionSix,
+    kSeatingSectionSeven,
+    kSeatingSectionEight,
+    kSeatingSectionNine
+  ];
 }

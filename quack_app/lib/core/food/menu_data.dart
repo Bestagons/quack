@@ -1,10 +1,10 @@
-import 'package:quack_app/core/item.dart';
+import 'package:quack_app/core/food/food_item.dart';
 
 // MenuData implements logic for menu related data as a Singleton
 class MenuData {
   String _currentServeTime = "";
-  List<Item> _allMenu = List.empty();
-  List<Item> _currentMenu = List.empty();
+  List<FoodItem> _allMenu = List.empty();
+  List<FoodItem> _currentMenu = List.empty();
   List<String> _stations = List.empty();
   List<String> _serveTimes = List.empty();
 
@@ -55,7 +55,7 @@ class MenuData {
 
     // TODO: Implement DCT Backend
     _allMenu = List.generate(foods.length, (index) {
-      return Item(
+      return FoodItem(
           foods[index],
           "",
           false,
@@ -82,12 +82,12 @@ class MenuData {
   }
 
   // getCurrentMenu returns the menu currently being served
-  List<Item> getCurrentMenu() {
+  List<FoodItem> getCurrentMenu() {
     return _currentMenu;
   }
 
   // getAllMenu returns the menu with all items for the entire day
-  List<Item> getAllMenu() {
+  List<FoodItem> getAllMenu() {
     return _allMenu;
   }
 
@@ -98,7 +98,7 @@ class MenuData {
   }
 
   // menuFilteredBy returns a list of items filtered by the passed in filter
-  List<Item> menuFilteredBy(Function(Item item) filter) {
+  List<FoodItem> menuFilteredBy(Function(FoodItem item) filter) {
     return getAllMenu().where((item) => filter(item)).toList();
   }
 
