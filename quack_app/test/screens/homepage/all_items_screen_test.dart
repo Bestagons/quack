@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/item.dart';
-import 'package:quack_app/core/menu_data.dart';
-import 'package:quack_app/core/test_auth.dart';
+import 'package:quack_app/core/food/food_item.dart';
+import 'package:quack_app/core/food/menu_data.dart';
+import 'package:quack_app/core/auth/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/homepage/all_items_screen.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
@@ -43,7 +43,7 @@ Future<void> main() async {
       await expectLater(find.byType(AllItemsScreen),
           matchesGoldenFile('goldens/all_items_like_food.png'));
       int totalFavorited = 0;
-      for (Item item in MenuData().getAllMenu()) {
+      for (FoodItem item in MenuData().getAllMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 1);
@@ -68,7 +68,7 @@ Future<void> main() async {
       await expectLater(find.byType(AllItemsScreen),
           matchesGoldenFile('goldens/all_items_like_three_food.png'));
       int totalFavorited = 0;
-      for (Item item in MenuData().getAllMenu()) {
+      for (FoodItem item in MenuData().getAllMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 3);
@@ -108,7 +108,7 @@ Future<void> main() async {
       await expectLater(find.byType(AllItemsScreen),
           matchesGoldenFile('goldens/all_items_like_last_and_scroll.png'));
       int totalFavorited = 0;
-      for (Item item in MenuData().getAllMenu()) {
+      for (FoodItem item in MenuData().getAllMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 1);
