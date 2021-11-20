@@ -1,9 +1,13 @@
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from auth_bearer import JWTBearer
-from auth_handler import signJWT
 from fastapi import APIRouter, status, Response
 import re
+import json
+from bson import BSON
+from bson import json_util
+
+from app.auth_bearer import JWTBearer
+from app.auth_handler import signJWT
 from database import db
 
 router = APIRouter(prefix="/user")
@@ -40,7 +44,7 @@ class User(BaseModel):
         JWT Token
             The token required to access specific routes
 """
-@app.post("/login")
+@router.post("/login")
 async def login(login: User, resp: Response):
     name = login.name
     email = login.email
@@ -56,12 +60,12 @@ async def login(login: User, resp: Response):
 
     if db_user is None:
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err": "This user does not exist. Please try different credentials."}
-        
-    return {"msg": "Successfully logged in"}, signJWT(user["email"])
+        return {"err": "This user does not exist. Please try different credentials."}, {}, None
+
+    return {"msg": "Successfully logged in"}, signJWT(user["email"]), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
 
 """
-    registeruser implements the /register/ route
+    register implements the /register/ route
 
     login: User
         The UserLogin model that includes the username, email, and password
