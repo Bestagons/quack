@@ -1,12 +1,12 @@
-import 'package:quack_app/core/item.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:quack_app/core/food/food_item.dart';
 
 // MenuData implements logic for menu related data as a Singleton
 class MenuData {
   String _currentServeTime = "";
-  final List<Item> _allMenu = [];
-  List<Item> _currentMenu = List.empty();
+  List<FoodItem> _allMenu = List.empty();
+  List<FoodItem> _currentMenu = List.empty();
   List<String> _stations = List.empty();
   List<String> _serveTimes = List.empty();
   Map<String, dynamic> _data = {};
@@ -34,7 +34,7 @@ class MenuData {
     for (var s in stations.keys) {
       List menu = stations[s]['menu'];
       for(var item in menu){
-              _allMenu.add(Item(
+              _allMenu.add(FoodItem(
                 item['name'],
                 item['categories'], 
                 false, // TODO: Implement checking user database for if item is favorited 
@@ -83,12 +83,12 @@ class MenuData {
   }
 
   // getCurrentMenu returns the menu currently being served
-  List<Item> getCurrentMenu() {
+  List<FoodItem> getCurrentMenu() {
     return _currentMenu;
   }
 
   // getAllMenu returns the menu with all items for the entire day
-  List<Item> getAllMenu() {
+  List<FoodItem> getAllMenu() {
     return _allMenu;
   }
 
@@ -99,7 +99,7 @@ class MenuData {
   }
 
   // menuFilteredBy returns a list of items filtered by the passed in filter
-  List<Item> menuFilteredBy(Function(Item item) filter) {
+  List<FoodItem> menuFilteredBy(Function(FoodItem item) filter) {
     return getAllMenu().where((item) => filter(item)).toList();
   }
 

@@ -42,13 +42,13 @@ void main() {
           matchesGoldenFile('goldens/favorites_active.png'));
     });
 
-    testGoldens("profile_active", (WidgetTester tester) async {
+    testGoldens("friends_active", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
       await tester.tap(find.byIcon(Constants.kNavBarProfileIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));
       await expectLater(
-          find.byType(NavBar), matchesGoldenFile('goldens/profile_active.png'));
+          find.byType(NavBar), matchesGoldenFile('goldens/friends_active.png'));
     });
   });
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quack_app/core/auth.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/core/auth/auth.dart';
+import 'package:quack_app/core/food/menu_data.dart';
 import 'package:quack_app/screens/loading/loading_screen.dart';
 
 class LoginScreen extends StatefulWidget {
