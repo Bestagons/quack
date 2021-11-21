@@ -3,7 +3,7 @@ import 'package:quack_app/core/user/user.dart';
 
 class FoodItem {
   final String _name;
-  final String _category;
+  final List _category;
   bool _isFavorite;
   final bool _isCurrentlyBeingServed;
   final String _serveTime;
@@ -30,7 +30,7 @@ class FoodItem {
     return _name;
   }
 
-  String getCategory() {
+  List getCategory() {
     return _category;
   }
 
