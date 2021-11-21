@@ -5,7 +5,7 @@ import 'package:quack_app/core/food/food_item.dart';
 // MenuData implements logic for menu related data as a Singleton
 class MenuData {
   String _currentServeTime = "";
-  List<FoodItem> _allMenu = List.empty();
+  List<FoodItem> _allMenu = [];
   List<FoodItem> _currentMenu = List.empty();
   List<String> _stations = List.empty();
   List<String> _serveTimes = List.empty();

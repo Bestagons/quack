@@ -4,7 +4,7 @@ import 'package:quack_app/core/food/food_item.dart';
 void main() {
   group("Item", () {
     test("Empty Item", () {
-      FoodItem item = FoodItem("", "", false, false, "", "");
+      FoodItem item = FoodItem("", [""], false, false, "", "");
       expect(item.getName(), "");
       expect(item.getCategory(), [""]);
       expect(item.isFavorite(), false);
