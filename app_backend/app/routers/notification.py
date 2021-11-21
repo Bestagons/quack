@@ -47,7 +47,7 @@ async def add_device(resp: Response, device_code: str):
 
 
 """
-    add_device binds a device to a user
+    remove_device removes a bind device from a user
 
     resp: Response
         The response to send back to the user which contains the status code and body
@@ -62,7 +62,7 @@ async def add_device(resp: Response, device_code: str):
             The status code for the request
 """
 @router.post("/remove_device")
-async def add_device(resp: Response, device_code: str):
+async def remove_device(resp: Response, device_code: str):
     user = User()  # Todo: Get User from JWT
     # Add the device to the user
     devices = user.devices
