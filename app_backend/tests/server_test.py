@@ -28,13 +28,29 @@ def test_root():
 
 
 def test_login():
-    response = client.get("/user/login")
-    assert response.status_code == 200
-    assert response.json() == {"msg": "This is the login page!"}
+    class Params:
+        def __init__(self, name: str, email: str, password: str, expects_code, expects_err: bool):
+            self.name = name
+            self.email = email
+            self.password = password
+            self.expects_code = expects_code
+            self.expects_err= expects_err
+        def to_json(self):
+            return {"name": self.name, "email": self.email, "password": self.password}
+    test_cases = [
+        Params('Bruce Lee', 'bruce.lee@emory.edu', 'Password1!', status.HTTP_200_OK, False),
+        Params('Bruce Lee', 'DNE@emory.edu', 'Password1!', status.HTTP_400_BAD_REQUEST, True),
+        Params('Bruce Lee', 'bruce.lee@emory.edu', 'Password1', status.HTTP_400_BAD_REQUEST, True)
+    ]
+
+    for test_case in test_cases:
+        response = client.post("user/login", json=test_case.to_json())
+        msg, _, _ = response.json()
+        assert response.status_code == test_case.expects_code
+        assert ("err" in msg) == test_case.expects_err
 
 
 def test_register():
-
     class Params:
         def __init__(self, name: str, email: str, password: str, expects_err: bool, expects_err_msg: dict):
             self.name = name
