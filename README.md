@@ -55,7 +55,7 @@ University students who are on meal plans
 
 ### Risks (could derail):
 
-- COVID
+- COVID/illness
 - Hardware issues
 - Resources not being free
 - Other class commitments
