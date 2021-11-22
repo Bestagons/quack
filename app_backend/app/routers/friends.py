@@ -1,15 +1,10 @@
-from pydantic import BaseModel
 from fastapi import APIRouter, Response, status
+from ..models.user_models import AddFriend
 
 
 print("Starting server...")
 
 router = APIRouter(prefix="/friends")
-
-
-class AddFriend(BaseModel):
-    uuid: str
-    fuuid: str
 
 
 """
@@ -32,24 +27,21 @@ class AddFriend(BaseModel):
 """
 @router.post("/new-friend/", status_code=status.HTTP_201_CREATED)
 async def add_friend(resp: Response, friend: AddFriend):
-    # check if the uuid exists
-    if friend.uuid == "":
-        resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err": "Invalid UUID"}
-    if friend.fuuid == "":
+    # TODO: Verify email/user exists
+    if friend.friend_email == "":
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "Invalid Friend UUID"}
 
     # check if the uuid does not already contain fuuid
-    if friend.uuid == friend.fuuid:
-        resp.status_code = status.HTTP_406_NOT_ACCEPTABLE
-        return {"err" : "Invalid combination of UUIDs"}
-
-    uuid_friends = ["test_uuid"]  # TODO: get uuid's friends here
-    if friend.fuuid in uuid_friends:
+    uuid_friends = ["test.friend@emory.edu"]  # TODO: get uuid's friends here
+    if friend.friend_email in uuid_friends:
         resp.status_code = status.HTTP_412_PRECONDITION_FAILED
         return {"err" : "FUUID already linked to UUID"}
 
     # add fuuid
-    uuid_friends.append(friend.fuuid)
+    uuid_friends.append(friend.friend_email)
     return {"msg" : "FUUID has been successfully linked to UUID"}
+
+@router.post("/get-friends/", status_code=status.HTTP_200_OK)
+async def get_friends(resp: Response):
+    pass
