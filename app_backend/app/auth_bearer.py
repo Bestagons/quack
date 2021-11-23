@@ -10,9 +10,9 @@ class JWTBearer(HTTPBearer):
     async def __call__(self, request: Request):
         credentials: HTTPAuthorizationCredentials = await super(JWTBearer, self).__call__(request)
         if credentials:
-            if not credentials.schema == "Bearer":
-                raise HTTPException(status_code=403, details="Invalid authentication schema.")
-            if not self.verify_jwt(credentials.credentials):
+            if not credentials.dict()["scheme"] == "Bearer":
+                raise HTTPException(status_code=403, detail="Invalid authentication schema.")
+            if not self.verify_jwt(credentials.dict()["credentials"]):
                 raise HTTPException(status_code=403, detail="Invalid token or expired token.")
             return credentials.credentials
         else:

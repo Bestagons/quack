@@ -1,11 +1,14 @@
-from fastapi import APIRouter, Response, status
+from fastapi import APIRouter, Response, status, Depends, Security
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from ..models.user_models import AddFriend
+from ..auth_bearer import JWTBearer
+from ..auth_handler import decodeJWT
 
 
 print("Starting server...")
 
 router = APIRouter(prefix="/friends")
-
+security = JWTBearer() 
 
 """
     add_friend implements the /new-friend route
@@ -42,6 +45,10 @@ async def add_friend(resp: Response, friend: AddFriend):
     uuid_friends.append(friend.friend_email)
     return {"msg" : "FUUID has been successfully linked to UUID"}
 
-@router.post("/get-friends/", status_code=status.HTTP_200_OK)
-async def get_friends(resp: Response):
-    pass
+@router.post("/get-friends/", status_code=status.HTTP_200_OK, dependencies=[Depends(security)])
+async def get_friends(resp: Response, token: HTTPAuthorizationCredentials = Security(security)):
+    payload = decodeJWT(token)
+    if payload is not None:
+        return "test"
+    else:
+        return "Unauthorized??"
