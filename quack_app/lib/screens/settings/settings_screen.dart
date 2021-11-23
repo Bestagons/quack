@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:quack_app/constants/constants.dart';
+import 'package:quack_app/core/auth/auth.dart';
+import 'package:quack_app/screens/loading/loading_screen.dart';
 import 'package:quack_app/screens/settings/subscreens/about_screen.dart';
 import 'package:quack_app/screens/settings/subscreens/account_preferences_screen.dart';
 import 'package:quack_app/screens/settings/subscreens/food_preferences_screen.dart';
@@ -67,7 +69,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         context, //
                         "About Quack App",
                         Icons.accessibility_outlined,
-                        const AboutScreen())
+                        const AboutScreen()),
+                    ListTile(
+                        onTap: () => {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoadingScreen(
+                                      routeTo: "/login",
+                                      waitOn: () async {
+                                        await Auth().destroy();
+                                        await Future.delayed(
+                                            const Duration(seconds: 2), () {});
+                                        return Future.value("");
+                                      },
+                                    ),
+                                  ),
+                                  (route) => false)
+                            },
+                        title: Row(
+                          children: [
+                            const Icon(Icons.logout),
+                            const SizedBox(width: 20),
+                            Container(
+                                decoration: const BoxDecoration(
+                                    border: Border(bottom: BorderSide())),
+                                child: AutoSizeText(
+                                  "Logout",
+                                  style: _style,
+                                  group: _group,
+                                ))
+                          ],
+                        ))
                   ]),
                 )),
           )

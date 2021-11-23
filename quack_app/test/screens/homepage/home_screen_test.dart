@@ -1,20 +1,22 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/item.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/core/food/food_item.dart';
+import 'package:quack_app/core/food/menu_data.dart';
+import 'package:quack_app/core/auth/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
-
-void main() {
+import 'package:http/http.dart' as http;
+void main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  List<String> creds = await TestAuth().getAuthCredentials();
+  MenuData().isTest = true;
   group("Home Screen Test", () {
-    MenuData fakeMenuData = MenuData();
-    fakeMenuData.loadData();
-
-    MyApp app = const MyApp();
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
+      MyApp app = const MyApp();
       await tester.pumpWidget(app);
+      await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
       await expectLater(
           find.byType(HomeScreen), matchesGoldenFile('goldens/basic_view.png'));
@@ -22,14 +24,17 @@ void main() {
 
     testGoldens("like_food", (WidgetTester tester) async {
       await loadAppFonts();
+      MyApp app = const MyApp();
+
       await tester.pumpWidget(app);
+      await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kFavorite).first);
       await tester.pumpAndSettle(const Duration(seconds: 2));
       await expectLater(
           find.byType(HomeScreen), matchesGoldenFile('goldens/like_food.png'));
       int totalFavorited = 0;
-      for (Item item in fakeMenuData.getCurrentMenu()) {
+      for (FoodItem item in MenuData().getCurrentMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 1);
@@ -37,7 +42,10 @@ void main() {
 
     testGoldens("like_three_food", (WidgetTester tester) async {
       await loadAppFonts();
+      MyApp app = const MyApp();
+
       await tester.pumpWidget(app);
+      await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kFavorite).first);
       await tester.pump();
@@ -48,7 +56,7 @@ void main() {
       await expectLater(find.byType(HomeScreen),
           matchesGoldenFile('goldens/like_three_food.png'));
       int totalFavorited = 0;
-      for (Item item in fakeMenuData.getCurrentMenu()) {
+      for (FoodItem item in MenuData().getCurrentMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 3);
@@ -56,7 +64,10 @@ void main() {
 
     testGoldens("scroll", (WidgetTester tester) async {
       await loadAppFonts();
+      MyApp app = const MyApp();
+
       await tester.pumpWidget(app);
+      await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Ceasar Salad"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -65,7 +76,10 @@ void main() {
     });
     testGoldens("like_last_and_scroll", (WidgetTester tester) async {
       await loadAppFonts();
+      MyApp app = const MyApp();
+
       await tester.pumpWidget(app);
+      await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Ceasar Salad"), 10);
       await tester.tap(find.byIcon(Constants.kFavorite).last);
@@ -73,7 +87,7 @@ void main() {
       await expectLater(find.byType(HomeScreen),
           matchesGoldenFile('goldens/like_last_and_scroll.png'));
       int totalFavorited = 0;
-      for (Item item in fakeMenuData.getCurrentMenu()) {
+      for (FoodItem item in MenuData().getCurrentMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 1);

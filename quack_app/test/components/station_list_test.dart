@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/components/station_list.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/core/food/menu_data.dart';
 
 void main() {
   group("StationList", () {
     MenuData fakeMenuData = MenuData();
+    fakeMenuData.isTest = true;
     fakeMenuData.loadData();
     group("byServeTime", () {
       MaterialApp app = MaterialApp(
@@ -15,7 +16,7 @@ void main() {
         StationList(byServeTime: true, filter: (item) => true)
       ])));
 
-      testGoldens("basic_view", (WidgetTester tester) async {
+      testGoldens("station_list_byservetime", (WidgetTester tester) async {
         await loadAppFonts();
         await tester.pumpWidget(app);
         await expectLater(find.byType(StationList),
@@ -29,7 +30,7 @@ void main() {
               body: Column(children: [
         StationList(byServeTime: false, filter: (item) => true)
       ])));
-      testGoldens("basic_view", (WidgetTester tester) async {
+      testGoldens("station_list_all", (WidgetTester tester) async {
         await loadAppFonts();
         await tester.pumpWidget(app);
         await expectLater(find.byType(StationList),
@@ -44,7 +45,7 @@ void main() {
         StationList(
             byServeTime: false, filter: (item) => item.isCurrentlyBeingServed())
       ])));
-      testGoldens("basic_view", (WidgetTester tester) async {
+      testGoldens("station_list_current", (WidgetTester tester) async {
         await loadAppFonts();
         await tester.pumpWidget(app);
         await expectLater(find.byType(StationList),
