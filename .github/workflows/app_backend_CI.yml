@@ -37,5 +37,7 @@ jobs:
         TEST_USER_NAME: ${{ secrets.TEST_USER_NAME }}
         TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }} 
         TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+        SECRET: "test_secret"
+        ALGORITHM: "HS256"
       run: |
         pytest
