@@ -26,5 +26,10 @@ def authenticate_test() -> str:
 
     assert response.status_code == status.HTTP_200_OK
     _, token, _ = response.json()
+    assert isinstance(token, dict)
+    assert "access_token" in token.keys()
+    token = token["access_token"]
+    assert isinstance(token, str)
+    assert token != ""
     return token
 

@@ -37,11 +37,6 @@ def test_get_friends():
             self.expects_err = expects_err
 
     token = authenticate_test()
-    assert isinstance(token, dict)
-    assert "access_token" in token.keys()
-    token = token["access_token"]
-    assert isinstance(token, str)
-    assert token != ""
 
     test_cases = [Params(token, status.HTTP_200_OK, False)]
 
