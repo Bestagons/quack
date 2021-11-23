@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/item.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/core/food/food_item.dart';
+import 'package:quack_app/core/food/menu_data.dart';
 import 'package:quack_app/components/food_summary.dart';
 
 // StationList returns a list of Items with a couple of configurations
@@ -11,7 +11,7 @@ import 'package:quack_app/components/food_summary.dart';
 // suffix: any widget that is appended at the end of the list
 class StationList extends StatefulWidget {
   final bool byServeTime;
-  final Function(Item item) filter;
+  final Function(FoodItem item) filter;
   final Widget? suffix;
 
   const StationList(
@@ -33,7 +33,6 @@ class _StationListState extends State<StationList> {
     stationList = getStationList();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -41,12 +40,10 @@ class _StationListState extends State<StationList> {
           color: Constants.kBackgroundGrey,
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
-            child: Column(
-                children: stationList),
+            child: Column(children: stationList),
           )),
     );
   }
-
 
   // getStationList - generates the list of items dynamically based on the passed in
   // widget parameters
@@ -70,14 +67,14 @@ class _StationListState extends State<StationList> {
       // Go through all stations
       for (String station in menuData.getStations()) {
         // provide a main filter that checks for stations or serveTime & stations
-        Function(Item item) mainFilter = widget.byServeTime
-            ? (Item item) => // Filter that checks serve time & station
+        Function(FoodItem item) mainFilter = widget.byServeTime
+            ? (FoodItem item) => // Filter that checks serve time & station
                 item.getStation().compareTo(station) == 0 &&
                 item.getServeTime().compareTo(serveTimes[i]) == 0
             // Filter that only checks for station
-            : (Item item) => item.getStation().compareTo(station) == 0;
+            : (FoodItem item) => item.getStation().compareTo(station) == 0;
 
-        List<Item> stationCurrentItems = menuData
+        List<FoodItem> stationCurrentItems = menuData
             .menuFilteredBy((item) => mainFilter(item) && widget.filter(item));
 
         if (stationCurrentItems.isEmpty) {
@@ -93,8 +90,10 @@ class _StationListState extends State<StationList> {
                     fontSize: 25, fontWeight: FontWeight.bold))));
 
         // All food items
-        for (Item item in stationCurrentItems) {
-          list.add(FoodSummary(item: item, group: _group,
+        for (FoodItem item in stationCurrentItems) {
+          list.add(FoodSummary(
+              item: item,
+              group: _group,
               onFavoritePressed: () {
                 setState(() {
                   stationList = getStationList();

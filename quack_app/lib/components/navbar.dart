@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
 import 'package:quack_app/screens/notification/notification_screen.dart';
+import 'package:quack_app/screens/friends/friends_screen.dart';
 import 'package:quack_app/screens/settings/settings_screen.dart';
-import 'package:quack_app/screens/profile/profile_screen.dart';
 import 'package:quack_app/screens/favorite/favorite_screen.dart';
 
 // Reuseable Navbar
@@ -17,8 +17,7 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   // The current index of the highlighted icon
   int currentIndex = Constants.kNavBarDefaultIndex;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   // To implement the new page,
   // change the Text() below to the page's class (i.e. HomeScreen())
   static const List<Widget> _widgetOptions = <Widget>[
@@ -26,7 +25,7 @@ class _NavBarState extends State<NavBar> {
     NotificationScreen(title: "Notifications"),
     HomeScreen(title: "Quack"),
     FavoriteScreen(title: "Favorite"),
-    ProfileScreen(title: "Profile")
+    FriendsScreen(title: "Friends")
   ];
 
   @override
@@ -76,7 +75,7 @@ class _NavBarState extends State<NavBar> {
               BottomNavigationBarItem(
                   icon: Icon(Constants.kNavBarProfileIcon,
                       color: Colors.black, size: Constants.kNavBarFontSize),
-                  label: 'Profile',
+                  label: 'Friends',
                   activeIcon: Icon(Constants.kNavBarProfileActiveIcon,
                       color: Colors.black, size: Constants.kNavBarFontSize)),
             ]));
