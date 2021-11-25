@@ -9,24 +9,9 @@ from bson import json_util
 from app.auth_bearer import JWTBearer
 from app.auth_handler import signJWT
 from database import db
+from models.user import User
 
 router = APIRouter(prefix="/user")
-
-
-"""
-    UserLogin model keeps track of the user login information
-
-    username: str
-        The username of the user
-    email: str
-        The email of the user
-    password: str
-        The password of the user
-"""
-class User(BaseModel):
-    name: str
-    email: str
-    password: str
 
 
 """
@@ -104,7 +89,7 @@ async def register(login: User, resp: Response):
     # check if password is a valid password
     if not (re.search(validPassword, password)):
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err" : "Invalid password. It must be 8 to 20 characters and have at least one upper case letter, one lower case letter, and one digit."}
+        return {"err": "Invalid password. It must be 8 to 20 characters and have at least one upper case letter, one lower case letter, and one digit."}
 
     # adds user to the database
     new_user = {
