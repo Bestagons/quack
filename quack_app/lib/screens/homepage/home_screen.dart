@@ -28,42 +28,105 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.start, //
+      //mainAxisAlignment: MainAxisAlignment.start, //
       children: <Widget>[
-        //
-        const SizedBox(
-          // white space
-          height: 30,
-        ),
-
-        Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Currently Serving: ${menuData.getServeTime()}",
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold)),
-              ),
+        Stack(children: <Widget>[
+          Container(
+            // white space
+            color: Constants.kBackgroundGrey,
+            padding: const EdgeInsets.only(
+              top: 10,
+              bottom: 10,
             ),
-            Expanded(
-                child: Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.filter_alt_outlined),
-                      color: Colors.blueAccent,
-                      iconSize: 32,
-                      onPressed: () {},
-                    )))
-          ],
-        ),
-        SizedBox(
-          height: 10,
-          child: Container(color: Constants.kBackgroundGrey),
-        ),
+            height: 100,
+            width: double.infinity,
+            // decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(30.0),
+            //     boxShadow: const [
+            //       BoxShadow(
+            //         color: Colors.black26,
+            //         offset: Offset(0.0, 2.0),
+            //         blurRadius: 6.0,
+            //       )
+            //     ]),
+            // child: 
+            // const ClipRRect(
+            //   borderRadius: BorderRadius.only(
+            //     topLeft: Radius.zero,
+            //     topRight: Radius.zero,
+            //     bottomLeft: Radius.circular(30.0),
+            //     bottomRight: Radius.circular(30.0),
+            //   ),
+            //   child: Image(
+            //     image: AssetImage('assets/background3.jpeg'),
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
+          ),
+          Positioned(
+            left: 20.0,
+            bottom: 20.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Text(
+                  'Dobbs Common Table',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    const Icon(
+                      Icons.ac_unit_sharp,
+                      size: 15.0,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(width: 5.0),
+                    Text(
+                      'Currently Serving: ${menuData.getServeTime()}',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 15.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ]), //
+        // Row(
+        //   children: <Widget>[
+        //     Padding(
+        //       padding: const EdgeInsets.all(5.0),
+        //       child: Align(
+        //         alignment: Alignment.centerLeft,
+        //         child: Text("Currently Serving: ${menuData.getServeTime()}",
+        //             style: const TextStyle(
+        //                 color: Colors.black,
+        //                 fontSize: 22,
+        //                 fontWeight: FontWeight.bold)),
+        //       ),
+        //     ),
+        //     Expanded(
+        //         child: Align(
+        //             alignment: Alignment.centerRight,
+        //             child: IconButton(
+        //               icon: const Icon(Icons.filter_alt_outlined),
+        //               color: Colors.blueAccent,
+        //               iconSize: 32,
+        //               onPressed: () {},
+        //             )))
+        //   ],
+        // ),
+        // SizedBox(
+        //   height: 10,
+        //   child: Container(color: Constants.kBackgroundGrey),
+        // ),
         StationList(
           byServeTime: false,
           filter: (item) => item.isCurrentlyBeingServed(),

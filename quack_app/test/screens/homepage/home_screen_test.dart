@@ -6,7 +6,6 @@ import 'package:quack_app/core/food/menu_data.dart';
 import 'package:quack_app/core/auth/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
-import 'package:http/http.dart' as http;
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   List<String> creds = await TestAuth().getAuthCredentials();

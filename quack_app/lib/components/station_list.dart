@@ -37,6 +37,12 @@ class _StationListState extends State<StationList> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
+        // decoration: const BoxDecoration(
+        // image: DecorationImage( 
+        //   image: AssetImage("assets/background_image.jpeg"),
+        //   fit: BoxFit.cover
+        //   ),
+        // ),
           color: Constants.kBackgroundGrey,
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
@@ -83,23 +89,89 @@ class _StationListState extends State<StationList> {
         }
 
         // Station subheader
-        list.add(Container(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-            child: AutoSizeText(station.toUpperCase(),
-                style: const TextStyle(
-                    fontSize: 25, fontWeight: FontWeight.bold))));
+        list.add(
+          Stack(
+            children: <Widget> [
+              Container(
+              margin: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 5.0),
+              height: 60.0 * stationCurrentItems.length + 40.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10.0, 40.0, 5.0, 20.0),
+                child: Column(
+                children: <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: stationCurrentItems.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return FoodSummary(
+                            item: stationCurrentItems[index],
+                            group: _group,
+                            onFavoritePressed: () {
+                              setState(() {
+                                stationList = getStationList();
+                              });
+                            });
+                      }),
+                ),
+              ]) ,)
+              ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(50.0, 5.0, 50.0, 5.0),
+            padding: const EdgeInsets.only(
+              left: 10.0
+            ),
+            height: 50.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Constants.kPrimaryColor,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Row(
+              children: <Widget> [
+                Text(station.toUpperCase(),
+                    style:
+                        const TextStyle(
+                          fontSize: 20.0, 
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          )),
+              ]           
+            )
+          )
+            ]
+          )
+        );
+          // Container(
+          //   decoration: const BoxDecoration(
+          //     color: Colors.white,
+          //     // border: Border.all(
+          //     //   width: 3,
+          //     //   color: Constants.kPrimaryColor,
+          //     // ),
+          //     borderRadius: BorderRadius.all(Radius.circular(20))
+          //   ),
+          //   //color: Constants.kPrimaryColor,
+          //   padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+          //   child: AutoSizeText(station.toUpperCase(),
+          //       style: const TextStyle(
+          //           fontSize: 20, fontWeight: FontWeight.bold))));
 
         // All food items
-        for (FoodItem item in stationCurrentItems) {
-          list.add(FoodSummary(
-              item: item,
-              group: _group,
-              onFavoritePressed: () {
-                setState(() {
-                  stationList = getStationList();
-                });
-              }));
-        }
+        // for (FoodItem item in stationCurrentItems) {
+        //   list.add(FoodSummary(
+        //       item: item,
+        //       group: _group,
+        //       onFavoritePressed: () {
+        //         setState(() {
+        //           stationList = getStationList();
+        //         });
+        //       }));
+        // }
       }
     }
 
