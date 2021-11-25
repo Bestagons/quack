@@ -1,9 +1,14 @@
 from fastapi import FastAPI
 from .routers import favorites, friends, user
 from fastapi.middleware.cors import CORSMiddleware
+import firebase_admin
+from firebase_admin import credentials
 
 
 app = FastAPI()
+
+cred = credentials.Certificate("serviceAccountKey.json")
+firebase_admin.initialize_app(cred)
 
 app.add_middleware(
     CORSMiddleware,
