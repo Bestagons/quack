@@ -1,20 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/item.dart';
-import 'package:quack_app/core/menu_data.dart';
-import 'package:quack_app/core/test_auth.dart';
+import 'package:quack_app/core/food/food_item.dart';
+import 'package:quack_app/core/food/menu_data.dart';
+import 'package:quack_app/core/auth/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
-
+import 'package:http/http.dart' as http;
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   List<String> creds = await TestAuth().getAuthCredentials();
+  MenuData().isTest = true;
   group("Home Screen Test", () {
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
       MyApp app = const MyApp();
-
       await tester.pumpWidget(app);
       await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
@@ -34,7 +34,7 @@ void main() async {
       await expectLater(
           find.byType(HomeScreen), matchesGoldenFile('goldens/like_food.png'));
       int totalFavorited = 0;
-      for (Item item in MenuData().getCurrentMenu()) {
+      for (FoodItem item in MenuData().getCurrentMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 1);
@@ -56,7 +56,7 @@ void main() async {
       await expectLater(find.byType(HomeScreen),
           matchesGoldenFile('goldens/like_three_food.png'));
       int totalFavorited = 0;
-      for (Item item in MenuData().getCurrentMenu()) {
+      for (FoodItem item in MenuData().getCurrentMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 3);
@@ -87,7 +87,7 @@ void main() async {
       await expectLater(find.byType(HomeScreen),
           matchesGoldenFile('goldens/like_last_and_scroll.png'));
       int totalFavorited = 0;
-      for (Item item in MenuData().getCurrentMenu()) {
+      for (FoodItem item in MenuData().getCurrentMenu()) {
         totalFavorited += item.isFavorite() ? 1 : 0;
       }
       expect(totalFavorited, 1);

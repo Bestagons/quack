@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:quack_app/components/station_list.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/core/food/menu_data.dart';
 import 'package:quack_app/screens/homepage/all_items_screen.dart';
 
 class HomeScreen extends StatefulWidget {

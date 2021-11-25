@@ -5,6 +5,7 @@ class DCT():
     def __init__(self):
         self.menu = []
         self.stations = {}
+        self.serve_times = {}
         self.takeout_capacity = 0
         self.dinein_capacity = 0
         self.total_capacity = 0
@@ -18,6 +19,7 @@ class DCT():
     def save_station(self, name: str):
         station = Station(name)
         self.stations[name] = station
+        return station
 
     """
         save_food_item adds a food item to the tracked menu of a specific station
@@ -52,8 +54,20 @@ class DCT():
             self.save_station(station)
             self.stations[station].add_food_item(item)
 
-        self.menu.append(item)
+        if item not in self.menu:
+            self.menu.append(item)
         return item
+
+    """
+        save_serve_time saves a serving period and the time associated with it
+        period: str
+            A period of time (Ex: Breakfast)
+
+        time: str
+            The actual specified time of the period (Ex: 7am - 10am)
+    """
+    def save_serve_time(self, period: str, time: str):
+        self.serve_times[period] = time
 
     """
         update_line_speed updates the line speed of the given station
@@ -64,8 +78,9 @@ class DCT():
             The new speed of the station line
     """
     def update_line_speed(self, station: str, line_speed: float):
-        self.stations[station].update_line_speed(line_speed)
-
+        if station in self.stations:
+            self.stations[station].update_line_speed(line_speed)
+            
     """
         incoming_dct_traffic adds people who are scanning into the dct
 
@@ -99,4 +114,3 @@ class DCT():
         outgoingtraffic = takeout + dinein
         self.total_capacity = max(self.total_capacity - outgoingtraffic, 0)
         return self.takeout_capacity, self.dinein_capacity, self.total_capacity
-        

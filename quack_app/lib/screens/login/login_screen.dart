@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quack_app/core/auth.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/core/auth/auth.dart';
+import 'package:quack_app/core/food/menu_data.dart';
 import 'package:quack_app/screens/loading/loading_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
             builder: (context) => LoadingScreen(
               routeTo: "/home",
               waitOn: () async {
-                MenuData().loadData();
+                await MenuData().loadData();
                 await Future.delayed(const Duration(seconds: 2), () {});
                 return Future.value("");
               },
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   waitOn: () async {
                                     Auth().saveAuth(emailController.text,
                                         passwordController.text);
-                                    MenuData().loadData();
+                                    await MenuData().loadData();
                                     await Future.delayed(
                                         const Duration(seconds: 2), () {});
                                     return Future.value("");

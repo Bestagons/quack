@@ -45,6 +45,11 @@ class Database():
 
         return {"msg": "Successfully registered new user."}
 
+    def get_user(self, login_info: dict):
+        users = self.db["users"]
+
+        return users.find_one({"email": login_info["email"], "password": login_info["password"]})
+
 
 load_dotenv()
 db = Database(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"), test_mode="pytest" in sys.modules)
