@@ -6,7 +6,6 @@ import json
 from bson import BSON
 from bson import json_util, ObjectId
 
-from app.auth_bearer import JWTBearer
 from app.auth_handler import signJWT
 from database import db
 from models.user import User

@@ -1,15 +1,13 @@
-from fastapi import APIRouter, Response, status
-from pydantic import BaseModel
-from database import Database
-from dotenv import load_dotenv
-import os
+from fastapi import APIRouter, Response, status, Depends, Security
+from ..auth_bearer import JWTBearer
+from fastapi.security import HTTPAuthorizationCredentials
+from database import db
 from models.user import User
+from app.auth_handler import decodeJWT
 
 router = APIRouter(prefix="/notification")
 
-load_dotenv()
-db = Database(os.getenv("DB_USERNAME"), os.getenv("DB_PASSWORD"))
-db.connect()
+security = JWTBearer()
 
 """
     add_device binds a device to a user
@@ -26,9 +24,12 @@ db.connect()
         Response.status: int
             The status code for the request
 """
-@router.post("/add_device")
-async def add_device(resp: Response, device_code: str):
-    user = User()  # Todo: Get User from JWT
+@router.post("/add_device", dependencies=[Depends(security)])
+async def add_device(resp: Response, device_code: str, token: HTTPAuthorizationCredentials = Security(security)):
+    payload: dict = decodeJWT(token)
+    user_id = payload["user_id"]
+    user: User = User().get_user_by_id(user_id)
+
     # Add the device to the user
     devices = user.devices
     if devices is None:
@@ -62,8 +63,11 @@ async def add_device(resp: Response, device_code: str):
             The status code for the request
 """
 @router.post("/remove_device")
-async def remove_device(resp: Response, device_code: str):
-    user = User()  # Todo: Get User from JWT
+async def remove_device(resp: Response, device_code: str, token: HTTPAuthorizationCredentials = Security(security)):
+    payload: dict = decodeJWT(token)
+    user_id = payload["user_id"]
+    user: User = User().get_user_by_id(user_id)
+
     # Add the device to the user
     devices = user.devices
     if devices is None or device_code not in devices:
