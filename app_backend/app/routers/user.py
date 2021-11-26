@@ -84,7 +84,7 @@ async def register(login: User, resp: Response):
     # check if email is a valid emory email
     if not (re.search(validEmail, email)):
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err" : "Invalid email address. It must be an emory.edu email."}
+        return {"err": "Invalid email address. It must be an emory.edu email."}
 
     # check if password is a valid password
     if not (re.search(validPassword, password)):

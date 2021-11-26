@@ -8,10 +8,12 @@ import jwt
 JWT_SECRET = os.getenv("SECRET")
 JWT_ALGORITHM = os.getenv("ALGORITHM")
 
+
 def token_response(token: str):
     return {
         "access_token": token
     }
+
 
 def signJWT(user_id: str) -> Dict[str, str]:
     payload = {
