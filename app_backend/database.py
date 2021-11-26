@@ -41,9 +41,15 @@ class Database():
         if not self.test_mode:
             print("[Database.py] Dry run not updating database")
             login_info["verified"] = False
+            login_info["friends"] = []
             users.insert_one(login_info)
 
         return {"msg": "Successfully registered new user."}
+
+    def get_user_by_uuid(self, uuid):
+        users = self.db["users"]
+        return users.find_one({"_id": uuid}, {"password": 0})
+
 
     def get_user(self, login_info: dict):
         users = self.db["users"]
