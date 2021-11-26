@@ -14,8 +14,22 @@ def test_new_friend():
             self.expected_status_code = expected_status_code
             self.expects_err = expects_err
 
+    # Remove all friends first
+    token = authenticate_test()
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
+    query = "/friends/get-friends/"
+    response = client.post(query, headers={"Authorization": f"Bearer {token}", "Accept": "application/json"})
+    print(response.json())
+    friends = response.json()["friends"]
+    for friend in friends:
+        response = client.post(f"/friends/remove-friend/",
+                               json={"friend_email": friend},
+                               headers=headers)
+        assert response.status_code == status.HTTP_200_OK
+
     test_cases = [Params("", status.HTTP_400_BAD_REQUEST, True),
                   Params(None, status.HTTP_422_UNPROCESSABLE_ENTITY, True),
+                  Params("test.friend@emory.edu", status.HTTP_201_CREATED, False),
                   Params("test.friend@emory.edu", status.HTTP_412_PRECONDITION_FAILED, True),
                   Params("new.friend@emory.edu", status.HTTP_201_CREATED, False)]
 
@@ -25,9 +39,10 @@ def test_new_friend():
             payload["friend_email"] = test_case.friend_email
         query = f"/friends/new-friend/"
         print("Testing: " + payload.__str__())
-        response = client.post(query, json=payload)
+        response = client.post(query, json=payload, headers=headers)
         assert response.status_code == test_case.expected_status_code
         assert ("err" in response.json() or 'detail' in response.json()) == test_case.expects_err
+
 
 def test_get_friends():
     class Params:
@@ -44,5 +59,5 @@ def test_get_friends():
         query = "/friends/get-friends/"
         response = client.post(query, headers={"Authorization" : f"Bearer {test_case.token}", "Accept": "application/json"})
         assert ("err" in response.json()) == test_case.expects_err
-        assert response.json() == "test"
+        # assert response.json() == "test"
         assert response.status_code == test_case.expected_status_code

@@ -38,13 +38,17 @@ class Database():
         if users.count_documents({"email": login_info['email']}, limit = 1) > 0:
             return {"err": "Email already exists. Use a different email."}
 
-        if not self.test_mode:
-            print("[Database.py] Dry run not updating database")
-            login_info["verified"] = False
-            login_info["friends"] = []
-            users.insert_one(login_info)
+        login_info["verified"] = False
+        # login_info["friends"] = []
 
-        return {"msg": "Successfully registered new user."}
+        if self.test_mode:
+            print("[Database.py] Dry run not updating database")
+            return login_info
+
+        users.insert_one(login_info)
+
+        # return inserted user id from database
+        return str(users.find_one({"email": login_info['email']})["_id"])
 
     def get_user_by_uuid(self, uuid):
         users = self.db["users"]

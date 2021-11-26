@@ -3,6 +3,7 @@ from typing import Dict
 from dotenv import load_dotenv
 import os
 import jwt
+from bson.objectid import ObjectId
 
 load_dotenv()
 
@@ -16,10 +17,12 @@ def token_response(token: str):
     }
 
 
-def signJWT(user_id: str) -> Dict[str, str]:
+def signJWT(user_id: ObjectId) -> Dict[str, str]:
+    if isinstance(user_id, ObjectId):
+        user_id = str(user_id)
     payload = {
         "user_id": user_id,
-        "expires": time.time() + 600 # 10 minutes
+        "expires": time.time() + 600  # 10 minutes
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
     return token_response(token)

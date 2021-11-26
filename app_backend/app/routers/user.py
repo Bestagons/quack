@@ -4,7 +4,7 @@ from fastapi import APIRouter, status, Response
 import re
 import json
 from bson import BSON
-from bson import json_util
+from bson import json_util, ObjectId
 
 from app.auth_bearer import JWTBearer
 from app.auth_handler import signJWT
@@ -41,13 +41,15 @@ async def login(login: User, resp: Response):
         "password": password
     }
 
-    db_user = db.get_user(user)
+    db_user: dict = db.get_user(user)
 
     if db_user is None:
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "This user does not exist. Please try different credentials."}, {}, None
 
-    return {"msg": "Successfully logged in"}, signJWT(user["email"]), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
+    db_user["_id"] = str(db_user['_id'])
+
+    return {"msg": "Successfully logged in"}, signJWT(db_user['_id']), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
 
 """
     register implements the /register/ route
@@ -102,7 +104,7 @@ async def register(login: User, resp: Response):
     if "err" in msg:
         resp.status_code = status.HTTP_400_BAD_REQUEST
     else:
-        return msg, signJWT(new_user["email"])
+        return signJWT(msg)
 
     return msg
 
