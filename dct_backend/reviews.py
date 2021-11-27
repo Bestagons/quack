@@ -5,11 +5,12 @@ from database import Database
 from pydantic import BaseModel
 import server
 
+
 load_dotenv()
 db = Database(os.getenv('DB_USERNAME'), os.getenv('DB_PASSWORD'))
 db.connect()
 
-food_db = db.client["food"] # from food collection
+food_db = db.db["food"] # from food collection
 review_collection = food_db["reviews"] # review --> sub collection
 router = APIRouter(prefix="/reviews")
 resp = Response
