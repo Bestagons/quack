@@ -86,6 +86,12 @@ flutter:
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png
     - assets/logo.png
+    - assets/team/ore.png
+    - assets/team/brenda.png
+    - assets/team/david.png
+    - assets/team/miles.png
+    - assets/team/mimi.png
+    - assets/team/rafael.png
     - assets/dct_seating_locs.png
     - test.env
   # An image asset can refer to one or more resolution-specific "variants", see

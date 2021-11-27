@@ -38,6 +38,10 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
             const SizedBox(
               height: 20,
             ),
+            Divider(
+              thickness: 0.5,
+              color: Colors.grey.shade400
+            ),
             Row(
               children: <Widget>[
                 Padding(
@@ -58,11 +62,14 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
-                    child: Text(" Peanuts",
-                      style: const TextStyle(
-                        color: Colors.black,
+                    child: Text("Peanuts",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
@@ -75,11 +82,14 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
-                    child: Text(" Fish",
-                      style: const TextStyle(
-                        color: Colors.black,
+                    child: Text("Fish",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
@@ -88,7 +98,31 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 5,
+            ),
+            Row(
+              children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
+                Flexible(
+                  child: Align(alignment: Alignment.centerLeft,
+                    child: Text("Etc",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal),
+                    )
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Divider(
+              thickness: 0.5,
+              color: Colors.grey.shade400
             ),
             Row(
               children: <Widget>[
@@ -110,11 +144,14 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
-                    child: Text(" None",
-                      style: const TextStyle(
-                        color: Colors.black,
+                    child: Text("None",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
@@ -127,11 +164,14 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
-                    child: Text(" Vegetarian",
-                      style: const TextStyle(
-                        color: Colors.black,
+                    child: Text("Vegetarian",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
@@ -144,11 +184,14 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
-                    child: Text(" Vegan",
-                      style: const TextStyle(
-                        color: Colors.black,
+                    child: Text("Vegan",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
@@ -161,11 +204,14 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
-                    child: Text(" Pescatarian",
-                      style: const TextStyle(
-                        color: Colors.black,
+                    child: Text("Pescatarian",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
@@ -178,11 +224,14 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
-                    child: Text(" Halal",
-                      style: const TextStyle(
-                        color: Colors.black,
+                    child: Text("Halal",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
@@ -195,17 +244,27 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
-                    child: Text(" Kosher",
-                      style: const TextStyle(
-                        color: Colors.black,
+                    child: Text("Kosher",
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
                   ),
                 )
               ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Divider(
+              thickness: 0.5,
+              color: Colors.grey.shade400
             )
           ],
         ),

@@ -42,6 +42,9 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("Bestagons are a 6-person team dedicated to developing the experience and skills necessary for a common project to build up their resumes. Centered around their shared experience as Emory students, they hope to add value to some of the lives of their community through their work.",
@@ -51,7 +54,10 @@ class _AboutScreenState extends State<AboutScreen> {
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             const SizedBox(
@@ -77,6 +83,9 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("The Quack Project on every Emory student phone, organizing the calendars of users & eliminating all frustrations with on-campus dining.",
@@ -86,7 +95,10 @@ class _AboutScreenState extends State<AboutScreen> {
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             const SizedBox(
@@ -112,6 +124,9 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("An app that increases the quality of life of Emory students both by finding free time in your calendar to suggest events/activities to integrate into your schedule (i.e. when to study, eat, etc.) and by adding value to the experience of getting food at DCT (food locations, capacity, etc.).",
@@ -121,7 +136,10 @@ class _AboutScreenState extends State<AboutScreen> {
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             const SizedBox(
@@ -147,11 +165,14 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 SizedBox(
                   width: 80,
                   height: 80,
                   child: Image.asset(
-                    'assets/logo.png',
+                    'assets/team/miles.png',
                     fit: BoxFit.cover
                   ),
                 ),
@@ -170,7 +191,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   width: 80,
                   height: 80,
                   child: Image.asset(
-                    'assets/logo.png',
+                    'assets/team/rafael.png',
                     fit: BoxFit.cover
                   ),
                 ),
@@ -184,7 +205,7 @@ class _AboutScreenState extends State<AboutScreen> {
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(
@@ -192,11 +213,14 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 SizedBox(
                   width: 80,
                   height: 80,
                   child: Image.asset(
-                    'assets/logo.png',
+                    'assets/team/ore.png',
                     fit: BoxFit.cover
                   ),
                 ),
@@ -211,11 +235,14 @@ class _AboutScreenState extends State<AboutScreen> {
                     )
                   ),
                 ),
+                const SizedBox(
+                  width: 15,
+                ),
                 SizedBox(
                   width: 80,
                   height: 80,
                   child: Image.asset(
-                    'assets/logo.png',
+                    'assets/team/david.png',
                     fit: BoxFit.cover
                   ),
                 ),
@@ -229,7 +256,7 @@ class _AboutScreenState extends State<AboutScreen> {
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(
@@ -237,11 +264,14 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 SizedBox(
                   width: 80,
                   height: 80,
                   child: Image.asset(
-                    'assets/logo.png',
+                    'assets/team/mimi.png',
                     fit: BoxFit.cover
                   ),
                 ),
@@ -256,11 +286,14 @@ class _AboutScreenState extends State<AboutScreen> {
                     )
                   ),
                 ),
+                const SizedBox(
+                  width: 24,
+                ),
                 SizedBox(
                   width: 80,
                   height: 80,
                   child: Image.asset(
-                    'assets/logo.png',
+                    'assets/team/brenda.png',
                     fit: BoxFit.cover
                   ),
                 ),

@@ -40,6 +40,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("How do I add a food to my favorites list?",
@@ -49,11 +52,17 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         fontWeight: FontWeight.bold),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("When you are browsing the menu on the Dining tab, you can favorite a meal by clicking the heart icon next to the meal's name. All your favorited meals will be displayed on the Favorites tab.",
@@ -63,7 +72,10 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             const SizedBox(
@@ -71,6 +83,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("How do I share my location?",
@@ -80,11 +95,17 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         fontWeight: FontWeight.bold),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("Navigate to your Friends tab and click \"share location\" at the top. A map of the dining hall will appear. Simply click on one of the seating sections and your location will be updated.",
@@ -94,7 +115,10 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             const SizedBox(
@@ -102,6 +126,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("What sort of notifications will I receive?",
@@ -111,11 +138,17 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         fontWeight: FontWeight.bold),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("To view your notifications navigate to the Notifications tab. The type of notifications you will receive are when your favorite meal is being served that day or when your friend is sharing their seating location.",
@@ -125,7 +158,10 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             const SizedBox(
@@ -143,7 +179,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(
@@ -151,6 +187,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("If you still have any questions or concerns, please contact quack.dining.app@gmail.com and we will get back to you at our earliest convenience.",
@@ -162,7 +201,10 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                   ),
                 )
               ],
-            )
+            ),
+            const SizedBox(
+              width: 5,
+            ),
           ],
         ),
       ),

@@ -28,7 +28,7 @@ class _AccountPreferencesScreenState extends State<AccountPreferencesScreen> {
                     child: Text("Hello!",
                       style: const TextStyle(
                         color: Colors.black,
-                        fontSize: 22,
+                        fontSize: 30,
                         fontWeight: FontWeight.normal),
                     )
                   ),
@@ -40,12 +40,15 @@ class _AccountPreferencesScreenState extends State<AccountPreferencesScreen> {
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("Thank you for using our app.",
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
+                        fontSize: 22,
                         fontWeight: FontWeight.normal),
                     )
                   ),
@@ -63,7 +66,7 @@ class _AccountPreferencesScreenState extends State<AccountPreferencesScreen> {
                     child: Text("Delete Account",
                       style: const TextStyle(
                         color: Colors.red,
-                        fontSize: 15,
+                        fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
                   ),

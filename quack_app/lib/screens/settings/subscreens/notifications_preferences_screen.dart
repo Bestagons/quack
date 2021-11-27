@@ -39,6 +39,10 @@ class _NotificationsPreferencesScreenState
             const SizedBox(
               height: 20,
             ),
+            Divider(
+              thickness: 0.5,
+              color: Colors.grey.shade400
+            ),
             Row(
               children: <Widget>[
                 Padding(
@@ -59,20 +63,30 @@ class _NotificationsPreferencesScreenState
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("Get notified when your favorite meal is being served.",
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
+            ),
+            Divider(
+              thickness: 0.5,
+              color: Colors.grey.shade400
             ),
             Row(
               children: <Widget>[
@@ -94,20 +108,30 @@ class _NotificationsPreferencesScreenState
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("Get notified when breakfast, lunch, or dinner starts and ends.",
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
+            ),
+            Divider(
+              thickness: 0.5,
+              color: Colors.grey.shade400
             ),
             Row(
               children: <Widget>[
@@ -129,17 +153,30 @@ class _NotificationsPreferencesScreenState
             ),
             Row(
               children: <Widget>[
+                const SizedBox(
+                  width: 5,
+                ),
                 Flexible(
                   child: Align(alignment: Alignment.centerLeft,
                     child: Text("Get notified when your friend is sharing their seating location.",
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
                         fontSize: 18,
                         fontWeight: FontWeight.normal),
                     )
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
               ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Divider(
+              thickness: 0.5,
+              color: Colors.grey.shade400
             )
           ],
         ),
