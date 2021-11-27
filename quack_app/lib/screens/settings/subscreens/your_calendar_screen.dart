@@ -18,14 +18,14 @@ class _YourCalendarScreenState extends State<YourCalendarScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             Row(
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Align(alignment: Alignment.centerLeft,
-                    child: Text("This is your calendar screen",
+                    child: Text("This page is coming soon...",
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 22,
