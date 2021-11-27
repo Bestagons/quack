@@ -15,13 +15,13 @@ class ReviewTest():
         self.test = test  # true or false
 
 def test_food_name():
-    # testing to make sure food names are entered in lowercase
-    load_dotenv()
-    username_db = os.getenv('DB_USERNAME')
+    # # testing to make sure food names are entered in lowercase
+    # load_dotenv()
+    # username_db = os.getenv('DB_USERNAME')
     test_cases = [
-        ("mac and cheese", 4, "really liked it", username_db, True), # correct format (all lower case)
-        ("MAC AND CHEESE", 4, "really liked it", username_db, False),
-        ("Mac and Cheese", 4, "really liked it", username_db, False)
+        ("mac and cheese", 4, "really liked it", "mimi", True), # correct format (all lower case)
+        ("MAC AND CHEESE", 4, "really liked it", "mimi", False),
+        ("Mac and Cheese", 4, "really liked it", "mimi", False)
     ]
     for test_case in test_cases:
         tester = ReviewTest(test_case[0],test_case[1], test_case[2], test_case[3],test_case[4])
