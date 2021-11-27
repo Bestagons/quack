@@ -1,4 +1,4 @@
-from save_seating import SaveSeating
+from save_seat import SaveSeating
 from sections import Sections
 
 def test_set_seat():
