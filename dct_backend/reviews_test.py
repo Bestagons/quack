@@ -34,6 +34,5 @@ def test_food_name():
 
 
         co_routine =  reviews.save_review_in_db(None,tester2,True)
-
         test_check = asyncio.run(co_routine)
         assert test_check == tester.test
