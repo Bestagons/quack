@@ -6,7 +6,7 @@ import os
 from database import Database
 from pydantic import BaseModel
 from sections import Sections
-import server
+#import server
 
 load_dotenv()
 db = Database(os.getenv('DB_USERNAME'), os.getenv('DB_PASSWORD'))
