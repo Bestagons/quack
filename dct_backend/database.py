@@ -14,6 +14,10 @@ class Database():
             self.db = self.client["food"] # connecting database to the food collection
         else:
             print("Error trying to connect to DB")
+            if  self.username is None:
+                raise Exception("USER passed may be None; ensure your .env file is setup!")
+            if  self.password is None:
+                raise Exception("PASS passed may be None; ensure your .env file is setup!")
             raise Exception("Parameters passed may be None; ensure your .env file is setup!")
 
     def has_client(self):
