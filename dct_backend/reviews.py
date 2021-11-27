@@ -98,7 +98,7 @@ async def edit_review_in_db(review_rating: Reviews, dry_run = False):
         resp.status_code = status.HTTP_201_CREATED
         return {"msg": "Review has been successfully edited."}
 
-@router.get("/reviews")
+@router.get("/get-reviews")
 async def get_reviews(review_rating: Reviews):
     """
         returns all reviews for food item that matches 'foodID'
