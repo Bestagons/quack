@@ -1,13 +1,9 @@
 from reviews import Reviews
 import reviews
-from reviews import save_review_in_db
-from fastapi import APIRouter, Response, status
 from dotenv import load_dotenv
 import os
 import asyncio
-import pytest
-from database import Database
-from pydantic import BaseModel
+
 
 class ReviewTest():
     def __init__(self, food_name: str, rating: int,
