@@ -44,7 +44,7 @@ async def set_section_info(resp: Response, seating_info: SaveSeating, dry_run) -
 
     """
 
-    if dry_run: # for testing
+    if dry_run: # for testing purposes
         if 0 < seating_info.section <= 9: # valid
             return True
         else: # invalid
