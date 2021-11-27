@@ -4,7 +4,6 @@ import os
 from database import Database
 from pydantic import BaseModel
 import server
-# from fastapi.testclient import TestClient
 
 load_dotenv()
 db = Database(os.getenv('DB_USERNAME'), os.getenv('DB_PASSWORD'))
@@ -12,7 +11,6 @@ db.connect()
 
 food_db = db.client["food"] # from food collection
 review_collection = food_db["reviews"] # review --> sub collection
-# app = FastAPI()
 router = APIRouter(prefix="/reviews")
 resp = Response
 
@@ -33,7 +31,7 @@ class Reviews(BaseModel):
 
 
 
-@router.post("/save-reviews", status_code=status.HTTP_201_CREATED)
+@router.post("/reviews", status_code=status.HTTP_201_CREATED)
 async def save_review_in_db(resp: Response, review_rating: Reviews, dry_run = False):
     """
         if a user has already reviewed an item retun err
