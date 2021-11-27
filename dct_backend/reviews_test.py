@@ -26,8 +26,8 @@ def test_food_name():
     for test_case in test_cases:
         tester = ReviewTest(test_case[0],test_case[1], test_case[2], test_case[3],test_case[4])
         tester2 = Reviews(food_name=test_case[0], rating=test_case[1],
-                          review=test_case[2], username=test_case[3] )
+                          review=test_case[2], username=test_case[3])
 
-        co_routine =  reviews.save_review_in_db(None,tester2,True)
+        co_routine = reviews.save_review_in_db(None,tester2,True)
         test_check = asyncio.run(co_routine)
         assert test_check == tester.test

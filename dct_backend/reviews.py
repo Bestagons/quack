@@ -101,15 +101,10 @@ async def edit_review_in_db(review_rating: Reviews, dry_run = False):
         return {"msg": "Review has been successfully edited."}
 
 @router.get("/reviews")
-async def get_reviews(review_rating: Reviews, dry_run = False):
+async def get_reviews(review_rating: Reviews):
     """
         returns all reviews for food item that matches 'foodID'
     """
-    if(dry_run):
-        if review_rating.food_name != review_rating.food_name.lower():# check if food_name is in valid format!
-            return False # wrong food_name format
-        else:
-            return True
     review_rating.food_name = review_rating.food_name.lower()  # to lowercase
     return review_collection.find_one({"foodID": review_rating.food_name})
     
