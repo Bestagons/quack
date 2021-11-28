@@ -57,12 +57,12 @@ async def login(login: User, resp: Response):
     }
 
     db_user = db.get_user(user)
-
+    db_user = json.loads(json_util.dumps(db_user))
     if db_user is None:
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "This user does not exist. Please try different credentials."}, {}, None
 
-    return {"msg": "Successfully logged in"}, signJWT(user["email"]), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
+    return {"msg": "Successfully logged in"}, signJWT(db_user['_id']['$oid'], db_user["email"]), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
 
 """
     register implements the /register/ route
@@ -81,7 +81,6 @@ async def login(login: User, resp: Response):
 """
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register(login: User, resp: Response):
-
     name = login.name
     email = login.email
     password = login.password
@@ -117,7 +116,7 @@ async def register(login: User, resp: Response):
     if "err" in msg:
         resp.status_code = status.HTTP_400_BAD_REQUEST
     else:
-        return msg, signJWT(new_user["email"])
+        return msg
 
     return msg
 

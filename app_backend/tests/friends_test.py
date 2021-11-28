@@ -38,11 +38,14 @@ def test_get_friends():
 
     token = authenticate_test()
 
-    test_cases = [Params(token, status.HTTP_200_OK, False)]
+    test_cases = [Params(token, status.HTTP_200_OK, False),
+            Params(token[:-1] + ",", status.HTTP_403_FORBIDDEN, True)]
 
     for test_case in test_cases:
         query = "/friends/get-friends/"
         response = client.post(query, headers={"Authorization" : f"Bearer {test_case.token}", "Accept": "application/json"})
-        assert ("err" in response.json()) == test_case.expects_err
-        assert response.json() == "test"
+        assert (("err" in response.json()) == test_case.expects_err) or (("detail" in response.json()) == test_case.expects_err)
         assert response.status_code == test_case.expected_status_code
+        if test_case.expects_err == False:
+            # Test User has 2 friends
+            assert len(response.json()) == 2

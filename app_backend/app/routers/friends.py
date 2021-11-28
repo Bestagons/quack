@@ -3,6 +3,9 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from ..models.user_models import AddFriend
 from ..auth_bearer import JWTBearer
 from ..auth_handler import decodeJWT
+from database import db
+import json
+from bson import json_util
 
 
 print("Starting server...")
@@ -49,6 +52,13 @@ async def add_friend(resp: Response, friend: AddFriend):
 async def get_friends(resp: Response, token: HTTPAuthorizationCredentials = Security(security)):
     payload = decodeJWT(token)
     if payload is not None:
-        return "test"
+        uuid = payload["user_id"]
+        user = db.get_user_by_uuid(uuid)
+        friends = []
+        for friend_email in user["friends"]:
+            fu = db.get_user_by_email(friend_email)
+            friends.append(json.loads(json_util.dumps(fu)))
+        return friends
     else:
-        return "Unauthorized??"
+        resp.status_code = status.HTTP_401_UNAUTHORIZED
+        return {"err": "Unauthorized - Could not verify user"}
