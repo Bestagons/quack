@@ -23,16 +23,16 @@ class _YourCalendarScreenState extends State<YourCalendarScreen> {
             Row(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("This page is coming soon...",
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 22,
-                        fontWeight: FontWeight.normal),
-                    )
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("This page is coming soon...",
+                    style: TextStyle(
+                      color: Colors.grey.shade700,
+                      fontSize: 25,
+                      fontWeight: FontWeight.normal
+                    ),
+                    textAlign: TextAlign.center
                   ),
-                )
+                ),
               ],
             )
           ],

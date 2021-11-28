@@ -86,6 +86,8 @@ flutter:
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png
     - assets/logo.png
+    - assets/dct.png
+    - assets/dctseats.png
     - assets/team/ore.png
     - assets/team/brenda.png
     - assets/team/david.png

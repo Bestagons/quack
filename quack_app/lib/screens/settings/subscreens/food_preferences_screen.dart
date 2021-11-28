@@ -10,265 +10,322 @@ class FoodPreferencesScreen extends StatefulWidget {
 }
 
 class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
+  bool vegetarian = false;
+  bool vegan = false;
+  bool pescatarian = false;
+  bool halal = false;
+  bool kosher = false;
+  bool none = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("This page is coming soon... \nbut here is a preview",
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 22,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Divider(
-              thickness: 0.5,
-              color: Colors.grey.shade400
-            ),
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Allergies:",
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 22,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
+        body: Center(
+          child: Container(
+            constraints: BoxConstraints.expand(),
+            // decoration: BoxDecoration(
+            //   image: DecorationImage(
+            //     image: AssetImage('assets/dct.png'),
+            //     fit: BoxFit.cover),
+            // ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(
-                  width: 5,
+                  height: 20,
                 ),
-                Flexible(
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Peanuts",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
+                Container(
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.all(Radius.zero),
+                    //   color: Colors.amber
+                    // ),
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                        child: Row(children: <Widget>[
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                      Flexible(
+                          child: Text(
+                              'This page is coming soon, but here is a preview...',
+                              style: TextStyle(
+                                  color: Colors.grey.shade700,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.normal),
+                              textAlign: TextAlign.left)),
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                    ]))
+                  ],
+                )),
                 const SizedBox(
-                  width: 5,
+                  height: 20.0,
                 ),
-                Flexible(
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Fish",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                    )
+                Divider(thickness: 0.5, color: Colors.grey.shade400),
+                Container(
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.all(Radius.zero),
+                    //   color: Colors.amber
+                    // ),
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                        child: Row(children: <Widget>[
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                      Flexible(
+                          child: Text('Allergies',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.normal),
+                              textAlign: TextAlign.left)),
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                    ])),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    Container(
+                        child: Row(children: <Widget>[
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                      Flexible(
+                          child: Text(
+                              'Here you will type in any allergies you may have.',
+                              style: TextStyle(
+                                  color: Colors.grey.shade800,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal),
+                              textAlign: TextAlign.left)),
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                    ])),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
+                )),
+                Divider(thickness: 0.5, color: Colors.grey.shade400),
+                Container(
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.all(Radius.zero),
+                  //   color: Colors.amber
+                  // ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                          child: Row(children: <Widget>[
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Flexible(
+                            child: Text('Dietary Restrictions',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.left)),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                      ])),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Container(
+                          child: Row(children: <Widget>[
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Transform.scale(
+                            scale: 1.2,
+                            child: Checkbox(
+                                value: vegetarian,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    vegetarian = value!;
+                                  });
+                                })),
+                        Flexible(
+                            child: Text('Vegetarian',
+                                style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.left)),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                      ])),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                          child: Row(children: <Widget>[
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Transform.scale(
+                            scale: 1.2,
+                            child: Checkbox(
+                                value: vegan,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    vegan = value!;
+                                  });
+                                })),
+                        Flexible(
+                            child: Text('Vegan',
+                                style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.left)),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                      ])),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                          child: Row(children: <Widget>[
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Transform.scale(
+                            scale: 1.2,
+                            child: Checkbox(
+                                value: pescatarian,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    pescatarian = value!;
+                                  });
+                                })),
+                        Flexible(
+                            child: Text('Pescatarian',
+                                style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.left)),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                      ])),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                          child: Row(children: <Widget>[
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Transform.scale(
+                            scale: 1.2,
+                            child: Checkbox(
+                                value: halal,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    halal = value!;
+                                  });
+                                })),
+                        Flexible(
+                            child: Text('Halal',
+                                style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.left)),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                      ])),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                          child: Row(children: <Widget>[
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Transform.scale(
+                            scale: 1.2,
+                            child: Checkbox(
+                                value: kosher,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    kosher = value!;
+                                  });
+                                })),
+                        Flexible(
+                            child: Text('Kosher',
+                                style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.left)),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                      ])),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                          child: Row(children: <Widget>[
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Transform.scale(
+                            scale: 1.2,
+                            child: Checkbox(
+                                value: none,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    none = value!;
+                                  });
+                                })),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Flexible(
+                            child: Text('None',
+                                style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.left)),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                      ])),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                    ],
                   ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  width: 5,
                 ),
-                Flexible(
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Etc",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
+                Divider(thickness: 0.5, color: Colors.grey.shade400),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Divider(
-              thickness: 0.5,
-              color: Colors.grey.shade400
-            ),
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Dietary Restrictions:",
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 22,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("None",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Vegetarian",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Vegan",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Pescatarian",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Halal",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Align(alignment: Alignment.centerLeft,
-                    child: Text("Kosher",
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal),
-                    )
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Divider(
-              thickness: 0.5,
-              color: Colors.grey.shade400
-            )
-          ],
+          ),
         ),
-      ),
-      appBar: AppBar(title: const Text("Food Preferences")));
+        appBar: AppBar(title: const Text("Food Preferences")));
   }
 }
