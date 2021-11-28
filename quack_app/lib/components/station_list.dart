@@ -37,12 +37,6 @@ class _StationListState extends State<StationList> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        // decoration: const BoxDecoration(
-        // image: DecorationImage( 
-        //   image: AssetImage("assets/background_image.jpeg"),
-        //   fit: BoxFit.cover
-        //   ),
-        // ),
           color: Constants.kBackgroundGrey,
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
@@ -88,10 +82,11 @@ class _StationListState extends State<StationList> {
           continue;
         }
 
-        // Station subheader
+        // Adds each station and their food items
         list.add(
           Stack(
             children: <Widget> [
+              //Food items
               Container(
               margin: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 5.0),
               height: 60.0 * stationCurrentItems.length + 40.0,
@@ -105,10 +100,12 @@ class _StationListState extends State<StationList> {
                 children: <Widget>[
                 Expanded(
                   child: ListView.builder(
+                      key: Key("foodItems" + station),
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: stationCurrentItems.length,
                       itemBuilder: (BuildContext context, int index) {
                         return FoodSummary(
+                            key: Key("item" + index.toString()),
                             item: stationCurrentItems[index],
                             group: _group,
                             onFavoritePressed: () {
@@ -120,6 +117,7 @@ class _StationListState extends State<StationList> {
                 ),
               ]) ,)
               ),
+              // Station sub header
           Container(
             margin: const EdgeInsets.fromLTRB(50.0, 5.0, 50.0, 5.0),
             padding: const EdgeInsets.only(
@@ -146,32 +144,6 @@ class _StationListState extends State<StationList> {
             ]
           )
         );
-          // Container(
-          //   decoration: const BoxDecoration(
-          //     color: Colors.white,
-          //     // border: Border.all(
-          //     //   width: 3,
-          //     //   color: Constants.kPrimaryColor,
-          //     // ),
-          //     borderRadius: BorderRadius.all(Radius.circular(20))
-          //   ),
-          //   //color: Constants.kPrimaryColor,
-          //   padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-          //   child: AutoSizeText(station.toUpperCase(),
-          //       style: const TextStyle(
-          //           fontSize: 20, fontWeight: FontWeight.bold))));
-
-        // All food items
-        // for (FoodItem item in stationCurrentItems) {
-        //   list.add(FoodSummary(
-        //       item: item,
-        //       group: _group,
-        //       onFavoritePressed: () {
-        //         setState(() {
-        //           stationList = getStationList();
-        //         });
-        //       }));
-        // }
       }
     }
 

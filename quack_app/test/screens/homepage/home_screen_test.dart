@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
+import 'package:quack_app/components/food_summary.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/core/food/food_item.dart';
 import 'package:quack_app/core/food/menu_data.dart';
@@ -10,6 +12,10 @@ void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   List<String> creds = await TestAuth().getAuthCredentials();
   MenuData().isTest = true;
+  final list = find.byKey(const Key("foodItemsLuncheonnette"));
+  final scrollable = find.byWidgetPredicate((widget) => widget is Scrollable);
+  final scrollableOfList = find.descendant(of: list, matching: scrollable);
+  final item = find.byKey(const Key("item0"));
   group("Home Screen Test", () {
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
@@ -68,7 +74,7 @@ void main() async {
       await tester.pumpWidget(app);
       await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text("Ceasar Salad"), 10);
+      await tester.scrollUntilVisible(list, 10.0);
       await tester.pumpAndSettle(const Duration(seconds: 2));
       await expectLater(
           find.byType(HomeScreen), matchesGoldenFile('goldens/scroll.png'));
