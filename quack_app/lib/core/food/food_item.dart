@@ -1,4 +1,6 @@
 // Implements a food item and data associated with that item
+import 'dart:math';
+
 import 'package:quack_app/core/user/user.dart';
 
 class FoodItem {
@@ -8,14 +10,23 @@ class FoodItem {
   final bool _isCurrentlyBeingServed;
   final String _serveTime;
   final String _station;
-
+  late final int _general_rating;
+  int _user_rating;
   // Implements a single food item
   //
   // required name - the name of the food item
   // required category - the category the food item falls under
   // required isFavorite - is the item favorited by the user
-  FoodItem(this._name, this._category, this._isFavorite,
-      this._isCurrentlyBeingServed, this._serveTime, this._station);
+  FoodItem(
+      this._name,
+      this._category,
+      this._isFavorite,
+      this._isCurrentlyBeingServed,
+      this._serveTime,
+      this._station,
+      this._user_rating) {
+    _general_rating = 5;
+  }
 
   // Toggle the item as a favorite or not
   Future<void> toggleFavorite() async {
@@ -48,5 +59,13 @@ class FoodItem {
 
   String getStation() {
     return _station;
+  }
+
+  int getRating() {
+    return _general_rating;
+  }
+
+  int getUserRating() {
+    return _user_rating;
   }
 }

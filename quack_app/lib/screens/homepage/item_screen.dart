@@ -15,11 +15,13 @@ class ItemScreen extends StatelessWidget {
           item.getName(),
           overflow: TextOverflow.ellipsis,
         )),
-        body: Center(
-            child: AutoSizeText(
-          item.getName(),
-          style: const TextStyle(fontSize: 38),
-          maxLines: 1,
-        )));
+        body: Column(children: [
+          Center(
+              child: AutoSizeText(
+            item.getName(),
+            style: const TextStyle(fontSize: 38),
+            maxLines: 1,
+          ))
+        ]));
   }
 }
