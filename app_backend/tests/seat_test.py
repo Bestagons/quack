@@ -1,5 +1,5 @@
-from ..save_seating import SaveSeating
-from ..sections import Sections
+from app_backend.save_seating import SaveSeating
+from app_backend.sections import Sections
 
 def test_set_seat():
     section = []
