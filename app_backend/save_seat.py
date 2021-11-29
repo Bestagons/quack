@@ -72,8 +72,7 @@ async def set_section_info(resp: Response, seating_info: SaveSeating, dry_run=Fa
             return {"msg": "Seating Section has been successfully saved."}
 
         if seating_collection.count_documents({"username": seating_info.username}, limit =1 ) > 0: #update seated
-            await seating_collection.delete_one({"username": seating_info['username']}) # delete old saved section
-            seating_collection.insert_one(seating_info) # save new seated section
+            seating_collection.replace_one({"username": seating_info['username']},seating_info)
             resp.status_code = status.HTTP_201_CREATED
             return {"msg": "Seating Section has been successfully saved."}
 
