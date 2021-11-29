@@ -4,11 +4,11 @@ from fastapi import APIRouter, status, Response
 import re
 import json
 from bson import BSON
-from bson import json_util
+from bson import json_util, ObjectId
 
-from app.auth_bearer import JWTBearer
 from app.auth_handler import signJWT
 from database import db
+from models.user import User
 
 from ..models.user_models import UserLogin, UserRegister
 
@@ -40,13 +40,15 @@ async def login(login: UserLogin, resp: Response):
         "password": password
     }
 
-    db_user = db.get_user(user)
-    db_user = json.loads(json_util.dumps(db_user))
+    db_user: dict = db.get_user(user)
+
     if db_user is None:
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "This user does not exist. Please try different credentials."}, {}, None
 
-    return {"msg": "Successfully logged in"}, signJWT(db_user['_id']['$oid'], db_user["email"]), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
+    db_user["_id"] = str(db_user['_id'])
+
+    return {"msg": "Successfully logged in"}, signJWT(db_user['_id'], email), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
 
 """
     register implements the /register/ route
@@ -82,12 +84,12 @@ async def register(login: UserRegister, resp: Response):
     # check if email is a valid emory email
     if not (re.search(validEmail, email)):
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err" : "Invalid email address. It must be an emory.edu email."}
+        return {"err": "Invalid email address. It must be an emory.edu email."}
 
     # check if password is a valid password
     if not (re.search(validPassword, password)):
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err" : "Invalid password. It must be 8 to 20 characters and have at least one upper case letter, one lower case letter, and one digit."}
+        return {"err": "Invalid password. It must be 8 to 20 characters and have at least one upper case letter, one lower case letter, and one digit."}
 
     # adds user to the database
     new_user = {
@@ -100,7 +102,7 @@ async def register(login: UserRegister, resp: Response):
     if "err" in msg:
         resp.status_code = status.HTTP_400_BAD_REQUEST
     else:
-        return msg
+        return signJWT(msg, email)
 
     return msg
 
