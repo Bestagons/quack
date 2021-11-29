@@ -38,6 +38,8 @@ dependencies:
   flutter_spinkit: ^5.1.0
   path_provider: ^2.0.6
   flutter_dotenv: ^5.0.2
+  http: ^0.13.4
+  image_pixels: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +86,7 @@ flutter:
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png
     - assets/logo.png
+    - assets/dct_seating_locs.png
     - test.env
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

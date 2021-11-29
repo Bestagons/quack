@@ -1,8 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:quack_app/core/item.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/core/food/food_item.dart';
+import 'package:quack_app/core/food/menu_data.dart';
 
 void main() {
+  MenuData().isTest = true;
   group("MenuData", () {
     MenuData menuData = MenuData();
 
@@ -30,14 +31,14 @@ void main() {
     });
 
     test("getTodaysMenu()", () async {
-      List<Item> menu = menuData.getAllMenu();
+      List<FoodItem> menu = menuData.getAllMenu();
       expect(menu.isNotEmpty, true);
     });
 
     test("getCurrentMenu", () {
-      List<Item> currentItems = menuData.getCurrentMenu();
+      List<FoodItem> currentItems = menuData.getCurrentMenu();
       expect(currentItems.isNotEmpty, true);
-      for (Item item in currentItems) {
+      for (FoodItem item in currentItems) {
         expect(item.isCurrentlyBeingServed(), true);
         expect(item.getServeTime(), menuData.getServeTime());
       }

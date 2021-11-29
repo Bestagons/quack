@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quack_app/core/auth/auth.dart';
 
 import 'package:quack_app/screens/loading/loading_screen.dart';
 
@@ -13,6 +14,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
@@ -84,6 +86,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      hintText: 'Name',
+                      suffixIcon: const Icon(Icons.email),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: emailController,
                     validator: validateEmail,
                     decoration: InputDecoration(
@@ -148,16 +164,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return;
                               }
 
-                              // TODO: Register account and do email verification here
-
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => LoadingScreen(
                                     routeTo: "/login",
                                     waitOn: () async {
-                                      await Future.delayed(
-                                          const Duration(seconds: 2), () {});
+                                      await Auth().register(
+                                          nameController.text,
+                                          emailController.text,
+                                          passwordController.text);
                                       return Future.value("");
                                     },
                                   ),
