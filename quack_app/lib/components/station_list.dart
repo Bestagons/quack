@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:quack_app/constants/constants.dart';
-import 'package:quack_app/core/item.dart';
-import 'package:quack_app/core/menu_data.dart';
+import 'package:quack_app/core/food/food_item.dart';
+import 'package:quack_app/core/food/menu_data.dart';
 import 'package:quack_app/components/food_summary.dart';
 
 // StationList returns a list of Items with a couple of configurations
@@ -11,7 +11,7 @@ import 'package:quack_app/components/food_summary.dart';
 // suffix: any widget that is appended at the end of the list
 class StationList extends StatefulWidget {
   final bool byServeTime;
-  final Function(Item item) filter;
+  final Function(FoodItem item) filter;
   final Widget? suffix;
 
   const StationList(
@@ -33,7 +33,6 @@ class _StationListState extends State<StationList> {
     stationList = getStationList();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -41,12 +40,10 @@ class _StationListState extends State<StationList> {
           color: Constants.kBackgroundGrey,
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
-            child: Column(
-                children: stationList),
+            child: Column(children: stationList),
           )),
     );
   }
-
 
   // getStationList - generates the list of items dynamically based on the passed in
   // widget parameters
@@ -70,14 +67,14 @@ class _StationListState extends State<StationList> {
       // Go through all stations
       for (String station in menuData.getStations()) {
         // provide a main filter that checks for stations or serveTime & stations
-        Function(Item item) mainFilter = widget.byServeTime
-            ? (Item item) => // Filter that checks serve time & station
+        Function(FoodItem item) mainFilter = widget.byServeTime
+            ? (FoodItem item) => // Filter that checks serve time & station
                 item.getStation().compareTo(station) == 0 &&
                 item.getServeTime().compareTo(serveTimes[i]) == 0
             // Filter that only checks for station
-            : (Item item) => item.getStation().compareTo(station) == 0;
+            : (FoodItem item) => item.getStation().compareTo(station) == 0;
 
-        List<Item> stationCurrentItems = menuData
+        List<FoodItem> stationCurrentItems = menuData
             .menuFilteredBy((item) => mainFilter(item) && widget.filter(item));
 
         if (stationCurrentItems.isEmpty) {
@@ -85,22 +82,66 @@ class _StationListState extends State<StationList> {
           continue;
         }
 
-        // Station subheader
-        list.add(Container(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-            child: AutoSizeText(station.toUpperCase(),
-                style: const TextStyle(
-                    fontSize: 25, fontWeight: FontWeight.bold))));
-
-        // All food items
-        for (Item item in stationCurrentItems) {
-          list.add(FoodSummary(item: item, group: _group,
-              onFavoritePressed: () {
-                setState(() {
-                  stationList = getStationList();
-                });
-              }));
-        }
+        // Adds each station and their food items
+        list.add(
+          Stack(
+            children: <Widget> [
+              //Food items
+              Container(
+              margin: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 5.0),
+              height: 60.0 * stationCurrentItems.length + 40.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10.0, 40.0, 5.0, 20.0),
+                child: Column(
+                children: <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: stationCurrentItems.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return FoodSummary(
+                            item: stationCurrentItems[index],
+                            group: _group,
+                            onFavoritePressed: () {
+                              setState(() {
+                                stationList = getStationList();
+                              });
+                            });
+                      }),
+                ),
+              ]) ,)
+              ),
+              // Station sub header
+          Container(
+            margin: const EdgeInsets.fromLTRB(50.0, 5.0, 50.0, 5.0),
+            padding: const EdgeInsets.only(
+              left: 10.0
+            ),
+            height: 50.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Constants.kPrimaryColor,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Row(
+              children: <Widget> [
+                Text(station.toUpperCase(),
+                    style:
+                        const TextStyle(
+                          fontSize: 20.0, 
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          )),
+              ]           
+            )
+          )
+            ]
+          )
+        );
       }
     }
 
