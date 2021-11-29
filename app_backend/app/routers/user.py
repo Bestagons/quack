@@ -48,7 +48,7 @@ async def login(login: User, resp: Response):
 
     db_user["_id"] = str(db_user['_id'])
 
-    return {"msg": "Successfully logged in"}, signJWT(db_user['_id']), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
+    return {"msg": "Successfully logged in"}, signJWT(db_user['_id'], email), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
 
 """
     register implements the /register/ route

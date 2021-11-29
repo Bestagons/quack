@@ -48,7 +48,7 @@ class Database():
             users.insert_one(login_info)
         else:
             print("[Database.py] Dry run not updating database")
-            return login_info
+            return login_info['email']
 
 
         # return inserted user id from database

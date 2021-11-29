@@ -20,10 +20,10 @@ def test_new_friend():
     query = "/friends/get-friends/"
     response = client.post(query, headers={"Authorization": f"Bearer {token}", "Accept": "application/json"})
     print(response.json())
-    friends = response.json()["friends"]
+    friends = response.json()
     for friend in friends:
         response = client.post(f"/friends/remove-friend/",
-                               json={"friend_email": friend},
+                               json={"friend_email": friend["email"]},
                                headers=headers)
         assert response.status_code == status.HTTP_200_OK
 
