@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:async';
 
+import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -50,7 +51,7 @@ class Auth {
       "password": password,
     });
 
-    final uri = Uri.http(baseUrl, "/register");
+    final uri = Uri.http(baseUrl, "/user/register");
     final response = await http.post(uri,
         headers: {"Content-Type": "application/json"}, body: body);
     if (response.statusCode == 201) {
@@ -61,24 +62,25 @@ class Auth {
     return Future.value(false);
   }
 
-  Future<bool> authenticate(String email, password) async {
+  Future<List> authenticate(String email, password) async {
     if (email != "" && password != "") {
-      // TODO: verify
-      final queryParams = {
+      final body = jsonEncode({
         "email": email,
         "password": password,
-      };
+      });
 
-      final uri = Uri.http(baseUrl, "/login", queryParams);
-      final response = await http.get(uri);
+      final uri = Uri.http(baseUrl, "/user/login");
+      final response = await http.post(uri,
+          headers: {"Content-Type": "application/json"}, body: body);
       if (response.statusCode == 200) {
         print("[core/auth] Successfully logged in");
-        return Future.value(true);
+        final List r = jsonDecode(response.body);
+        return Future.value(r);
       }
       print("[core/auth] Failed to login ${response.body}");
     }
 
-    return Future.value(false);
+    return Future.value([]);
   }
 
   Future<void> saveAuth(String email, String password) async {

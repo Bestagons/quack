@@ -22,8 +22,9 @@ class _LoginScreenState extends State<LoginScreen> {
       String email = creds[0];
       String password = creds[1];
 
-      bool isAuth = await Auth().authenticate(email, password);
-      if (isAuth) {
+      final List response = await Auth().authenticate(email, password);
+      if (response.isNotEmpty) {
+        print(response);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -161,28 +162,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                     null) {
                               return;
                             }
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoadingScreen(
-                                  routeTo: "/home",
-                                  waitOn: () async {
-                                    bool isAuth = await Auth().authenticate(
-                                        emailController.text,
-                                        passwordController.text);
-
-                                    if (isAuth) {
-                                      Auth().saveAuth(emailController.text,
-                                          passwordController.text);
-                                      await MenuData().loadData();
-                                      return Future.value("");
-                                    }
-                                    return Future.value("");
-                                  },
+                            final List response = await Auth().authenticate(
+                                emailController.text, passwordController.text);
+                            if (response.isNotEmpty) {
+                              print(response);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoadingScreen(
+                                      routeTo: "/home",
+                                      waitOn: () async {
+                                        Auth().saveAuth(emailController.text,
+                                            passwordController.text);
+                                        await MenuData().loadData();
+                                        return Future.value("");
+                                      }),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                         ),
                       ],

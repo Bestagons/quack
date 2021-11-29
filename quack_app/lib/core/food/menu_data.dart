@@ -10,11 +10,148 @@ class MenuData {
   List<String> _stations = List.empty();
   List<String> _serveTimes = List.empty();
   Map<String, dynamic> _data = {};
-  static const String baseUrl = "127.0.0.1:8000";
+  static const String baseUrl = "dct-api.herokuapp.com";
   static final MenuData _menuData = MenuData._internal();
   bool isTest = false;
-  Map<String, Map<String, Object>> testData = {"stations":{"Stem To Root":{"name":"Stem To Root","menu":[{"name":"Pancakes","station":"Stem To Root","meal_time":"Breakfast","calories":"100","categories":["carbs"]},{"name":"Wings","station":"Stem To Root","meal_time":"Lunch","calories":"102","categories":["category1"]},{"name":"Macaroni & Cheese","station":"Stem To Root","meal_time":"Dinner","calories":"102","categories":["vegan","carbs"]},{"name":"Pasta","station":"Stem To Root","meal_time":"Breakfast","calories":"100","categories":["carbs"]}],"line_speed":0},"605 Kitchen":{"name":"605 Kitchen","menu":[{"name":"Bagel","station":"605 Kitchen","meal_time":"Lunch","calories":"100","categories":["carbs"]},{"name":"Grilled Chicken","station":"605 Kitchen","meal_time":"Dinner","calories":"102","categories":["vegan","carbs"]},{"name":"Veggie Fried Rice","station":"605 Kitchen","meal_time":"Breakfast","calories":"100","categories":["carbs"]},{"name":"French Fries","station":"605 Kitchen","meal_time":"Lunch","calories":"100","categories":["carbs"]}],"line_speed":0},"Spice":{"name":"Spice","menu":[{"name":"Cereal","station":"Spice","meal_time":"Dinner","calories":"102","categories":["vegan","carbs"]},{"name":"Beyond Beef Burger","station":"Spice","meal_time":"Breakfast","calories":"100","categories":["carbs"]},{"name":"Avacado Grilled Cheese","station":"Spice","meal_time":"Lunch","calories":"100","categories":["carbs"]},{"name":"Ceasar Salad","station":"Spice","meal_time":"Dinner","calories":"102","categories":["vegan","carbs"]}],"line_speed":0},"Luncheonnette":{"name":"Luncheonnette","menu":[{"name":"Sandwhich","station":"Luncheonnette","meal_time":"Breakfast","calories":"102","categories":["category1"]},{"name":"Portobello Mushrooms","station":"Luncheonnette","meal_time":"Lunch","calories":"102","categories":["vegan","carbs"]},{"name":"Mediterranean Pita","station":"Luncheonnette","meal_time":"Dinner","calories":"100","categories":["carbs"]}],"line_speed":0}},"serve_times":{"Breakfast":"7am - 10am","Lunch":"11am - 2pm","Dinner":"2pm - 5pm"}};
-  
+  Map<String, Map<String, Object>> testData = {
+    "stations": {
+      "Stem To Root": {
+        "name": "Stem To Root",
+        "menu": [
+          {
+            "name": "Pancakes",
+            "station": "Stem To Root",
+            "meal_time": "Breakfast",
+            "calories": "100",
+            "categories": ["carbs"]
+          },
+          {
+            "name": "Wings",
+            "station": "Stem To Root",
+            "meal_time": "Lunch",
+            "calories": "102",
+            "categories": ["category1"]
+          },
+          {
+            "name": "Macaroni & Cheese",
+            "station": "Stem To Root",
+            "meal_time": "Dinner",
+            "calories": "102",
+            "categories": ["vegan", "carbs"]
+          },
+          {
+            "name": "Pasta",
+            "station": "Stem To Root",
+            "meal_time": "Breakfast",
+            "calories": "100",
+            "categories": ["carbs"]
+          }
+        ],
+        "line_speed": 0
+      },
+      "605 Kitchen": {
+        "name": "605 Kitchen",
+        "menu": [
+          {
+            "name": "Bagel",
+            "station": "605 Kitchen",
+            "meal_time": "Lunch",
+            "calories": "100",
+            "categories": ["carbs"]
+          },
+          {
+            "name": "Grilled Chicken",
+            "station": "605 Kitchen",
+            "meal_time": "Dinner",
+            "calories": "102",
+            "categories": ["vegan", "carbs"]
+          },
+          {
+            "name": "Veggie Fried Rice",
+            "station": "605 Kitchen",
+            "meal_time": "Breakfast",
+            "calories": "100",
+            "categories": ["carbs"]
+          },
+          {
+            "name": "French Fries",
+            "station": "605 Kitchen",
+            "meal_time": "Lunch",
+            "calories": "100",
+            "categories": ["carbs"]
+          }
+        ],
+        "line_speed": 0
+      },
+      "Spice": {
+        "name": "Spice",
+        "menu": [
+          {
+            "name": "Cereal",
+            "station": "Spice",
+            "meal_time": "Dinner",
+            "calories": "102",
+            "categories": ["vegan", "carbs"]
+          },
+          {
+            "name": "Beyond Beef Burger",
+            "station": "Spice",
+            "meal_time": "Breakfast",
+            "calories": "100",
+            "categories": ["carbs"]
+          },
+          {
+            "name": "Avacado Grilled Cheese",
+            "station": "Spice",
+            "meal_time": "Lunch",
+            "calories": "100",
+            "categories": ["carbs"]
+          },
+          {
+            "name": "Ceasar Salad",
+            "station": "Spice",
+            "meal_time": "Dinner",
+            "calories": "102",
+            "categories": ["vegan", "carbs"]
+          }
+        ],
+        "line_speed": 0
+      },
+      "Luncheonnette": {
+        "name": "Luncheonnette",
+        "menu": [
+          {
+            "name": "Sandwhich",
+            "station": "Luncheonnette",
+            "meal_time": "Breakfast",
+            "calories": "102",
+            "categories": ["category1"]
+          },
+          {
+            "name": "Portobello Mushrooms",
+            "station": "Luncheonnette",
+            "meal_time": "Lunch",
+            "calories": "102",
+            "categories": ["vegan", "carbs"]
+          },
+          {
+            "name": "Mediterranean Pita",
+            "station": "Luncheonnette",
+            "meal_time": "Dinner",
+            "calories": "100",
+            "categories": ["carbs"]
+          }
+        ],
+        "line_speed": 0
+      }
+    },
+    "serve_times": {
+      "Breakfast": "7am - 10am",
+      "Lunch": "11am - 2pm",
+      "Dinner": "2pm - 5pm"
+    }
+  };
+
   factory MenuData() {
     return _menuData;
   }
@@ -33,21 +170,20 @@ class MenuData {
     var stations = _data['stations'];
     for (var s in stations.keys) {
       List menu = stations[s]['menu'];
-      for(var item in menu){
-              _allMenu.add(FoodItem(
-                item['name'],
-                item['categories'], 
-                false, // TODO: Implement checking user database for if item is favorited 
-                item['meal_time'].compareTo(getServeTime()) == 0, 
-                item['meal_time'], 
-                item['station']));
+      for (var item in menu) {
+        _allMenu.add(FoodItem(
+            item['name'],
+            item['categories'],
+            false, // TODO: Implement checking user database for if item is favorited
+            item['meal_time'].compareTo(getServeTime()) == 0,
+            item['meal_time'],
+            item['station']));
       }
     }
 
     _serveTimes = _data['serve_times'].keys.toList();
 
     _stations = _data['stations'].keys.toList();
-
   }
 
   // loadCurrentMenu loads the current menu
@@ -59,26 +195,25 @@ class MenuData {
 
   // loadData loads all data that needs to be fetched from the server at once
   Future loadData() async {
-    if (isTest == false){
-      final url = Uri.http(baseUrl, "/dct-data");
+    if (isTest == false) {
+      final url = Uri.https(baseUrl, "/dct-data");
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        _data =
-            await convert.jsonDecode(response.body) as Map<String, dynamic>;
+        _data = await convert.jsonDecode(response.body) as Map<String, dynamic>;
         await loadCurrentServeTime();
         await loadTodaysMenu().then((_) {
-        loadCurrentMenu();
+          loadCurrentMenu();
         });
-        print("DCT Data received");      
+        print("DCT Data received");
       } else {
-          print("DCT Data not received");
+        print("DCT Data not received");
       }
     } else {
       _data = testData;
       await loadCurrentServeTime();
       await loadTodaysMenu().then((_) {
-      loadCurrentMenu();
-    });
+        loadCurrentMenu();
+      });
     }
   }
 
