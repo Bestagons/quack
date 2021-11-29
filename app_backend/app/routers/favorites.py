@@ -51,6 +51,8 @@ async def toggle_favorite(resp: Response, favorite: FavoriteFood, token: HTTPAut
     else:
         if favorite.state:
             favorites.append(favorite.food_name)
+        else:
+            favorites.remove(favorite.food_name)
 
     # Save
     user.favorites = favorites
