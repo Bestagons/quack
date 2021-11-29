@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 class Auth {
   static final Auth _auth = Auth._internal();
   static const String baseUrl = "127.0.0.1:8000";
+  static bool istest = false;
+
   factory Auth() {
     return _auth;
   }
@@ -50,7 +52,7 @@ class Auth {
       "password": password,
     });
 
-    final uri = Uri.http(baseUrl, "/register");
+    final uri = Uri.http(baseUrl, "/user/register");
     final response = await http.post(uri,
         headers: {"Content-Type": "application/json"}, body: body);
     if (response.statusCode == 201) {
@@ -61,31 +63,49 @@ class Auth {
     return Future.value(false);
   }
 
-  Future<bool> authenticate(String credentials) async {
-    if (credentials.contains(",")) {
-      List<String> creds = credentials.split(",");
-      String email = creds[0];
-      String password = creds[1];
-      if (email != "" && password != "") {
-        // TODO: verify
-        final queryParams = {
-          "email": email,
-          "password": password,
-        };
-
-        final uri = Uri.http(baseUrl, "/login", queryParams);
-        final response = await http.get(uri);
-        if (response.statusCode == 200) {
-          print("[core/auth] Successfully logged in");
-          return Future.value(true);
-        }
-        print("[core/auth] Failed to login ${response.body}");
-      }
+  Future<List> authenticate(String email, password) async {
+    if (istest) {
+      return Future.value([
+        "",
+        {"access_token": ""},
+        jsonEncode({
+          "_id": {"\$oid": "61882c265f992e7f6d141036"},
+          "devices": [],
+          "email": "test@emory.edu",
+          "favorites": [],
+          "friends": ["felipe@emory.edu", "mitchie@emory.edu"],
+          "is_sharing_location": false,
+          "loc": 1,
+          "name": "Test User",
+          "password": "password1!",
+          "verified": false
+        })
+      ]);
     }
-    return Future.value(false);
+
+    if (email != "" && password != "") {
+      final body = jsonEncode({
+        "email": email,
+        "password": password,
+      });
+
+      final uri = Uri.http(baseUrl, "/user/login");
+      final response = await http.post(uri,
+          headers: {"Content-Type": "application/json"}, body: body);
+      if (response.statusCode == 200) {
+        print("[core/auth] Successfully logged in");
+        final List r = jsonDecode(response.body);
+        return Future.value(r);
+      }
+      print("[core/auth] Failed to login ${response.body}");
+    }
+
+    return Future.value([]);
   }
 
   Future<void> saveAuth(String email, String password) async {
+    if (istest) return;
+
     String lp = await _localPath;
     print(
         "[core/auth.dart] Saving auth with email: $email and password $password at $lp");
@@ -97,5 +117,17 @@ class Auth {
   Future<void> destroy() async {
     // TODO: Delete any user data on destroy
     await saveAuth("", "");
+  }
+
+  String getBaseURL() {
+    return baseUrl;
+  }
+
+  bool isTest() {
+    return istest;
+  }
+
+  void setTest() {
+    istest = true;
   }
 }

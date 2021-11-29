@@ -32,8 +32,8 @@ security = JWTBearer()
         Response.status: int
             The status code for the request
 """
-@router.post("/new-friend/", status_code=status.HTTP_201_CREATED)
-async def add_friend(resp: Response, friend: AddFriend, token: HTTPAuthorizationCredentials = Security(security)):
+@router.post("/new-friend", status_code=status.HTTP_201_CREATED)
+async def add_friend(resp: Response, friend: AddFriend, token: HTTPAuthorizationCredentials = Security(security), dry_run: bool = False):
     payload: dict = decodeJWT(token)
     user_id = payload["user_id"]
     user: User = User().get_user_by_id(user_id)
@@ -52,7 +52,8 @@ async def add_friend(resp: Response, friend: AddFriend, token: HTTPAuthorization
     uuid_friends.append(friend.friend_email)
     # update user
     user.friends = uuid_friends
-    user.save()
+    if not dry_run:
+        user.save()
     return {"msg": "FUUID has been successfully linked to UUID"}
 
 
@@ -72,7 +73,7 @@ async def add_friend(resp: Response, friend: AddFriend, token: HTTPAuthorization
             The status code for the request
 """
 @router.post("/remove-friend/", status_code=status.HTTP_200_OK)
-async def remove_friend(resp: Response, friend: AddFriend, token: HTTPAuthorizationCredentials = Security(security)):
+async def remove_friend(resp: Response, friend: AddFriend, token: HTTPAuthorizationCredentials = Security(security), dry_run: bool = False):
     payload: dict = decodeJWT(token)
     user_id = payload["user_id"]
     user: User = User().get_user_by_id(user_id)
@@ -91,22 +92,21 @@ async def remove_friend(resp: Response, friend: AddFriend, token: HTTPAuthorizat
     uuid_friends.remove(friend.friend_email)
     # update user
     user.friends = uuid_friends
-    user.save()
+    if not dry_run:
+        user.save()
 
     return {"msg": "FUUID has been successfully removed from UUID"}
 
 
-@router.post("/get-friends/", status_code=status.HTTP_200_OK, dependencies=[Depends(security)])
+@router.post("/get-friends", status_code=status.HTTP_200_OK, dependencies=[Depends(security)])
 async def get_friends(resp: Response, token: HTTPAuthorizationCredentials = Security(security)):
     payload = decodeJWT(token)
     if payload is not None:
         uuid = payload["user_id"]
-        user = db.get_user_by_uuid(uuid)
+        user = User().get_user_by_id(uuid)
         friends = []
-        for friend_email in user["friends"]:
-            fu = db.get_user_by_email(friend_email)
-            if fu is None:
-                fu = {"email": friend_email, "name": "", "uuid": "", "friends": []}
+        for friend_email in user.friends:
+            fu = User().get_user_by_email(friend_email)
             friends.append(fu)
         return friends
     else:

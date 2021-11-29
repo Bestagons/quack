@@ -1,43 +1,26 @@
+import 'dart:convert';
+
+import 'package:quack_app/core/auth/auth.dart';
 import 'package:quack_app/core/seating/seating_locations.dart';
+
+import 'package:http/http.dart' as http;
 
 class UserData {
   String _email = "";
   String _password = "";
+  String _token = "";
   String _name = "";
 
-  SeatingLocation _currentLoc = SeatingLocation.none_;
+  SeatingLocation _currentLoc = SeatingLocation.none_0;
   bool _isSharingLoc = false;
 
   List<UserData> _friends = List.empty();
 
   // Constructor for app user
-  UserData(String email, String password) {
+  UserData(String email, password, token) {
     _email = email;
     _password = password;
-    // Use email and password to authenticate and get user data
-    _friends = [
-      UserData.friend(
-          "felipe@emory.edu", "Felipe", SeatingLocation.section_1, true),
-      UserData.friend(
-          "rafael@emory.edu", "Rafael", SeatingLocation.section_2, true),
-      UserData.friend(
-          "brenda@emory.edu", "Brenda Cano", SeatingLocation.section_5, true),
-      UserData.friend(
-          "david@emory.edu", "David", SeatingLocation.section_9, true),
-      UserData.friend("ore@emory.edu", "Ore", SeatingLocation.section_4, true),
-      UserData.friend(
-          "mimi@emory.edu", "Mimi", SeatingLocation.section_8, true),
-      UserData.friend("miles@emory.edu", "Miles Robertson",
-          SeatingLocation.section_3, true),
-      UserData.friend("rdj@emory.edu", "Robert Downey Jr.",
-          SeatingLocation.section_6, true),
-      UserData.friend(
-          "superman@emory.edu", "Superman", SeatingLocation.none_, true),
-      UserData.friend(
-          "batman@emory.edu", "Batman", SeatingLocation.section_1, false),
-      UserData.friend(
-          "elchapo@emory.edu", "El Chapo", SeatingLocation.section_4, true),
-    ];
+    _token = token;
   }
 
   // Constructor for empty user
@@ -52,11 +35,11 @@ class UserData {
     _isSharingLoc = isSharingLoc;
   }
 
-  Future<bool> initialize() async {
-    _name = "Felipe";
-
-    _currentLoc = SeatingLocation.section_1;
-    _isSharingLoc = true;
+  Future<bool> initialize(String user_data) async {
+    final Map data = jsonDecode(user_data);
+    _currentLoc = SeatingLocation.none_0.fromInt(data["loc"]);
+    _isSharingLoc = data["is_sharing_location"];
+    _friends = await loadFriends();
 
     return Future.value(true);
   }
@@ -97,5 +80,40 @@ class UserData {
 
   String getName() {
     return _name;
+  }
+
+  Future<List<UserData>> loadFriends() async {
+    if (Auth().isTest()) {
+      return [
+        UserData.friend("", "Rafael", SeatingLocation.section_1, true),
+        UserData.friend("", "Miles", SeatingLocation.section_6, true),
+        UserData.friend("", "Brenda", SeatingLocation.section_9, true),
+        UserData.friend("", "Mimi", SeatingLocation.section_7, true),
+        UserData.friend("", "Ore", SeatingLocation.section_4, true),
+        UserData.friend("", "David", SeatingLocation.section_3, false)
+      ];
+    }
+
+    final uri = Uri.http(Auth().getBaseURL(), "/friends/get-friends");
+    final response =
+        await http.post(uri, headers: {"Authorization": "Bearer " + _token});
+    if (response.statusCode == 200) {
+      final List<UserData> friends = [];
+
+      final List r = jsonDecode(response.body);
+
+      for (var f in r) {
+        friends.add(UserData.friend(
+            f["email"],
+            f["name"],
+            SeatingLocation.none_0.fromInt(f["loc"]),
+            f["is_sharing_location"]));
+      }
+      return Future.value(friends);
+    } else {
+      print("[user_data.dart.loadFriends] " + response.body);
+    }
+
+    return Future.value([]);
   }
 }

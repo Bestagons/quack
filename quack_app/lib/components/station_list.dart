@@ -82,24 +82,66 @@ class _StationListState extends State<StationList> {
           continue;
         }
 
-        // Station subheader
-        list.add(Container(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-            child: AutoSizeText(station.toUpperCase(),
-                style: const TextStyle(
-                    fontSize: 25, fontWeight: FontWeight.bold))));
-
-        // All food items
-        for (FoodItem item in stationCurrentItems) {
-          list.add(FoodSummary(
-              item: item,
-              group: _group,
-              onFavoritePressed: () {
-                setState(() {
-                  stationList = getStationList();
-                });
-              }));
-        }
+        // Adds each station and their food items
+        list.add(
+          Stack(
+            children: <Widget> [
+              //Food items
+              Container(
+              margin: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 5.0),
+              height: 60.0 * stationCurrentItems.length + 40.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10.0, 40.0, 5.0, 20.0),
+                child: Column(
+                children: <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: stationCurrentItems.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return FoodSummary(
+                            item: stationCurrentItems[index],
+                            group: _group,
+                            onFavoritePressed: () {
+                              setState(() {
+                                stationList = getStationList();
+                              });
+                            });
+                      }),
+                ),
+              ]) ,)
+              ),
+              // Station sub header
+          Container(
+            margin: const EdgeInsets.fromLTRB(50.0, 5.0, 50.0, 5.0),
+            padding: const EdgeInsets.only(
+              left: 10.0
+            ),
+            height: 50.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Constants.kPrimaryColor,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Row(
+              children: <Widget> [
+                Text(station.toUpperCase(),
+                    style:
+                        const TextStyle(
+                          fontSize: 20.0, 
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          )),
+              ]           
+            )
+          )
+            ]
+          )
+        );
       }
     }
 
