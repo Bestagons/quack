@@ -167,13 +167,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   waitOn: () async {
                                     Auth().saveAuth(emailController.text,
                                         passwordController.text);
-<<<<<<< HEAD
                                     MenuData().loadData();
                                     User().initialize(emailController.text,
                                         passwordController.text);
-=======
-                                    await MenuData().loadData();
->>>>>>> d785b1d0da58e00039809a4d0745c2d3dcc8379f
                                     await Future.delayed(
                                         const Duration(seconds: 2), () {});
                                     return Future.value("");
