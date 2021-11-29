@@ -26,3 +26,7 @@ class UUID(BaseModel):
 
 class AddFriend(BaseModel):
     friend_email: str
+
+class SaveSeating(BaseModel):
+    section: int
+

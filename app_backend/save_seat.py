@@ -6,6 +6,14 @@ import os
 from database import Database
 from pydantic import BaseModel
 from sections import Sections
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from app.models.user_models import SaveSeating
+from models.user import User
+from app.auth_bearer import JWTBearer
+from app.auth_handler import decodeJWT
+from fastapi import APIRouter, Response, status, Depends, Security
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+
 #import server
 
 load_dotenv()
@@ -14,6 +22,7 @@ db.connect()
 
 
 router = APIRouter(prefix="/seating")
+security = JWTBearer()
 resp = Response
 
 seating_db = db.client["user"] # from user collection
@@ -21,69 +30,47 @@ seating_collection = seating_db["seating"] # review --> sub collection
 
 
 
-class SaveSeating(BaseModel):
-    """
-        section: The seating section (numbered from 1 to 9)
-
-        color: The respective color associated with each seating section
-
-    """
-    section: int # required
-    username: str # required
-    color: str # not required
-
-
 @router.post("/dct-seating-section", status_code=status.HTTP_201_CREATED)
-async def set_section_info(resp: Response, seating_info: SaveSeating, dry_run=False):
+async def set_seating_info(resp: Response, seating_info: SaveSeating,token: HTTPAuthorizationCredentials = Security(security), dry_run=False):
     """
 
     This function updates the object with the section number and respective color
+     resp: Response
+        The response to send back to the user which contains the status code and body
 
-    section: The seating section number (based off of @BrendaCano 's Map)
-    return: True or False (error handling)
+    Seating_info: SaveSeating
+        The seating section number (based off of @BrendaCano 's Map)
+
+    loc: int
+        The section number associated with a user
+
+    returns: Response
 
     """
 
-    if dry_run: # for testing purposes
-        if 0 <= seating_info.section <= 9: # valid (0 is none)
-            return True
-        else: # invalid
-            return False
+    payload: dict = decodeJWT(token)
+    user_id = payload["user_id"]
+    user: User = User().get_user_by_id(user_id)
 
-    if (not dry_run):
-    # ==== Error Handling: ====
-        if seating_info.section == "" :
-            resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err": "No seating section number specified"}
-        if seating_info.color == "":
-            resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err": "No seating section color specified"}
-        if 0 >= seating_info.section or seating_info.section > 9:
-            resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err": "Invalid section number specified"}
+    # checks if location value is valid
+    if seating_info.section == "":
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+        return {"err": "No seating section number specified"}
 
-        if ((Sections.color_dict.get(seating_info.section) != seating_info.color) and (seating_info.section != None)):
-            resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err": "Invalid section number specified"}
-     # ==== Save Seating for user  ====    
-        if seating_collection.count_documents({"username": seating_info.username}, limit = 1 )== 0: # save seated
-            seating_collection.insert_one(seating_info)
-            resp.status_code = status.HTTP_201_CREATED
-            return {"msg": "Seating Section has been successfully saved."}
+    if seating_info.section < 0 or seating_info.section > 9:# 0 for "None"
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+        return {"err": "Invalid seating section number"}
 
-        if seating_collection.count_documents({"username": seating_info.username}, limit =1 ) > 0: #update seated
-            seating_collection.replace_one({"username": seating_info['username']},seating_info)
-            resp.status_code = status.HTTP_201_CREATED
-            return {"msg": "Seating Section has been successfully saved."}
+    where_the_quack = seating_info.section
 
+    # check if location being shared
+    if user.is_sharing_location == False:
+        resp.status_code = status.HTTP_412_PRECONDITION_FAILED
+        return {"err": "Location sharing is not enabled"}
 
+    # override previous location
+    user.loc = where_the_quack
 
-
-
-
-
-
-
-
-
-
+    if not dry_run:
+        user.save()
+    return {"msg": "Seating Section has been successfully linked to UUID"}
