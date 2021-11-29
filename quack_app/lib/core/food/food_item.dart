@@ -68,4 +68,9 @@ class FoodItem {
   int getUserRating() {
     return _user_rating;
   }
+
+  void setUserRating(int rating) {
+    // TODO: Update app backend with new rating
+    _user_rating = rating;
+  }
 }
