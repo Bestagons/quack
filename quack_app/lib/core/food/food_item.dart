@@ -10,7 +10,7 @@ class FoodItem {
   final bool _isCurrentlyBeingServed;
   final String _serveTime;
   final String _station;
-  late final int _general_rating;
+  final int _general_rating;
   int _user_rating;
   // Implements a single food item
   //
@@ -24,9 +24,8 @@ class FoodItem {
       this._isCurrentlyBeingServed,
       this._serveTime,
       this._station,
-      this._user_rating) {
-    _general_rating = 5;
-  }
+      this._general_rating,
+      this._user_rating);
 
   // Toggle the item as a favorite or not
   Future<void> toggleFavorite() async {

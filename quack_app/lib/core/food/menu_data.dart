@@ -178,7 +178,8 @@ class MenuData {
             item['meal_time'].compareTo(getServeTime()) == 0,
             item['meal_time'],
             item['station'],
-            3)); // TODO: Implement user rating
+            5, // TODO: Implement general rating dct backend
+            3)); // TODO: Implement user rating app backend
       }
     }
 
