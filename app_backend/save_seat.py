@@ -1,12 +1,7 @@
 from sections import Sections
-
-from fastapi import APIRouter, Response, status
 from dotenv import load_dotenv
 import os
 from database import Database
-from pydantic import BaseModel
-from sections import Sections
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from app.models.user_models import SaveSeating
 from models.user import User
 from app.auth_bearer import JWTBearer
@@ -14,19 +9,17 @@ from app.auth_handler import decodeJWT
 from fastapi import APIRouter, Response, status, Depends, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-#import server
-
 load_dotenv()
 db = Database(os.getenv('DB_USERNAME'), os.getenv('DB_PASSWORD'))
 db.connect()
 
+seating_db = db.client["user"] # from user collection
+seating_collection = seating_db["seating"] # review --> sub collection
 
 router = APIRouter(prefix="/seating")
 security = JWTBearer()
 resp = Response
 
-seating_db = db.client["user"] # from user collection
-seating_collection = seating_db["seating"] # review --> sub collection
 
 
 
