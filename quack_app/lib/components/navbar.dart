@@ -32,7 +32,8 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+          automaticallyImplyLeading: false,
+           // leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
             title: const Text("Quack")),
         body: Center(
           child: _widgetOptions.elementAt(currentIndex),

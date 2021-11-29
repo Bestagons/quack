@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quack_app/core/auth/auth.dart';
 import 'package:quack_app/core/food/menu_data.dart';
+import 'package:quack_app/core/user/user.dart';
 import 'package:quack_app/screens/loading/loading_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,17 +16,27 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   void authenticate() async {
     String auth = await Auth().getAuth();
-    if (auth != "") {
+    if (auth != "" && auth.contains(",")) {
       // Try to auto login with saved creds
-      bool isAuth = await Auth().authenticate(auth);
-      if (isAuth) {
+
+      List<String> creds = auth.split(",");
+      String email = creds[0];
+      String password = creds[1];
+
+      final List response = await Auth().authenticate(email, password);
+      if (response.isNotEmpty) {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => LoadingScreen(
               routeTo: "/home",
               waitOn: () async {
-                await MenuData().loadData();
+                MenuData().loadData();
+                User().initialize(
+                    auth.split(",")[0],
+                    auth.split(",")[1],
+                    response.elementAt(1)["access_token"],
+                    response.elementAt(2));
                 await Future.delayed(const Duration(seconds: 2), () {});
                 return Future.value("");
               },
@@ -156,23 +167,29 @@ class _LoginScreenState extends State<LoginScreen> {
                                     null) {
                               return;
                             }
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoadingScreen(
-                                  routeTo: "/home",
-                                  waitOn: () async {
-                                    Auth().saveAuth(emailController.text,
-                                        passwordController.text);
-                                    await MenuData().loadData();
-                                    await Future.delayed(
-                                        const Duration(seconds: 2), () {});
-                                    return Future.value("");
-                                  },
+                            final List response = await Auth().authenticate(
+                                emailController.text, passwordController.text);
+                            if (response.isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoadingScreen(
+                                      routeTo: "/home",
+                                      waitOn: () async {
+                                        Auth().saveAuth(emailController.text,
+                                            passwordController.text);
+                                        await MenuData().loadData();
+                                        User().initialize(
+                                            emailController.text,
+                                            passwordController.text,
+                                            response
+                                                .elementAt(1)["access_token"],
+                                            response.elementAt(2));
+                                        return Future.value("");
+                                      }),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                         ),
                       ],

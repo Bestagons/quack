@@ -40,6 +40,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   http: ^0.13.4
   image_pixels: ^2.0.1
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -86,6 +87,14 @@ flutter:
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png
     - ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png
     - assets/logo.png
+    - assets/dct.png
+    - assets/dctseats.png
+    - assets/team/ore.png
+    - assets/team/brenda.png
+    - assets/team/david.png
+    - assets/team/miles.png
+    - assets/team/mimi.png
+    - assets/team/rafael.png
     - assets/dct_seating_locs.png
     - test.env
   # An image asset can refer to one or more resolution-specific "variants", see
