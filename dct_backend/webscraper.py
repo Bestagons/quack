@@ -6,9 +6,6 @@ def createSoup(url):
     # setup BeautifulSoup with URL
     req = requests.get(url)
     soup = BeautifulSoup(req.content, "html.parser")
-    # Title of webpage
-    title = soup.title
-    title = title.get_text()
     return soup
 
 def scrapeFrame(soup):
@@ -41,6 +38,4 @@ def scrapeFood(mealtime, mealname, station_soup):
         else:
             foodcal = -1
 
-        # statement for logging purposes
-        log_string = "At " + str(stationName) + " from " + str(mealtime) + ", " + str(foodname) + " is served."  
-        return foodname, stationName, mealtime, foodcal, foodcats, mealname # this is an immutable touple
+        return foodname, stationName, mealtime, foodcal, foodcats # this is an immutable touple
