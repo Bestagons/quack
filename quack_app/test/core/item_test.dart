@@ -4,18 +4,17 @@ import 'package:quack_app/core/food/food_item.dart';
 void main() {
   group("Item", () {
     test("Empty Item", () {
-      FoodItem item = FoodItem("", "", false, false, "", "");
+      FoodItem item = FoodItem("", [""], false, false, "", "");
       expect(item.getName(), "");
-      expect(item.getCategory(), "");
+      expect(item.getCategory(), [""]);
       expect(item.isFavorite(), false);
       expect(item.isCurrentlyBeingServed(), false);
     });
 
     test("all", () {
-      FoodItem item =
-          FoodItem("Fries", "Potato", true, true, "Breakfast", "Station1");
+      FoodItem item = FoodItem("Fries", ["Potato"], true, true, "Breakfast", "Station1");
       expect(item.getName(), "Fries");
-      expect(item.getCategory(), "Potato");
+      expect(item.getCategory(), ["Potato"]);
       expect(item.isFavorite(), true);
       expect(item.isCurrentlyBeingServed(), true);
       expect(item.getServeTime(), "Breakfast");
@@ -23,8 +22,7 @@ void main() {
     });
 
     test("toggle favorite", () async {
-      FoodItem item =
-          FoodItem("Fries", "Potato", true, false, "Breakfast", "Empty");
+      FoodItem item = FoodItem("Fries", ["Potato"], true, false, "Breakfast", "Empty");
       await item.toggleFavorite();
       expect(item.isFavorite(), false);
     });

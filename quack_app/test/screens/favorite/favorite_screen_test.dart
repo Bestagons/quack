@@ -10,6 +10,7 @@ import 'package:quack_app/screens/favorite/favorite_screen.dart';
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   List<String> creds = await TestAuth().getAuthCredentials();
+  MenuData().isTest = true;
   group("Favorite Screen", () {
     testGoldens("empty_favorites", (WidgetTester tester) async {
       MyApp app = const MyApp();
