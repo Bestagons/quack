@@ -10,7 +10,7 @@ def test_set_seat():
     for sections in section:
         tester = SaveSeating()
         test_success =  tester.set_section_info(sections)
-        if (0 < sections <= 9): # Success Cases
+        if (0 <= sections <= 9): # Success Cases (0 is none)
             assert tester.color == Sections.color_dict.get(tester.section)
             assert tester.section == sections
             assert test_success == True # true on success

@@ -34,7 +34,7 @@ class SaveSeating(BaseModel):
 
 
 @router.post("/dct-seating-section", status_code=status.HTTP_201_CREATED)
-async def set_section_info(resp: Response, seating_info: SaveSeating, dry_run) -> bool:
+async def set_section_info(resp: Response, seating_info: SaveSeating, dry_run=False):
     """
 
     This function updates the object with the section number and respective color
@@ -45,7 +45,7 @@ async def set_section_info(resp: Response, seating_info: SaveSeating, dry_run) -
     """
 
     if dry_run: # for testing purposes
-        if 0 < seating_info.section <= 9: # valid
+        if 0 <= seating_info.section <= 9: # valid (0 is none)
             return True
         else: # invalid
             return False
