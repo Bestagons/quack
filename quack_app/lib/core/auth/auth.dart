@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 class Auth {
   static final Auth _auth = Auth._internal();
   static const String baseUrl = "127.0.0.1:8000";
+  static bool istest = false;
+
   factory Auth() {
     return _auth;
   }
@@ -62,6 +64,25 @@ class Auth {
   }
 
   Future<List> authenticate(String email, password) async {
+    if (istest) {
+      return Future.value([
+        "",
+        {"access_token": ""},
+        jsonEncode({
+          "_id": {"\$oid": "61882c265f992e7f6d141036"},
+          "devices": [],
+          "email": "test@emory.edu",
+          "favorites": [],
+          "friends": ["felipe@emory.edu", "mitchie@emory.edu"],
+          "is_sharing_location": false,
+          "loc": 1,
+          "name": "Test User",
+          "password": "password1!",
+          "verified": false
+        })
+      ]);
+    }
+
     if (email != "" && password != "") {
       final body = jsonEncode({
         "email": email,
@@ -83,6 +104,8 @@ class Auth {
   }
 
   Future<void> saveAuth(String email, String password) async {
+    if (istest) return;
+
     String lp = await _localPath;
     print(
         "[core/auth.dart] Saving auth with email: $email and password $password at $lp");
@@ -98,5 +121,13 @@ class Auth {
 
   String getBaseURL() {
     return baseUrl;
+  }
+
+  bool isTest() {
+    return istest;
+  }
+
+  void setTest() {
+    istest = true;
   }
 }

@@ -83,6 +83,17 @@ class UserData {
   }
 
   Future<List<UserData>> loadFriends() async {
+    if (Auth().isTest()) {
+      return [
+        UserData.friend("", "Rafael", SeatingLocation.section_1, true),
+        UserData.friend("", "Miles", SeatingLocation.section_6, true),
+        UserData.friend("", "Brenda", SeatingLocation.section_9, true),
+        UserData.friend("", "Mimi", SeatingLocation.section_7, true),
+        UserData.friend("", "Ore", SeatingLocation.section_4, true),
+        UserData.friend("", "David", SeatingLocation.section_3, false)
+      ];
+    }
+
     final uri = Uri.http(Auth().getBaseURL(), "/friends/get-friends");
     final response =
         await http.post(uri, headers: {"Authorization": "Bearer " + _token});

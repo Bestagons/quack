@@ -25,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final List response = await Auth().authenticate(email, password);
       if (response.isNotEmpty) {
-        print(response);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -171,7 +170,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             final List response = await Auth().authenticate(
                                 emailController.text, passwordController.text);
                             if (response.isNotEmpty) {
-                              print(response);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
