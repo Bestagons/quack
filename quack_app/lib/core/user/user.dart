@@ -1,4 +1,3 @@
-import 'package:quack_app/core/seating/seating_locations.dart';
 import 'package:quack_app/core/user/user_data.dart';
 
 class User {
