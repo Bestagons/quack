@@ -43,7 +43,6 @@ def test_new_friend():
         assert response.status_code == test_case.expected_status_code
         assert ("err" in response.json() or 'detail' in response.json()) == test_case.expects_err
 
-
 def test_get_friends():
     class Params:
         def __init__(self, token: str, expected_status_code: int, expects_err: bool):
@@ -53,11 +52,14 @@ def test_get_friends():
 
     token = authenticate_test()
 
-    test_cases = [Params(token, status.HTTP_200_OK, False)]
+    test_cases = [Params(token, status.HTTP_200_OK, False),
+            Params(token[:-1] + ",", status.HTTP_403_FORBIDDEN, True)]
 
     for test_case in test_cases:
         query = "/friends/get-friends/"
         response = client.post(query, headers={"Authorization" : f"Bearer {test_case.token}", "Accept": "application/json"})
-        assert ("err" in response.json()) == test_case.expects_err
-        # assert response.json() == "test"
+        assert (("err" in response.json()) == test_case.expects_err) or (("detail" in response.json()) == test_case.expects_err)
         assert response.status_code == test_case.expected_status_code
+        if test_case.expects_err == False:
+            # Test User has 2 friends
+            assert len(response.json()) == 2

@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 import os
 from dotenv import load_dotenv
 import sys
@@ -39,25 +40,31 @@ class Database():
             return {"err": "Email already exists. Use a different email."}
 
         login_info["verified"] = False
-        # login_info["friends"] = []
+        login_info["friends"] = []
+        login_info["is_sharing_loc"] = False
+        login_info["loc"] = "None"
 
-        if self.test_mode:
+        if not self.test_mode:
+            users.insert_one(login_info)
+        else:
             print("[Database.py] Dry run not updating database")
             return login_info
 
-        users.insert_one(login_info)
 
         # return inserted user id from database
         return str(users.find_one({"email": login_info['email']})["_id"])
 
     def get_user_by_uuid(self, uuid):
         users = self.db["users"]
-        return users.find_one({"_id": uuid}, {"password": 0})
+        return users.find_one({"_id": ObjectId(uuid)}, {"password": 0})
+
+    def get_user_by_email(self, email):
+        users = self.db["users"]
+        return users.find_one({'email': email}, {"password": 0})
 
 
     def get_user(self, login_info: dict):
         users = self.db["users"]
-
         return users.find_one({"email": login_info["email"], "password": login_info["password"]})
 
 

@@ -4,6 +4,9 @@ from ..models.user_models import AddFriend
 from ..auth_bearer import JWTBearer
 from ..auth_handler import decodeJWT
 from models.user import User
+from database import db
+import json
+from bson import json_util
 
 
 print("Starting server...")
@@ -96,7 +99,14 @@ async def remove_friend(resp: Response, friend: AddFriend, token: HTTPAuthorizat
 @router.post("/get-friends/", status_code=status.HTTP_200_OK, dependencies=[Depends(security)])
 async def get_friends(resp: Response, token: HTTPAuthorizationCredentials = Security(security)):
     payload = decodeJWT(token)
-    user_id = payload["user_id"]
-    print(user_id)
-    user: User = User().get_user_by_id(user_id)
-    return {"friends": user.friends}
+    if payload is not None:
+        uuid = payload["user_id"]
+        user = db.get_user_by_uuid(uuid)
+        friends = []
+        for friend_email in user["friends"]:
+            fu = db.get_user_by_email(friend_email)
+            friends.append(json.loads(json_util.dumps(fu)))
+        return friends
+    else:
+        resp.status_code = status.HTTP_401_UNAUTHORIZED
+        return {"err": "Unauthorized - Could not verify user"}

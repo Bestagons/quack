@@ -67,7 +67,6 @@ async def login(login: User, resp: Response):
 """
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register(login: User, resp: Response):
-
     name = login.name
     email = login.email
     password = login.password
@@ -103,7 +102,7 @@ async def register(login: User, resp: Response):
     if "err" in msg:
         resp.status_code = status.HTTP_400_BAD_REQUEST
     else:
-        return signJWT(msg)
+        return signJWT(msg, email)
 
     return msg
 
