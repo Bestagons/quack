@@ -9,12 +9,7 @@ from app.auth_handler import decodeJWT
 from fastapi import APIRouter, Response, status, Depends, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-load_dotenv()
-db = Database(os.getenv('DB_USERNAME'), os.getenv('DB_PASSWORD'))
-db.connect()
 
-seating_db = db.client["user"] # from user collection
-seating_collection = seating_db["seating"] # review --> sub collection
 
 router = APIRouter(prefix="/seating")
 security = JWTBearer()
