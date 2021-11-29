@@ -22,6 +22,7 @@ class _NotificationsPreferencesScreenState
           children: <Widget>[
             Expanded(
               child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[

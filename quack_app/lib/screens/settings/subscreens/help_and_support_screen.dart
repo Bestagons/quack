@@ -18,6 +18,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
           children: <Widget>[
             Expanded(
               child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[

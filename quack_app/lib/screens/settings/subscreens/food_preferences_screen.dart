@@ -24,6 +24,7 @@ class _FoodPreferencesScreenState extends State<FoodPreferencesScreen> {
           children: <Widget>[
             Expanded(
               child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
