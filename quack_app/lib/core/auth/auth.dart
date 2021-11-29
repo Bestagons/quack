@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:async';
 
-import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -95,5 +94,9 @@ class Auth {
   Future<void> destroy() async {
     // TODO: Delete any user data on destroy
     await saveAuth("", "");
+  }
+
+  String getBaseURL() {
+    return baseUrl;
   }
 }

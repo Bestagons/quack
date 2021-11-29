@@ -11,9 +11,9 @@ class User {
 
   User._internal();
 
-  Future<void> initialize(String email, String password) async {
-    userData = UserData(email, password);
-    await userData.initialize();
+  Future<void> initialize(String email, password, token, userJson) async {
+    userData = UserData(email, password, token);
+    await userData.initialize(userJson);
     return Future.value();
   }
 }

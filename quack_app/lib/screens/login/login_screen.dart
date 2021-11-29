@@ -33,7 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
               routeTo: "/home",
               waitOn: () async {
                 MenuData().loadData();
-                User().initialize(auth.split(",")[0], auth.split(",")[1]);
+                User().initialize(
+                    auth.split(",")[0],
+                    auth.split(",")[1],
+                    response.elementAt(1)["access_token"],
+                    response.elementAt(2));
                 await Future.delayed(const Duration(seconds: 2), () {});
                 return Future.value("");
               },
@@ -177,8 +181,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Auth().saveAuth(emailController.text,
                                             passwordController.text);
                                         await MenuData().loadData();
-                                        User().initialize(emailController.text,
-                                            passwordController.text);
+                                        User().initialize(
+                                            emailController.text,
+                                            passwordController.text,
+                                            response
+                                                .elementAt(1)["access_token"],
+                                            response.elementAt(2));
                                         return Future.value("");
                                       }),
                                 ),

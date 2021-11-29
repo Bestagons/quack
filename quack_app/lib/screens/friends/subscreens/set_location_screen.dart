@@ -80,8 +80,8 @@ class SetLocationScreenState extends State<SetLocationScreen> {
                         int x = details.localPosition.dx.toInt() * 3;
                         int y = details.localPosition.dy.toInt() * 3;
                         Color c = img.pixelColorAt!(x, y);
-                        SeatingLocation s = SeatingLocation.none_.fromColor(c);
-                        if (s != SeatingLocation.none_) {
+                        SeatingLocation s = SeatingLocation.none_0.fromColor(c);
+                        if (s != SeatingLocation.none_0) {
                           User().userData.setSeatingLoc(s);
                           Navigator.pop(context);
                         }
