@@ -106,7 +106,8 @@ async def get_friends(resp: Response, token: HTTPAuthorizationCredentials = Secu
         for friend_email in user["friends"]:
             fu = db.get_user_by_email(friend_email)
             if fu is None:
-                fu = {"email": friend_email, "name": "", "uuid": "", "friends": []}
+                fu = {"email": friend_email, "name": "", "_id": "", "friends": []}
+            fu["_id"] = str(fu["_id"])
             friends.append(fu)
         return friends
     else:

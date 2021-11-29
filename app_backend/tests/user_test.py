@@ -25,7 +25,7 @@ def test_login():
 
     for test_case in test_cases:
         response = client.post("user/login", json=test_case.to_json())
-        msg, _, _ = response.json()
+        msg = response.json()
         assert response.status_code == test_case.expects_code
         assert ("err" in msg) == test_case.expects_err
 

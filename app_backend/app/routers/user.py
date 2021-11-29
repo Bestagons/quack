@@ -30,12 +30,11 @@ router = APIRouter(prefix="/user")
 """
 @router.post("/login")
 async def login(login: User, resp: Response):
-    name = login.name
+    # name = login.name
     email = login.email
     password = login.password
 
     user = {
-        "name": name,
         "email": email,
         "password": password
     }
@@ -44,11 +43,17 @@ async def login(login: User, resp: Response):
 
     if db_user is None:
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err": "This user does not exist. Please try different credentials."}, {}, None
+        return {"err": "This user does not exist. Please try different credentials."}
 
     db_user["_id"] = str(db_user['_id'])
+    response = {"msg": "Successfully logged in",
+            "token": signJWT(db_user['_id'], email)}
 
-    return {"msg": "Successfully logged in"}, signJWT(db_user['_id'], email), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
+    # Append db_user to the response
+    response.update(db_user)
+    # remove 'id' from the response
+    response.pop('id', None)
+    return response
 
 """
     register implements the /register/ route

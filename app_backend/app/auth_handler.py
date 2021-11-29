@@ -11,19 +11,21 @@ JWT_SECRET = os.getenv("SECRET")
 JWT_ALGORITHM = os.getenv("ALGORITHM")
 
 
-def token_response(token: str):
-    return {
-        "access_token": token
-    }
+# def token_response(token: str):
+#     return {
+#         "access_token": token
+#     }
 
-def signJWT(user_id: str, email: str) -> Dict[str, str]:
+def signJWT(user_id: str, email: str) -> str:
+    if isinstance(user_id, ObjectId):
+        user_id = str(user_id)
     payload = {
         "user_id": user_id,
         "email": email,
         "expires": time.time() + 600 # 10 minutes
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
-    return token_response(token)
+    return token
 
 def decodeJWT(token: str) -> dict:
     try:
