@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi_utils.tasks import repeat_every
 from dct import DCT
 from webscraper import scrapeFrame, createSoup
 import sys
@@ -37,6 +38,7 @@ def scrape_data(dct: DCT):
 dct = DCT()
 app = FastAPI()
 
+@repeat_every(seconds=60*60*12) # repeat every 12 hours
 @app.on_event("startup")
 async def startup_event():
     scrape_data(dct)
