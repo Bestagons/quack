@@ -1,19 +1,24 @@
 from food_item import FoodItem
-from station import Station 
+from station import Station
 
 class DCT():
     def __init__(self):
         self.menu = []
         self.stations = {}
         self.serve_times = {}
+        self.current_serve_time = ""
         self.takeout_capacity = 0
         self.dinein_capacity = 0
         self.total_capacity = 0
+
+    def save_current_serve_time(self, time):
+        self.current_serve_time = time
 
     def clear_data(self):
         self.menu = []
         self.stations = {}
         self.serve_times = {}
+        self.current_serve_time = ""
 
     """
         save_station adds a station to the tracked station list

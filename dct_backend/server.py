@@ -3,10 +3,11 @@ from fastapi_utils.tasks import repeat_every
 from dct import DCT
 from webscraper import scrapeFrame, createSoup
 import sys
+import json
 
 def scrape_data(dct: DCT):
     soup = createSoup("https://emoryatlanta.cafebonappetit.com/cafe/dobbs-common-table/")
-    output = scrapeFrame(soup)
+    current_time, serve_times, output = scrapeFrame(soup)
     dct.clear_data()
 
     if "pytest" in sys.modules:
@@ -31,8 +32,12 @@ def scrape_data(dct: DCT):
         dct.save_serve_time('Lunch', '11am - 2pm')
         dct.save_serve_time('Dinner', '2pm - 5pm')
     else:
+        dct.save_current_serve_time(current_time)
+        for serve_time in serve_times:
+            dct.save_serve_time(serve_time[0], serve_time[1])
         for entry in output:
             dct.save_food_item(*entry)
+
         print("Successfully scraped new data")
 
 dct = DCT()
@@ -58,6 +63,7 @@ serve_times: dict
 @app.get("/dct-data")
 async def get_dct_data():
     return {
+        "current_serve_time": dct.current_serve_time,
         "stations" : dct.stations,
         "serve_times": dct.serve_times}
 
