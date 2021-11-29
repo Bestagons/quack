@@ -33,7 +33,7 @@ def scrape_data(dct: DCT):
     else:
         for entry in output:
             dct.save_food_item(*entry)
-        print("Successfully scrapped new data")
+        print("Successfully scraped new data")
 
 dct = DCT()
 app = FastAPI()
