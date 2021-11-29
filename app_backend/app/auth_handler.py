@@ -2,8 +2,9 @@ import time
 from typing import Dict
 from dotenv import load_dotenv
 import os
-
 import jwt
+
+load_dotenv()
 
 JWT_SECRET = os.getenv("SECRET")
 JWT_ALGORITHM = os.getenv("ALGORITHM")
@@ -13,18 +14,20 @@ def token_response(token: str):
         "access_token": token
     }
 
-def signJWT(user_id: str) -> Dict[str, str]:
+def signJWT(user_id: str, email: str) -> Dict[str, str]:
     payload = {
         "user_id": user_id,
+        "email": email,
         "expires": time.time() + 600 # 10 minutes
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
     return token_response(token)
 
 def decodeJWT(token: str) -> dict:
-    try: 
+    try:
         decoded_token = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         return decoded_token if decoded_token["expires"] >= time.time() else None
-    except:
+    except Exception as e:
+        print("Got error trying to decode JWT: " + str(e))
         return {}
 
