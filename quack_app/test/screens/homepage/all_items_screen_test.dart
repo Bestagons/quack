@@ -12,6 +12,7 @@ import 'package:quack_app/screens/homepage/home_screen.dart';
 Future<void> main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   MenuData().isTest = true;
+  final scrollable = find.byWidgetPredicate((widget) => widget is Scrollable && widget.physics is ClampingScrollPhysics);
   group("All Items Screen", () {
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
@@ -20,7 +21,8 @@ Future<void> main() async {
       await tester.pumpWidget(app);
       await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
+      await tester.scrollUntilVisible(
+        find.text('Mediterranean Pita'), 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
       await tester.pumpAndSettle(const Duration(seconds: 3));
@@ -34,7 +36,8 @@ Future<void> main() async {
       await tester.pumpWidget(app);
       await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
+      await tester.scrollUntilVisible(
+        find.text('Mediterranean Pita'), 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
       await tester.pumpAndSettle(const Duration(seconds: 3));
@@ -55,7 +58,8 @@ Future<void> main() async {
       await tester.pumpWidget(app);
       await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
+      await tester.scrollUntilVisible(
+        find.text('Mediterranean Pita'), 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
       await tester.pumpAndSettle(const Duration(seconds: 3));
@@ -81,11 +85,12 @@ Future<void> main() async {
       await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
-          find.text("Mediterranean Pita").first, 10);
+        find.text('Mediterranean Pita').first, 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
       await tester.pumpAndSettle(const Duration(seconds: 3));
-      await tester.scrollUntilVisible(find.text("Ceasar Salad"), 10);
+      await tester.scrollUntilVisible(
+        find.text('Ceasar Salad'), 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 2));
       await expectLater(find.byType(AllItemsScreen),
           matchesGoldenFile('goldens/all_items_scroll.png'));
@@ -97,11 +102,12 @@ Future<void> main() async {
       await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
-          find.text("Mediterranean Pita").first, 10);
+        find.text('Mediterranean Pita').first, 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byType(ListTile).last);
       await tester.pumpAndSettle(const Duration(seconds: 3));
-      await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
+      await tester.scrollUntilVisible(
+        find.text('Mediterranean Pita'), 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byIcon(Constants.kFavorite).last);
       await tester.pumpAndSettle(const Duration(seconds: 3));
@@ -121,7 +127,7 @@ Future<void> main() async {
       await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
-          find.text("Mediterranean Pita").first, 10);
+         find.text('Mediterranean Pita').first, 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await expectLater(find.byType(HomeScreen).last,
           matchesGoldenFile('goldens/all_items_verify_like_persistance.png'));
