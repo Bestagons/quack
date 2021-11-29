@@ -23,7 +23,7 @@ def test_new_friend():
         payload = dict()
         if test_case.friend_email is not None:
             payload["friend_email"] = test_case.friend_email
-        query = f"/friends/new-friend/"
+        query = f"/friends/new-friend"
         print("Testing: " + payload.__str__())
         response = client.post(query, json=payload)
         assert response.status_code == test_case.expected_status_code
@@ -42,7 +42,7 @@ def test_get_friends():
             Params(token[:-1] + ",", status.HTTP_403_FORBIDDEN, True)]
 
     for test_case in test_cases:
-        query = "/friends/get-friends/"
+        query = "/friends/get-friends"
         response = client.post(query, headers={"Authorization" : f"Bearer {test_case.token}", "Accept": "application/json"})
         assert (("err" in response.json()) == test_case.expects_err) or (("detail" in response.json()) == test_case.expects_err)
         assert response.status_code == test_case.expected_status_code
