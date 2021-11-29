@@ -15,9 +15,14 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   void authenticate() async {
     String auth = await Auth().getAuth();
-    if (auth != "") {
+    if (auth != "" && auth.contains(",")) {
       // Try to auto login with saved creds
-      bool isAuth = await Auth().authenticate(auth);
+
+      List<String> creds = auth.split(",");
+      String email = creds[0];
+      String password = creds[1];
+
+      bool isAuth = await Auth().authenticate(email, password);
       if (isAuth) {
         Navigator.push(
           context,
@@ -163,11 +168,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 builder: (context) => LoadingScreen(
                                   routeTo: "/home",
                                   waitOn: () async {
-                                    Auth().saveAuth(emailController.text,
+                                    bool isAuth = await Auth().authenticate(
+                                        emailController.text,
                                         passwordController.text);
-                                    await MenuData().loadData();
-                                    await Future.delayed(
-                                        const Duration(seconds: 2), () {});
+
+                                    if (isAuth) {
+                                      Auth().saveAuth(emailController.text,
+                                          passwordController.text);
+                                      await MenuData().loadData();
+                                      return Future.value("");
+                                    }
                                     return Future.value("");
                                   },
                                 ),

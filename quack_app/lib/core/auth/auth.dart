@@ -61,27 +61,23 @@ class Auth {
     return Future.value(false);
   }
 
-  Future<bool> authenticate(String credentials) async {
-    if (credentials.contains(",")) {
-      List<String> creds = credentials.split(",");
-      String email = creds[0];
-      String password = creds[1];
-      if (email != "" && password != "") {
-        // TODO: verify
-        final queryParams = {
-          "email": email,
-          "password": password,
-        };
+  Future<bool> authenticate(String email, password) async {
+    if (email != "" && password != "") {
+      // TODO: verify
+      final queryParams = {
+        "email": email,
+        "password": password,
+      };
 
-        final uri = Uri.http(baseUrl, "/login", queryParams);
-        final response = await http.get(uri);
-        if (response.statusCode == 200) {
-          print("[core/auth] Successfully logged in");
-          return Future.value(true);
-        }
-        print("[core/auth] Failed to login ${response.body}");
+      final uri = Uri.http(baseUrl, "/login", queryParams);
+      final response = await http.get(uri);
+      if (response.statusCode == 200) {
+        print("[core/auth] Successfully logged in");
+        return Future.value(true);
       }
+      print("[core/auth] Failed to login ${response.body}");
     }
+
     return Future.value(false);
   }
 
