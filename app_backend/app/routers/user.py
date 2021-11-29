@@ -10,6 +10,8 @@ from app.auth_handler import signJWT
 from database import db
 from models.user import User
 
+from ..models.user_models import UserLogin, UserRegister
+
 router = APIRouter(prefix="/user")
 
 
@@ -29,13 +31,11 @@ router = APIRouter(prefix="/user")
             The token required to access specific routes
 """
 @router.post("/login")
-async def login(login: User, resp: Response):
-    name = login.name
+async def login(login: UserLogin, resp: Response):
     email = login.email
     password = login.password
 
     user = {
-        "name": name,
         "email": email,
         "password": password
     }
@@ -66,7 +66,7 @@ async def login(login: User, resp: Response):
             The token required to access specific routes
 """
 @router.post("/register", status_code=status.HTTP_201_CREATED)
-async def register(login: User, resp: Response):
+async def register(login: UserRegister, resp: Response):
     name = login.name
     email = login.email
     password = login.password

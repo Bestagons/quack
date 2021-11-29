@@ -11,7 +11,6 @@ import 'package:quack_app/screens/homepage/home_screen.dart';
 
 Future<void> main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
-  List<String> creds = await TestAuth().getAuthCredentials();
   MenuData().isTest = true;
   final scrollable = find.byWidgetPredicate((widget) => widget is Scrollable && widget.physics is ClampingScrollPhysics);
   group("All Items Screen", () {
@@ -20,7 +19,7 @@ Future<void> main() async {
       MyApp app = const MyApp();
 
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
         find.text('Mediterranean Pita'), 10.0, scrollable: scrollable);
@@ -35,7 +34,7 @@ Future<void> main() async {
       await loadAppFonts();
       MyApp app = const MyApp();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
         find.text('Mediterranean Pita'), 10.0, scrollable: scrollable);
@@ -57,7 +56,7 @@ Future<void> main() async {
       await loadAppFonts();
       MyApp app = const MyApp();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
         find.text('Mediterranean Pita'), 10.0, scrollable: scrollable);
@@ -83,7 +82,7 @@ Future<void> main() async {
       await loadAppFonts();
       MyApp app = const MyApp();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
         find.text('Mediterranean Pita').first, 10.0, scrollable: scrollable);
@@ -100,7 +99,7 @@ Future<void> main() async {
       await loadAppFonts();
       MyApp app = const MyApp();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
         find.text('Mediterranean Pita').first, 10.0, scrollable: scrollable);
@@ -125,7 +124,7 @@ Future<void> main() async {
       await loadAppFonts();
       MyApp app = const MyApp();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(
          find.text('Mediterranean Pita').first, 10.0, scrollable: scrollable);

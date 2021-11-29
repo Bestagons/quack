@@ -7,9 +7,9 @@ import 'package:quack_app/core/food/menu_data.dart';
 import 'package:quack_app/core/auth/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
+
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
-  List<String> creds = await TestAuth().getAuthCredentials();
   MenuData().isTest = true;
   final scrollable = find.byWidgetPredicate((widget) => widget is Scrollable && widget.physics is ClampingScrollPhysics);
   group("Home Screen Test", () {
@@ -17,7 +17,7 @@ void main() async {
       await loadAppFonts();
       MyApp app = const MyApp();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await expectLater(
           find.byType(HomeScreen), matchesGoldenFile('goldens/basic_view.png'));
@@ -28,7 +28,7 @@ void main() async {
       MyApp app = const MyApp();
 
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kFavorite).first);
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -46,7 +46,7 @@ void main() async {
       MyApp app = const MyApp();
 
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kFavorite).first);
       await tester.pump();
@@ -68,7 +68,7 @@ void main() async {
       MyApp app = const MyApp();
 
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text('Ceasar Salad'), 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -80,7 +80,7 @@ void main() async {
       MyApp app = const MyApp();
 
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text('Ceasar Salad'), 10.0, scrollable: scrollable);
       await tester.tap(find.byIcon(Constants.kFavorite).last);
