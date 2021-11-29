@@ -105,7 +105,9 @@ async def get_friends(resp: Response, token: HTTPAuthorizationCredentials = Secu
         friends = []
         for friend_email in user["friends"]:
             fu = db.get_user_by_email(friend_email)
-            friends.append(json.loads(json_util.dumps(fu)))
+            if fu is None:
+                fu = {"email": friend_email, "name": "", "uuid": "", "friends": []}
+            friends.append(fu)
         return friends
     else:
         resp.status_code = status.HTTP_401_UNAUTHORIZED
