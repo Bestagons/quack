@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:quack_app/constants/constants.dart';
@@ -11,6 +12,7 @@ void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   List<String> creds = await TestAuth().getAuthCredentials();
   MenuData().isTest = true;
+  final scrollable = find.byWidgetPredicate((widget) => widget is Scrollable && widget.physics is ClampingScrollPhysics);
   group("Favorite Screen", () {
     testGoldens("empty_favorites", (WidgetTester tester) async {
       MyApp app = const MyApp();
@@ -31,7 +33,8 @@ void main() async {
       await tester.pumpWidget(app);
       await TestAuth().authenticateTest(tester, creds);
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
+      await tester.scrollUntilVisible(
+        find.text('Mediterranean Pita'), 10.0, scrollable: scrollable);
       await tester.pumpAndSettle(const Duration(seconds: 3));
       await tester.tap(find.byIcon(Constants.kFavorite).last);
       await tester.pumpAndSettle(const Duration(seconds: 2));

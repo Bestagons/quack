@@ -100,12 +100,10 @@ class _StationListState extends State<StationList> {
                 children: <Widget>[
                 Expanded(
                   child: ListView.builder(
-                      key: Key("foodItems" + station),
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: stationCurrentItems.length,
                       itemBuilder: (BuildContext context, int index) {
                         return FoodSummary(
-                            key: Key("item" + index.toString()),
                             item: stationCurrentItems[index],
                             group: _group,
                             onFavoritePressed: () {
