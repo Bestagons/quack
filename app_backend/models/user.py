@@ -3,21 +3,6 @@ from pydantic import BaseModel, Field
 from typing import List
 from database import db
 
-
-class PyObjectId(ObjectId):
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-    @classmethod
-    def validate(cls, v):
-        if not ObjectId.is_valid(v):
-            raise ValueError("Invalid objectid")
-        return ObjectId(v)
-    @classmethod
-    def __modify_schema__(cls, field_schema):
-        field_schema.update(type="string")
-
-
 """
     UserLogin model keeps track of the user login information
     username: str
@@ -28,7 +13,7 @@ class PyObjectId(ObjectId):
         The password of the user
 """
 class User(BaseModel):
-    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    _id = None
     name: str = ''
     email: str = ''
     password: str = ''
@@ -47,7 +32,9 @@ class User(BaseModel):
         return user
 
     def get_user_by_email(self, email):
-        return db.db.users.find_one({"email": email})
+        user_dict = db.db.users.find_one({"email": email})
+        user = User(**user_dict)
+        return user
 
     def save(self):
-        db.db.users.update_one({"_id": self.id}, {"$set": self.dict()}, upsert=True)
+        db.db.users.update_one({"_id": self._id}, {"$set": self.dict()}, upsert=True)
