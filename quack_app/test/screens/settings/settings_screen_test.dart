@@ -11,8 +11,7 @@ void main() {
     testGoldens("settings_screen_view", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(app);
-      List<String> creds = await TestAuth().getAuthCredentials();
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kNavBarSettingsIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));

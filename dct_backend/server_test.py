@@ -1,12 +1,11 @@
 import server
 from fastapi.testclient import TestClient
 
-client = TestClient(server.app)
-
 def test_root():
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.json() == {"msg": "This is the DCT Backend!"}
+    with TestClient(server.app) as client:
+        response = client.get("/")
+        assert response.status_code == 200
+        assert response.json() == {"msg": "This is the DCT Backend!"}
 
 
 data = {"stations": {"Stem To Root": {"name": "Stem To Root", "menu": [{"name": "Pancakes", "station": "Stem To Root", "meal_time": "Breakfast", "calories": "100", "categories": ["carbs"]}, {"name": "Wings", "station": "Stem To Root", "meal_time": "Lunch", "calories": "102", "categories": ["category1"]}, {"name": "Macaroni & Cheese", "station": "Stem To Root", "meal_time": "Dinner", "calories": "102", "categories": ["vegan", "carbs"]}, {"name": "Pasta", "station": "Stem To Root", "meal_time": "Breakfast", "calories": "100", "categories": ["carbs"]}], "line_speed": 0}, "605 Kitchen": {"name": "605 Kitchen", "menu": [{"name": "Bagel", "station": "605 Kitchen", "meal_time": "Lunch", "calories": "100", "categories": ["carbs"]}, {"name": "Grilled Chicken", "station": "605 Kitchen", "meal_time": "Dinner", "calories": "102", "categories": ["vegan", "carbs"]}, {"name": "Veggie Fried Rice", "station": "605 Kitchen", "meal_time": "Breakfast", "calories": "100", "categories": ["carbs"]}, {"name": "French Fries", "station": "605 Kitchen", "meal_time": "Lunch", "calories": "100", "categories": [
@@ -14,7 +13,8 @@ data = {"stations": {"Stem To Root": {"name": "Stem To Root", "menu": [{"name": 
 
 
 def test_get_dct_data():
-    response = client.get("/dct-data")
-    assert response.status_code == 200
-    assert response.json() == data
+    with TestClient(server.app) as client:
+        response = client.get("/dct-data")
+        assert response.status_code == 200
+        assert response.json() == data
 

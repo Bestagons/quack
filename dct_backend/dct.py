@@ -10,6 +10,11 @@ class DCT():
         self.dinein_capacity = 0
         self.total_capacity = 0
 
+    def clear_data(self):
+        self.menu = []
+        self.stations = {}
+        self.serve_times = {}
+
     """
         save_station adds a station to the tracked station list
 
