@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
 import 'package:quack_app/screens/notification/notification_screen.dart';
+import 'package:quack_app/screens/friends/friends_screen.dart';
 import 'package:quack_app/screens/settings/settings_screen.dart';
-import 'package:quack_app/screens/profile/profile_screen.dart';
 import 'package:quack_app/screens/favorite/favorite_screen.dart';
 
 // Reuseable Navbar
@@ -25,14 +25,15 @@ class _NavBarState extends State<NavBar> {
     NotificationScreen(title: "Notifications"),
     HomeScreen(title: "Quack"),
     FavoriteScreen(title: "Favorite"),
-    ProfileScreen(title: "Profile")
+    FriendsScreen(title: "Friends")
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+          automaticallyImplyLeading: false,
+           // leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
             title: const Text("Quack")),
         body: Center(
           child: _widgetOptions.elementAt(currentIndex),
@@ -75,7 +76,7 @@ class _NavBarState extends State<NavBar> {
               BottomNavigationBarItem(
                   icon: Icon(Constants.kNavBarProfileIcon,
                       color: Colors.black, size: Constants.kNavBarFontSize),
-                  label: 'Profile',
+                  label: 'Friends',
                   activeIcon: Icon(Constants.kNavBarProfileActiveIcon,
                       color: Colors.black, size: Constants.kNavBarFontSize)),
             ]));
