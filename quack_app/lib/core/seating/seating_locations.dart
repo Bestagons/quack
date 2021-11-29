@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:quack_app/constants/constants.dart';
 
 enum SeatingLocation {
-  none_,
+  none_0,
   section_1,
   section_2,
   section_3,
@@ -25,5 +25,14 @@ extension FromColor on SeatingLocation {
   SeatingLocation fromColor(Color c) {
     int index = Constants.kSeatingSections.indexOf(c);
     return SeatingLocation.values[index + 1];
+  }
+}
+
+extension FromString on SeatingLocation {
+  SeatingLocation fromInt(int s) {
+    return SeatingLocation.values.firstWhere((element) =>
+        int.parse(
+            element.toString().substring(element.toString().length - 1)) ==
+        s);
   }
 }

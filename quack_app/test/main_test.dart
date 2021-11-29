@@ -10,8 +10,7 @@ void main() {
     testGoldens("app", (WidgetTester tester) async {
       await loadAppFonts();
       await tester.pumpWidget(const MyApp());
-      List<String> creds = await TestAuth().getAuthCredentials();
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await expectLater(
           find.byType(MyApp), matchesGoldenFile('goldens/app.png'));

@@ -9,14 +9,13 @@ import 'package:quack_app/screens/homepage/item_screen.dart';
 
 Future<void> main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
-  List<String> creds = await TestAuth().getAuthCredentials();
   MenuData().isTest = true;
   group("Item Screen Test", () {
     testGoldens("item_screen_view", (WidgetTester tester) async {
       await loadAppFonts();
       MyApp app = const MyApp();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byType(ListTile).first);
       await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -28,7 +27,7 @@ Future<void> main() async {
       await loadAppFonts();
       MyApp app = const MyApp();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byType(ListTile).first);
       await tester.pumpAndSettle(const Duration(seconds: 1));

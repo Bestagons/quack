@@ -8,7 +8,6 @@ import 'package:quack_app/screens/notification/notification_screen.dart';
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
-  List<String> creds = await TestAuth().getAuthCredentials();
 
   group("Notification Screen Test", () {
     NotificationData fakeNotificationData = NotificationData();
@@ -18,7 +17,7 @@ void main() async {
       MyApp app = const MyApp();
       await loadAppFonts();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kNavBarNotificationsIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -31,7 +30,7 @@ void main() async {
       MyApp app = const MyApp();
       await loadAppFonts();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kNavBarNotificationsIcon));
       await tester.pumpAndSettle(const Duration(seconds: 1));

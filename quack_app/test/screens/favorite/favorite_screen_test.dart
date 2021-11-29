@@ -9,14 +9,13 @@ import 'package:quack_app/screens/favorite/favorite_screen.dart';
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
-  List<String> creds = await TestAuth().getAuthCredentials();
   MenuData().isTest = true;
   group("Favorite Screen", () {
     testGoldens("empty_favorites", (WidgetTester tester) async {
       MyApp app = const MyApp();
       await loadAppFonts();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.pumpAndSettle(const Duration(seconds: 2));
       await tester.tap(find.byIcon(Constants.kNavBarFavoritesIcon));
@@ -29,7 +28,7 @@ void main() async {
       MyApp app = const MyApp();
       await loadAppFonts();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Mediterranean Pita"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 3));
@@ -51,7 +50,7 @@ void main() async {
       MyApp app = const MyApp();
       await loadAppFonts();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kNavBarFavoritesIcon));
       await tester.pumpAndSettle(const Duration(seconds: 3));

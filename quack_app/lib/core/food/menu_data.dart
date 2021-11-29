@@ -10,7 +10,7 @@ class MenuData {
   List<String> _stations = List.empty();
   List<String> _serveTimes = List.empty();
   Map<String, dynamic> _data = {};
-  static const String baseUrl = "127.0.0.1:8000";
+  static const String baseUrl = "dct-api.herokuapp.com";
   static final MenuData _menuData = MenuData._internal();
   bool isTest = false;
   Map<String, Map<String, Object>> testData = {
@@ -198,7 +198,7 @@ class MenuData {
   // loadData loads all data that needs to be fetched from the server at once
   Future loadData() async {
     if (isTest == false) {
-      final url = Uri.http(baseUrl, "/dct-data");
+      final url = Uri.https(baseUrl, "/dct-data");
       var response = await http.get(url);
       if (response.statusCode == 200) {
         _data = await convert.jsonDecode(response.body) as Map<String, dynamic>;

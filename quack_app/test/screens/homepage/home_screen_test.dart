@@ -7,16 +7,16 @@ import 'package:quack_app/core/auth/test_auth.dart';
 import 'package:quack_app/main.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
 import 'package:http/http.dart' as http;
+
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
-  List<String> creds = await TestAuth().getAuthCredentials();
   MenuData().isTest = true;
   group("Home Screen Test", () {
     testGoldens("basic_view", (WidgetTester tester) async {
       await loadAppFonts();
       MyApp app = const MyApp();
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await expectLater(
           find.byType(HomeScreen), matchesGoldenFile('goldens/basic_view.png'));
@@ -27,7 +27,7 @@ void main() async {
       MyApp app = const MyApp();
 
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kFavorite).first);
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -45,7 +45,7 @@ void main() async {
       MyApp app = const MyApp();
 
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Constants.kFavorite).first);
       await tester.pump();
@@ -67,7 +67,7 @@ void main() async {
       MyApp app = const MyApp();
 
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Ceasar Salad"), 10);
       await tester.pumpAndSettle(const Duration(seconds: 2));
@@ -79,7 +79,7 @@ void main() async {
       MyApp app = const MyApp();
 
       await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester, creds);
+      await TestAuth().authenticateTest(tester);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text("Ceasar Salad"), 10);
       await tester.tap(find.byIcon(Constants.kFavorite).last);
