@@ -10,23 +10,9 @@ from app.auth_bearer import JWTBearer
 from app.auth_handler import signJWT
 from database import db
 
+from ..models.user_models import UserLogin, UserRegister
+
 router = APIRouter(prefix="/user")
-
-
-"""
-    UserLogin model keeps track of the user login information
-
-    username: str
-        The username of the user
-    email: str
-        The email of the user
-    password: str
-        The password of the user
-"""
-class User(BaseModel):
-    name: str
-    email: str
-    password: str
 
 
 """
@@ -45,13 +31,11 @@ class User(BaseModel):
             The token required to access specific routes
 """
 @router.post("/login")
-async def login(login: User, resp: Response):
-    name = login.name
+async def login(login: UserLogin, resp: Response):
     email = login.email
     password = login.password
 
     user = {
-        "name": name,
         "email": email,
         "password": password
     }
@@ -80,7 +64,7 @@ async def login(login: User, resp: Response):
             The token required to access specific routes
 """
 @router.post("/register", status_code=status.HTTP_201_CREATED)
-async def register(login: User, resp: Response):
+async def register(login: UserRegister, resp: Response):
     name = login.name
     email = login.email
     password = login.password
