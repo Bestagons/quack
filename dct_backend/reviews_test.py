@@ -21,7 +21,7 @@ def test_food_name():
         ("Mac and Cheese", 4, "really liked it", "mimi", False)
     ]
     for test_case in test_cases:
-        tester = ReviewTest(test_case[0],test_case[1], test_case[2], test_case[3],test_case[4])
+        tester = ReviewTest(test_case[0], test_case[1], test_case[2], test_case[3],test_case[4])
         tester2 = Reviews(food_name=test_case[0], rating=test_case[1],
                           review=test_case[2], username=test_case[3])
 
