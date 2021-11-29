@@ -3,16 +3,18 @@ from bs4 import BeautifulSoup
 import dct
 
 # DCT import
-DCT = dct.DCT()
+# DCT = dct.DCT()
 
-# setup BeautifulSoup with URL
-req = requests.get("https://emoryatlanta.cafebonappetit.com/cafe/dobbs-common-table/")
-soup = BeautifulSoup(req.content, "html.parser")
+def createSoup(url):
+    # setup BeautifulSoup with URL
+    req = requests.get(url)
+    soup = BeautifulSoup(req.content, "html.parser")
 
-# Title of webpage
-title = soup.title
-# print(title.prettify()) #prettify() can be a useful beautifulsoup method
-title = title.get_text()
+    # Title of webpage
+    title = soup.title
+    # print(title.prettify()) #prettify() can be a useful beautifulsoup method
+    title = title.get_text()
+    return soup
 
 def scrapeFood(mealtime, mealname, station_soup):
     # finish up from 'for each station'
@@ -45,13 +47,14 @@ def scrapeFood(mealtime, mealname, station_soup):
         # print("")
 
         # # saving
-        DCT.save_food_item(foodname, stationName, mealtime, foodcal, foodcats)
+        # DCT.save_food_item(foodname, stationName, mealtime, foodcal, foodcats)
         # TODO: save mealname?
 
         # return statement for logging purposes
-        return "At " + str(stationName) + " from " + str(mealtime) + ", " + str(foodname) + " is served."  
+        # return "At " + str(stationName) + " from " + str(mealtime) + ", " + str(foodname) + " is served."  
+        return foodname, stationName, mealtime, foodcal, foodcats # this is an immutable touple
 
-def scrapeFrame():
+def scrapeFrame(soup):
     log = []
     frames_soup = soup.findAll('section', attrs = {'class':'panel s-wrapper site-panel site-panel--daypart'})
     frames_soup.extend(soup.findAll('section', attrs = {'class':'panel s-wrapper site-panel site-panel--daypart site-panel--daypart-even'}))
@@ -64,10 +67,12 @@ def scrapeFrame():
     return log
 
 # MAIN
-output = scrapeFrame()
+soup = createSoup("https://emoryatlanta.cafebonappetit.com/cafe/dobbs-common-table/")
+output = scrapeFrame(soup)
 
 # printing
 print(len(output))
+# print(output[0])
 # print(DCT.menu)
 # print('food served today:')
 # for item in DCT.menu:
