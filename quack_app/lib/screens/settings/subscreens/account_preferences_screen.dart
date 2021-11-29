@@ -23,7 +23,7 @@ class _AccountPreferencesScreenState extends State<AccountPreferencesScreen> {
                 height: 20,
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: const <Widget>[
                   SizedBox(
                     height: 10.0,
