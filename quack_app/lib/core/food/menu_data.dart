@@ -4,13 +4,13 @@ import 'package:quack_app/core/food/food_item.dart';
 
 // MenuData implements logic for menu related data as a Singleton
 class MenuData {
-  String _currentServeTime = "";
+  String _currentServeTime = "Dinner";
   List<FoodItem> _allMenu = [];
   List<FoodItem> _currentMenu = List.empty();
   List<String> _stations = List.empty();
   List<String> _serveTimes = List.empty();
   Map<String, dynamic> _data = {};
-  static const String baseUrl = "dct-api.herokuapp.com";
+  static const String baseUrl = "127.0.0.1:8001";
   static final MenuData _menuData = MenuData._internal();
   bool isTest = false;
   Map<String, Map<String, Object>> testData = {
@@ -158,22 +158,24 @@ class MenuData {
 
   MenuData._internal();
 
-  // loadCurrentlyServing loads the current serve time
-  Future loadCurrentServeTime() async {
-    // TODO: Implement DCT Backend
-    _currentServeTime = "Dinner";
-  }
-
   // loadTodaysMenu loads the menu for the entire day
   Future loadTodaysMenu() async {
     _allMenu.clear();
     var stations = _data['stations'];
+    _currentServeTime = _data["current_serve_time"];
     for (var s in stations.keys) {
       List menu = stations[s]['menu'];
       for (var item in menu) {
+        if (item["meal_time"] == getServeTime()) {
+          print(item['name']);
+        } else {
+          print(item["meal_time"] +
+              " does not equal current time " +
+              getServeTime());
+        }
         _allMenu.add(FoodItem(
             item['name'],
-            item['categories'],
+            [],
             false, // TODO: Implement checking user database for if item is favorited
             item['meal_time'].compareTo(getServeTime()) == 0,
             item['meal_time'],
@@ -198,11 +200,10 @@ class MenuData {
   // loadData loads all data that needs to be fetched from the server at once
   Future loadData() async {
     if (isTest == false) {
-      final url = Uri.https(baseUrl, "/dct-data");
+      final url = Uri.http(baseUrl, "/dct-data");
       var response = await http.get(url);
       if (response.statusCode == 200) {
         _data = await convert.jsonDecode(response.body) as Map<String, dynamic>;
-        await loadCurrentServeTime();
         await loadTodaysMenu().then((_) {
           loadCurrentMenu();
         });
@@ -212,7 +213,6 @@ class MenuData {
       }
     } else {
       _data = testData;
-      await loadCurrentServeTime();
       await loadTodaysMenu().then((_) {
         loadCurrentMenu();
       });
