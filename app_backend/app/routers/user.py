@@ -1,6 +1,13 @@
 from pydantic import BaseModel
+from dotenv import load_dotenv
 from fastapi import APIRouter, status, Response
 import re
+import json
+from bson import BSON
+from bson import json_util
+
+from app.auth_bearer import JWTBearer
+from app.auth_handler import signJWT
 from database import db
 
 router = APIRouter(prefix="/user")
@@ -8,6 +15,7 @@ router = APIRouter(prefix="/user")
 
 """
     UserLogin model keeps track of the user login information
+
     username: str
         The username of the user
     email: str
@@ -22,31 +30,57 @@ class User(BaseModel):
 
 
 """
-    getuser implements the route /login/
-    returns message
-"""
-# TODO: Once attached to database will be able to retreive
-# specific user information and to log them in
-@router.get("/login/")
-async def login():
-    return {"msg": "This is the login page!"}
+    login implements the route /login/
 
-
-"""
-    registeruser implements the /register/ route
     login: User
         The UserLogin model that includes the username, email, and password
     resp: Response
         The response to send back to the user which contains the status code and body
-    returns Response
+    returns Response, JWT Token
         Response.body: dict
             Provides any msgs/errs for the request
         Response.status: int
             The status code for the request
+        JWT Token
+            The token required to access specific routes
+"""
+@router.post("/login")
+async def login(login: User, resp: Response):
+    name = login.name
+    email = login.email
+    password = login.password
+
+    user = {
+        "name": name,
+        "email": email,
+        "password": password
+    }
+
+    db_user = db.get_user(user)
+    db_user = json.loads(json_util.dumps(db_user))
+    if db_user is None:
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+        return {"err": "This user does not exist. Please try different credentials."}, {}, None
+
+    return {"msg": "Successfully logged in"}, signJWT(db_user['_id']['$oid'], db_user["email"]), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
+
+"""
+    register implements the /register/ route
+
+    login: User
+        The UserLogin model that includes the username, email, and password
+    resp: Response
+        The response to send back to the user which contains the status code and body
+    returns Response, JWT Token
+        Response.body: dict
+            Provides any msgs/errs for the request
+        Response.status: int
+            The status code for the request
+        JWT Token
+            The token required to access specific routes
 """
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register(login: User, resp: Response):
-
     name = login.name
     email = login.email
     password = login.password
@@ -81,6 +115,8 @@ async def register(login: User, resp: Response):
     msg = db.save_user_in_db(new_user)
     if "err" in msg:
         resp.status_code = status.HTTP_400_BAD_REQUEST
+    else:
+        return msg
 
     return msg
 
