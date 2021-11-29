@@ -31,7 +31,7 @@ security = JWTBearer()
         Response.status: int
             The status code for the request
 """
-@router.post("/new-friend/", status_code=status.HTTP_201_CREATED)
+@router.post("/new-friend", status_code=status.HTTP_201_CREATED)
 async def add_friend(resp: Response, friend: AddFriend):
     # TODO: Verify email/user exists
     if friend.friend_email == "":
@@ -48,7 +48,7 @@ async def add_friend(resp: Response, friend: AddFriend):
     uuid_friends.append(friend.friend_email)
     return {"msg" : "FUUID has been successfully linked to UUID"}
 
-@router.post("/get-friends/", status_code=status.HTTP_200_OK, dependencies=[Depends(security)])
+@router.post("/get-friends", status_code=status.HTTP_200_OK, dependencies=[Depends(security)])
 async def get_friends(resp: Response, token: HTTPAuthorizationCredentials = Security(security)):
     payload = decodeJWT(token)
     if payload is not None:
