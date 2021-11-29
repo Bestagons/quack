@@ -21,6 +21,7 @@ class User(BaseModel):
     friends: List[str] = []
     favorites: List[str] = []
     is_sharing_location: bool = False
+    loc: int = 0
 
     def get_user_by_id(self, _id):
         if isinstance(_id, str):
