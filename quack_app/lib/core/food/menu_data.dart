@@ -177,7 +177,9 @@ class MenuData {
             false, // TODO: Implement checking user database for if item is favorited
             item['meal_time'].compareTo(getServeTime()) == 0,
             item['meal_time'],
-            item['station']));
+            item['station'],
+            5, // TODO: Implement general rating dct backend
+            3)); // TODO: Implement user rating app backend
       }
     }
 
