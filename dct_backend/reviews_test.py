@@ -1,29 +1,39 @@
+from fastapi import status
+from fastapi.testclient import TestClient
+from server import app
 from reviews import Reviews
-from fastapi import APIRouter, Response, status
-import reviews
-import asyncio
 
 
-class ReviewTest():
-    def __init__(self, food_name: str, rating: int,
-                 review: str, username: str, test: bool):
-        self.food_name = food_name
-        self.rating = rating
-        self. review = review
-        self.username = username
-        self.test = test  # true or false
+def test_review():
+    # testing to make sure food names are entered in lowercase
 
-def test_food_name():
-    # # testing to make sure food names are entered in lowercase
+    client = TestClient(app)
+
+    class Params():
+        def __init__(self, food, rating, msg, email):
+            self.food = food
+            self.rating = rating
+            self.msg = msg
+            self.email = email
+
+        def to_json(self):
+            return {"food_name": self.food, "rating": self.rating, "review": self.msg, "email": self.email}
+
+    class ReviewTest():
+        def __init__(self, review: Params, expect_status: int, expects_err: bool):
+            self.review = review.to_json()
+            self.expects_status = expect_status
+            self.expects_err = expects_err  # true or false
+
     test_cases = [
-        ("mac and cheese", 4, "really liked it", "mimi", True), # correct format (all lower case)
-        ("MAC AND CHEESE", 4, "really liked it", "mimi", False),
-        ("Mac and Cheese", 4, "really liked it", "mimi", False)
+        ReviewTest(Params("mac and cheese", 4, "really liked it", "mimi@emory.edu"), status.HTTP_201_CREATED, False), # correct format (all lower case)
+        ReviewTest(Params("MAC AND CHEESE", 4, "really liked it", "mimi@emory.edu"), status.HTTP_400_BAD_REQUEST, True),
+        ReviewTest(Params("Mac and Cheese", 4, "really liked it", "mimi@emory.edu"), status.HTTP_400_BAD_REQUEST, True)
     ]
     for test_case in test_cases:
-        tester = ReviewTest(test_case[0], test_case[1], test_case[2], test_case[3],test_case[4])
-        tester2 = Reviews(food_name=test_case[0], rating=test_case[1],
-                          review=test_case[2], username=test_case[3])
-        co_routine = reviews.save_review_in_db(Response ,tester2,True)
-        test_check = asyncio.run(co_routine)
-        assert test_check == tester.test
+        payload = test_case.review
+        payload["dry_run"] = True
+        print("Testing: " + test_case.review["food_name"])
+        response = client.post("/reviews/review", json=payload)
+        assert response.status_code == test_case.expects_status
+        assert ("err" in response.json()) == test_case.expects_err

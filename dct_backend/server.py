@@ -1,13 +1,13 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi_utils.tasks import repeat_every
 from dct import DCT
 from webscraper import scrapeFrame, createSoup
 import sys
 import json
+import reviews
 
 def scrape_data(dct: DCT):
-    soup = createSoup("https://emoryatlanta.cafebonappetit.com/cafe/dobbs-common-table/")
-    current_time, serve_times, output = scrapeFrame(soup)
     dct.clear_data()
 
     if "pytest" in sys.modules:
@@ -31,7 +31,12 @@ def scrape_data(dct: DCT):
         dct.save_serve_time('Breakfast', '7am - 10am')
         dct.save_serve_time('Lunch', '11am - 2pm')
         dct.save_serve_time('Dinner', '2pm - 5pm')
+
+        dct.save_current_serve_time("Dinner")
     else:
+        soup = createSoup("https://emoryatlanta.cafebonappetit.com/cafe/dobbs-common-table/")
+        current_time, serve_times, output = scrapeFrame(soup)
+
         dct.save_current_serve_time(current_time)
         for serve_time in serve_times:
             dct.save_serve_time(serve_time[0], serve_time[1])
@@ -42,6 +47,19 @@ def scrape_data(dct: DCT):
 
 dct = DCT()
 app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+app.include_router(reviews.router)
+
 
 @repeat_every(seconds=60*60*12) # repeat every 12 hours
 @app.on_event("startup")

@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 import os
 from database import Database
 from pydantic import BaseModel
-import server
 
 
 load_dotenv()
@@ -13,7 +12,6 @@ db.connect()
 food_db = db.client["food"] # from food collection
 review_collection = food_db["reviews"] # review --> sub collection
 router = APIRouter(prefix="/reviews")
-resp = Response
 
 class Reviews(BaseModel):
     """
@@ -28,46 +26,40 @@ class Reviews(BaseModel):
     food_name: str
     rating: int
     review: str
-    username: str
+    email: str
+    dry_run: bool = False
 
 
 
-@router.post("/reviews", status_code=status.HTTP_201_CREATED)
-async def save_review_in_db(resp: Response, review_rating: Reviews, dry_run = False):
+@router.post("/review", status_code=status.HTTP_201_CREATED)
+async def save_review_in_db(resp: Response, review_rating: Reviews):
     """
         if a user has already reviewed an item retun err
         else insert a review
 
         *only saves reviews that are not tests
     """
-    # Dry run for testing.
-    if(dry_run):
-        if review_rating.food_name != review_rating.food_name.lower():# check if food_name is in valid format (lowecase)
-            return False # wrong food_name format
-        else:
-            return True
-
-    if(not dry_run): # if false
-        if review_rating.food_name == "":
-            resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err": "Empty food_name"}
-        if review_rating.username == "":
-            resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err": "No user specified"}
+    if review_rating.food_name == "" or review_rating.food_name != review_rating.food_name.lower():
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+        return {"err": "Inappropriate food name"}
+    if review_rating.email == "":
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+        return {"err": "No email specified"}
 
         # review_rating.food_name = review_rating.food_name.lower()  # to lowercase
 
-        if review_collection.count_documents({"username": review_rating.username,"foodID": review_rating.food_name}, limit = 1) > 0: # each user can add one review per food item
-            resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err": "User has already made a review. Try editing existing review"}
+    if review_collection.count_documents({"email": review_rating.email, "foodID": review_rating.food_name}, limit = 1) > 0: # each user can add one review per food item
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+        return {"err": "User has already made a review. Try editing existing review"}
 
-        review_collection.insert_one(review_rating)
-        resp.status_code = status.HTTP_201_CREATED
-        return {"msg": "Review has been successfully created."}
+    if not review_rating.dry_run:
+        review_collection.insert_one({"food_name": review_rating.food_name, "rating": review_rating.rating, "review": review_rating.review, "email": review_rating.email})
+    resp.status_code = status.HTTP_201_CREATED
+    return {"msg": "Review has been successfully created."}
 
 
 @router.post("/edit-review", status_code=status.HTTP_201_CREATED)
-async def edit_review_in_db(review_rating: Reviews, dry_run = False):
+async def edit_review_in_db(resp: Response, review_rating: Reviews, dry_run = False):
     """
         if review does not exit return an error
         else delete old review and insert new review
@@ -79,32 +71,30 @@ async def edit_review_in_db(review_rating: Reviews, dry_run = False):
             return False # wrong food_name format
         else:
             return True
-        
+
     if(not dry_run): # if false
         if review_rating.food_name == "":
             resp.status_code = status.HTTP_400_BAD_REQUEST
             return {"err": "Empty foodID"}
-        if review_rating.username == "":
+        if review_rating.email == "":
             resp.status_code = status.HTTP_400_BAD_REQUEST
-            return {"err": "No user specified"}
+            return {"err": "No email specified"}
 
         review_rating.food_name = review_rating.food_name.lower() # to lowercase
 
-        if review_collection.count_documents({"username": review_rating.username,"foodID": review_rating.food_name}, limit = 1) == 0: # review does not exist for specified food item
+        if review_collection.count_documents({"email": review_rating.username,"foodID": review_rating.food_name}, limit = 1) == 0: # review does not exist for specified food item
             resp.status_code = status.HTTP_400_BAD_REQUEST
             return {"err": "User's review does not exist"}
-        
-        await review_collection.delete_one({"username": review_rating['username']}) # delete old review
+
+        await review_collection.delete_one({"email": review_rating['email']}) # delete old review
         review_collection.insert_one(review_rating) # replacement
         resp.status_code = status.HTTP_201_CREATED
         return {"msg": "Review has been successfully edited."}
 
 @router.get("/get-reviews")
-async def get_reviews(review_rating: Reviews):
+async def get_reviews(resp: Response, review_rating: Reviews):
     """
         returns all reviews for food item that matches 'foodID'
     """
     review_rating.food_name = review_rating.food_name.lower()  # to lowercase
     return review_collection.find_one({"foodID": review_rating.food_name})
-    
-    
