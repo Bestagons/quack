@@ -53,7 +53,6 @@ class _StationListState extends State<StationList> {
     List<Widget> list = List.empty(growable: true);
     int repeat = widget.byServeTime ? MenuData().getServeTimes().length : 1;
     List<String> serveTimes = MenuData().getServeTimes();
-
     // repeats by total serve times or just once
     for (int i = 0; i < repeat; i++) {
       if (widget.byServeTime) {
@@ -83,11 +82,9 @@ class _StationListState extends State<StationList> {
         }
 
         // Adds each station and their food items
-        list.add(
-          Stack(
-            children: <Widget> [
-              //Food items
-              Container(
+        list.add(Stack(children: <Widget>[
+          //Food items
+          Container(
               margin: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 5.0),
               height: 60.0 * stationCurrentItems.length + 40.0,
               width: double.infinity,
@@ -96,52 +93,43 @@ class _StationListState extends State<StationList> {
                   borderRadius: BorderRadius.circular(20.0)),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10.0, 40.0, 5.0, 20.0),
-                child: Column(
-                children: <Widget>[
-                Expanded(
-                  child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: stationCurrentItems.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return FoodSummary(
-                            item: stationCurrentItems[index],
-                            group: _group,
-                            onFavoritePressed: () {
-                              setState(() {
-                                stationList = getStationList();
+                child: Column(children: <Widget>[
+                  Expanded(
+                    child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: stationCurrentItems.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return FoodSummary(
+                              item: stationCurrentItems[index],
+                              group: _group,
+                              onFavoritePressed: () {
+                                setState(() {
+                                  stationList = getStationList();
+                                });
                               });
-                            });
-                      }),
-                ),
-              ]) ,)
-              ),
-              // Station sub header
+                        }),
+                  ),
+                ]),
+              )),
+          // Station sub header
           Container(
-            margin: const EdgeInsets.fromLTRB(50.0, 5.0, 50.0, 5.0),
-            padding: const EdgeInsets.only(
-              left: 10.0
-            ),
-            height: 50.0,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Constants.kPrimaryColor,
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            child: Row(
-              children: <Widget> [
+              margin: const EdgeInsets.fromLTRB(50.0, 5.0, 50.0, 5.0),
+              padding: const EdgeInsets.only(left: 10.0),
+              height: 50.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Constants.kPrimaryColor,
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Row(children: <Widget>[
                 Text(station.toUpperCase(),
-                    style:
-                        const TextStyle(
-                          fontSize: 20.0, 
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          )),
-              ]           
-            )
-          )
-            ]
-          )
-        );
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]))
+        ]));
       }
     }
 
