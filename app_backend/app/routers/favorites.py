@@ -1,7 +1,13 @@
-from fastapi import APIRouter, Response, status
+from fastapi import APIRouter, Response, status, Security
+from ..auth_bearer import JWTBearer
+from fastapi.security import HTTPAuthorizationCredentials
+from database import db
+from models.user import User
+from app.auth_handler import decodeJWT
 from ..models.food_models import FavoriteFood
 
 router = APIRouter(prefix="/favorites")
+security = JWTBearer()
 
 
 """
@@ -24,7 +30,11 @@ router = APIRouter(prefix="/favorites")
             The status code for the request
 """
 @router.post("/toggle-favorite/", status_code=status.HTTP_200_OK)
-async def toggle_favorite(resp: Response, favorite: FavoriteFood):
+async def toggle_favorite(resp: Response, favorite: FavoriteFood, token: HTTPAuthorizationCredentials = Security(security)):
+    payload: dict = decodeJWT(token)
+    user_id = payload["user_id"]
+    user: User = User().get_user_by_id(user_id)
+
     # check if state is valid
     if not isinstance(favorite.state, bool):
         resp.status_code = status.HTTP_400_BAD_REQUEST
@@ -34,11 +44,19 @@ async def toggle_favorite(resp: Response, favorite: FavoriteFood):
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "Empty food_id"}
 
-    existing_food_state = True  # TODO: get food_id's state here
-    if existing_food_state == favorite.state:
+    favorites = user.favorites
+    if (favorite.food_name in favorites) == favorite.state:
         resp.status_code = status.HTTP_200_OK
         return {"msg": "No row is affected."}
-    # TODO: Update food_id here
-    # toggle food_id
+    else:
+        if favorite.state:
+            favorites.append(favorite.food_name)
+        else:
+            favorites.remove(favorite.food_name)
+
+    # Save
+    user.favorites = favorites
+    user.save()
+
     return {"msg": "Food ID has been successfully toggled"}
 

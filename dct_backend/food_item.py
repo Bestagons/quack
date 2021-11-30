@@ -22,4 +22,3 @@ class FoodItem():
         self.station = station
         self.meal_time = meal_time
         self.calories = calories
-        self.categories = categories
