@@ -4,7 +4,7 @@ import 'package:quack_app/core/food/food_item.dart';
 
 // MenuData implements logic for menu related data as a Singleton
 class MenuData {
-  String _currentServeTime = "Dinner";
+  String _currentServeTime = "";
   List<FoodItem> _allMenu = [];
   List<FoodItem> _currentMenu = List.empty();
   List<String> _stations = List.empty();
@@ -162,17 +162,10 @@ class MenuData {
   Future loadTodaysMenu() async {
     _allMenu.clear();
     var stations = _data['stations'];
-    _currentServeTime = _data["current_serve_time"];
+    _currentServeTime = _data["current_serve_time"] ?? "Dinner";
     for (var s in stations.keys) {
       List menu = stations[s]['menu'];
       for (var item in menu) {
-        if (item["meal_time"] == getServeTime()) {
-          print(item['name']);
-        } else {
-          print(item["meal_time"] +
-              " does not equal current time " +
-              getServeTime());
-        }
         _allMenu.add(FoodItem(
             item['name'],
             [],
