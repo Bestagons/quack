@@ -21,6 +21,7 @@ class User(BaseModel):
     friends: List[str] = []
     favorites: List[str] = []
     is_sharing_location: bool = False
+    loc: int = 0
 
     def get_user_by_id(self, _id):
         if isinstance(_id, str):
@@ -37,4 +38,5 @@ class User(BaseModel):
         return user
 
     def save(self):
-        db.db.users.update_one({"_id": self._id}, {"$set": self.dict()}, upsert=True)
+        if not db.test_mode:
+            db.db.users.update_one({"_id": self._id}, {"$set": self.dict()}, upsert=True)
