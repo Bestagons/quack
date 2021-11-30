@@ -62,4 +62,4 @@ async def set_seating_info(resp: Response, seating_info: SaveSeating,token: HTTP
     if not dry_run:
         user.save()
     return {"msg": "Seating Section has been successfully linked to UUID"}
-    
+
