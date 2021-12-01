@@ -41,7 +41,7 @@ async def set_seating_info(resp: Response, seating_info: SaveSeating,token: HTTP
     user: User = User().get_user_by_id(user_id)
 
     # checks if location value is valid
-    if seating_info.section == "":
+    if seating_info.section == None: # no number specified
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "No seating section number specified"}
 
@@ -49,17 +49,11 @@ async def set_seating_info(resp: Response, seating_info: SaveSeating,token: HTTP
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "Invalid seating section number"}
 
-    where_the_quack = seating_info.section
+    # override previous location
+    user.loc = seating_info.section
 
     # check if location being shared
-    if user.is_sharing_location == False:
-        resp.status_code = status.HTTP_412_PRECONDITION_FAILED
-        return {"err": "Location sharing is not enabled"}
-
-    # override previous location
-    user.loc = where_the_quack
-
-    if not dry_run:
+    if not dry_run and user.is_sharing_location == True:
         user.save()
     return {"msg": "Seating Section has been successfully linked to UUID"}
 
