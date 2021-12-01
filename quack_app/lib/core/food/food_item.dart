@@ -29,7 +29,7 @@ class FoodItem {
 
   // Toggle the item as a favorite or not
   Future<void> toggleFavorite() async {
-    bool ok = await User().userData.toggleFavorite(getName());
+    bool ok = await User().userData.toggleFavorite(getName(), !_isFavorite);
     if (ok) {
       // If backend updated, show UI update
       _isFavorite = !_isFavorite;

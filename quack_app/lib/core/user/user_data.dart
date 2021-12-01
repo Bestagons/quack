@@ -10,6 +10,7 @@ class UserData {
   String _password = "";
   String _token = "";
   String _name = "";
+  static const String baseUrl = "quack-app-backend.herokuapp.com";
 
   SeatingLocation _currentLoc = SeatingLocation.none_0;
   bool _isSharingLoc = false;
@@ -44,9 +45,32 @@ class UserData {
     return Future.value(true);
   }
 
-  Future<bool> toggleFavorite(String name) async {
-    // TODO: Send backend update here
-    return Future.value(true);
+  Future<bool> toggleFavorite(String name, bool state) async {
+    final Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $_token',
+    };
+
+    final Map<String, dynamic> json = {
+      'food_name': name,
+      'state': state
+    };
+
+    String url = "https://$baseUrl/api/v1/user/toggle_favorite";
+
+    final http.Response response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: jsonEncode(json),
+    );
+
+    // If the response code is 200, return true
+    if (response.statusCode == 200) {
+      return Future.value(true);
+    } else {
+      return Future.value(false);
+    }
   }
 
   List<UserData> getFriends() {
