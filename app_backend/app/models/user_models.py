@@ -30,4 +30,5 @@ class AddFriend(BaseModel):
 
 class SaveSeating(BaseModel):
     section: int
+    is_sharing_loc: bool
 

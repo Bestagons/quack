@@ -49,11 +49,15 @@ async def set_seating_info(resp: Response, seating_info: SaveSeating,token: HTTP
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "Invalid seating section number"}
 
-    # override previous location
+    # override previous location etc
+
     user.loc = seating_info.section
+    if seating_info.is_sharing_loc != None:# no error handling
+        user.is_sharing_location = seating_info.is_sharing_loc
 
     # check if location being shared
-    if not dry_run and user.is_sharing_location == True:
+    if not dry_run:
         user.save()
+
     return {"msg": "Seating Section has been successfully linked to UUID"}
 
