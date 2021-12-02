@@ -17,6 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  String errMsg = "";
 
   String? validateEmail(String? value) {
     if (value == null || value == "") {
@@ -61,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               SizedBox(
                 width: width,
-                height: height * 0.30,
+                height: height * 0.20,
                 child: Image.asset(
                   'assets/logo.png',
                   fit: BoxFit.cover,
@@ -89,7 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: nameController,
                     decoration: InputDecoration(
                       hintText: 'Name',
-                      suffixIcon: const Icon(Icons.email),
+                      suffixIcon: const Icon(Icons.person),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -143,6 +144,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   const SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(errMsg, style: TextStyle(color: Colors.red)),
+                  const SizedBox(
                     height: 30.0,
                   ),
                   Padding(
@@ -163,22 +168,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       null) {
                                 return;
                               }
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoadingScreen(
-                                    routeTo: "/login",
-                                    waitOn: () async {
-                                      await Auth().register(
-                                          nameController.text,
-                                          emailController.text,
-                                          passwordController.text);
-                                      return Future.value("");
-                                    },
+                              final response = await Auth().register(
+                                  nameController.text,
+                                  emailController.text,
+                                  passwordController.text);
+                              if (response.isNotEmpty &&
+                                  !response.containsKey("err")) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoadingScreen(
+                                      routeTo: "/login",
+                                      waitOn: () async {
+                                        await Future.delayed(
+                                            const Duration(seconds: 1));
+                                        return Future.value("");
+                                      },
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              } else {
+                                setState(() {
+                                  errMsg = response["err"];
+                                });
+                              }
                             },
                           ),
                         )

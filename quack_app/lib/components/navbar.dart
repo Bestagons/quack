@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/screens/homepage/home_screen.dart';
 import 'package:quack_app/screens/notification/notification_screen.dart';
@@ -33,8 +34,17 @@ class _NavBarState extends State<NavBar> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-           // leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-            title: const Text("Quack")),
+          // leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+          title: const Text("Quack"),
+          leading: IconButton(
+            onPressed: () async {
+              Phoenix.rebirth(context);
+            },
+            icon: const Icon(
+              Icons.refresh,
+            ),
+          ),
+        ),
         body: Center(
           child: _widgetOptions.elementAt(currentIndex),
         ),
