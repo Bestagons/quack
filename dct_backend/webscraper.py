@@ -21,8 +21,8 @@ def scrapeFrame(soup):
         mh = frame_soup.find('div', attrs = {'class': 'site-panel__daypart-time'}).get_text()
         serve_times.append((mealtime, mh))
         meal_hour = [t.strip() for t in mh.split("-")]
-        tz = pytz.timezone('America/New_York')
-        current_time = tz.localize(datetime.now())
+        tz = pytz.timezone('EST')
+        current_time = datetime.now(tz)
         start_time = tz.localize(datetime.strptime(meal_hour[0], "%I:%M %p"))
         end_time = tz.localize(datetime.strptime(meal_hour[1], "%I:%M %p"))
         if start_time.time() <= current_time.time() and current_time.time() <= end_time.time():

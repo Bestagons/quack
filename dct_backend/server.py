@@ -36,7 +36,7 @@ def scrape_data(dct: DCT):
     else:
         soup = createSoup("https://emoryatlanta.cafebonappetit.com/cafe/dobbs-common-table/")
         current_time, serve_times, output = scrapeFrame(soup)
-
+        print(f"Serving current time: {current_time}")
         dct.save_current_serve_time(current_time)
         for serve_time in serve_times:
             dct.save_serve_time(serve_time[0], serve_time[1])
