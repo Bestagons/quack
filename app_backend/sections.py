@@ -5,7 +5,8 @@ class Sections():
     (sections range from 1 - 9) --> from @BrendaCano 's map of the DC
 
     """
-    color_dict = {1: "red",
+    color_dict = {0:"none",
+                  1: "red",
                   2: "orange",
                   3: "yellow",
                   4: "green",

@@ -26,3 +26,9 @@ class UUID(BaseModel):
 
 class AddFriend(BaseModel):
     friend_email: str
+
+
+class SaveSeating(BaseModel):
+    section: int
+    is_sharing_loc: bool
+
