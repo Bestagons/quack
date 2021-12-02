@@ -10,32 +10,47 @@ class AddFriendsScreen extends StatefulWidget {
 }
 
 class AddFriendsScreenState extends State<AddFriendsScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  static const historyLength = 5;
+
+  final _searchHistory = {
+    'bruce.lee@emory.edu': 'Bruce Lee',
+    'captain.marvel@emory.edu': 'Captain Marvel',
+    'wanda.vision@emory.edu': 'Wanda Vision'
+  };
+
+  String selectedTerm = "";
+  String currentEmail = "";
+  String currentName = "";
+  bool status = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // TODO: search friend by email with search bar
         body: FloatingSearchBar(
           hint: "Search for friends with email...",
           openAxisAlignment: 0.0,
-          scrollPadding: EdgeInsets.only(top: 16, bottom: 20),
+          scrollPadding: const EdgeInsets.only(top: 16, bottom: 20),
           elevation: 4.0,
-          onQueryChanged: (query) {},
+          onQueryChanged: (query) {
+            selectedTerm = query;
+            searchFriendResult();
+          },
+          onSubmitted: (query) {
+            selectedTerm = query;
+            searchFriendResult();
+          },
           transitionCurve: Curves.easeInOut,
-          transitionDuration: Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 500),
           transition: CircularFloatingSearchBarTransition(),
-          debounceDelay: Duration(milliseconds: 500),
+          debounceDelay: const Duration(milliseconds: 500),
           actions: [
             FloatingSearchBarAction(
-                showIfOpened: false,
+                showIfOpened: true,
                 child: CircularButton(
-                  icon: Icon(Icons.person_add),
+                  icon: const Icon(Icons.search),
                   onPressed: () {
-                    print('Friends Pressed');
+                    searchFriendResult();
+                    setState(() {});
                   },
                 )),
             FloatingSearchBarAction.searchToClear(
@@ -44,26 +59,41 @@ class AddFriendsScreenState extends State<AddFriendsScreen> {
           ],
           builder: (BuildContext context, Animation<double> transition) {
             return ClipRRect(
-              child: Material(
-                  color: Colors.white,
-                  child: Container(
+                child: Material(
+                    color: Colors.white,
+                    child: Container(
+                      height: 200.0,
                       color: Colors.white,
                       child: Column(
-                        children: const [
+                        children: [
                           ListTile(
-                            title: Text('Friend Name'),
-                            subtitle: Text('Friend Information'),
-                          )
+                            trailing: Icon(status
+                                ? Icons.person_add
+                                : Icons.person_remove),
+                            title: Text(currentName),
+                            subtitle: Text(currentEmail),
+                            onTap: () {
+                              setState(() {
+                                status = !status;
+                              });
+                            },
+                          ),
                         ],
-                      )
+                      ),
+                    )
                   )
-               ),
-            );
+                );
           },
         ),
-        // TODO: display search results under search bar
-        // TODO: click on result and it shows as a card under search bar
-        // TODO: card has a "add friend" button, switches to "remove friend"
         appBar: AppBar(title: const Text("Add Friends")));
+  }
+
+  void searchFriendResult() {
+    _searchHistory.forEach((key, value) {
+      if (selectedTerm == key) {
+        currentEmail = key;
+        currentName = value;
+      }
+    });
   }
 }

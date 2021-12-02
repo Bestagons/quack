@@ -29,7 +29,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
                 Align(
-                  // alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     onPressed: () async {
                       await Navigator.push(context,
@@ -43,7 +42,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   ),
                 ),
                 Align(
-                  // alignment: Alignment.topRight,
                   child: ElevatedButton(
                     onPressed: () async {
                       await Navigator.push(context,
@@ -59,36 +57,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 ),
             ],
           ),
-         // const SizedBox(height: 15),
-          // Align(
-          //   alignment: Alignment.topCenter,
-          //   child: ElevatedButton(
-          //     onPressed: () async {
-          //       await Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) {
-          //         return const SetLocationScreen();
-          //       }));
-          //       setState(() {});
-          //     },
-          //     child: AutoSizeText(
-          //         "Share Location (${User().userData.getSeatingLocString()})"),
-          //   ),
-          // ),
-          // const SizedBox(height: 15),
-          // Align(
-          //   alignment: Alignment.topCenter,
-          //   child: ElevatedButton(
-          //     onPressed: () async {
-          //       await Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) {
-          //         return const SetLocationScreen();
-          //       }));
-          //       setState(() {});
-          //     },
-          //     child: AutoSizeText(
-          //         "Share Location (${User().userData.getSeatingLocString()})"),
-          //   ),
-          // ),
           const SizedBox(height: 20),
           Expanded(
               child: Container(
