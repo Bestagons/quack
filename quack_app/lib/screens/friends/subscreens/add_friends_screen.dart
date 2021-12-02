@@ -10,8 +10,6 @@ class AddFriendsScreen extends StatefulWidget {
 }
 
 class AddFriendsScreenState extends State<AddFriendsScreen> {
-  static const historyLength = 5;
-
   final _searchHistory = {
     'bruce.lee@emory.edu': 'Bruce Lee',
     'captain.marvel@emory.edu': 'Captain Marvel',
