@@ -61,7 +61,7 @@ app.add_middleware(
 app.include_router(reviews.router)
 
 
-@repeat_every(seconds=60*60*12) # repeat every 12 hours
+@repeat_every(seconds=60*60) # repeat every hour
 @app.on_event("startup")
 async def startup_event():
     scrape_data(dct)
