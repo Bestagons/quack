@@ -64,6 +64,7 @@ class UserData {
 
   void setSeatingLoc(SeatingLocation loc) {
     _currentLoc = loc;
+    saveSeating();
   }
 
   SeatingLocation getSeatingLoc() {
@@ -80,6 +81,18 @@ class UserData {
 
   String getName() {
     return _name;
+  }
+
+  Future saveSeating() async {
+    print(getSeatingLocString().substring(getSeatingLocString().length - 1));
+    final body = jsonEncode({
+      "section": int.parse(getSeatingLocString().substring(getSeatingLocString().length - 1)),
+      "is_sharing_loc": _isSharingLoc,
+    });
+    final uri = Uri.http(Auth().getBaseURL(), "/seating/dct-seating-section");
+    final response =
+        await http.post(uri, headers: {"Authorization": "Bearer " + _token}, body: body);
+    print("[user_data.dart.saveSeating] " + response.body);
   }
 
   Future<List<UserData>> loadFriends() async {

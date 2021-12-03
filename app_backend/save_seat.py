@@ -19,7 +19,7 @@ resp = Response
 
 
 @router.post("/dct-seating-section", status_code=status.HTTP_201_CREATED)
-async def set_seating_info(resp: Response, seating_info: SaveSeating,token: HTTPAuthorizationCredentials = Security(security), dry_run=False):
+async def set_seating_info(resp: Response, seating_info: SaveSeating, token: HTTPAuthorizationCredentials = Security(security), dry_run=False):
     """
 
     This function updates the object with the section number and respective color
