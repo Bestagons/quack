@@ -42,6 +42,12 @@ async def add_friend(resp: Response, friend: AddFriend, token: HTTPAuthorization
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "Invalid Friend UUID"}
 
+    # check if friend email exists in database
+    friend_user: User = User().get_user_by_email(friend.friend_email)
+    if friend_user.name == "":
+        resp.status_code = status.HTTP_404_NOT_FOUND
+        return {"err": "User with this email does not exist"}
+    
     # check if the uuid does not already contain fuuid
     uuid_friends = user.friends
     if friend.friend_email in uuid_friends:
