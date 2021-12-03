@@ -64,7 +64,7 @@ class UserData {
 
   void setSeatingLoc(SeatingLocation loc) {
     _currentLoc = loc;
-    saveSeating();
+    saveSeatingLoc();
   }
 
   SeatingLocation getSeatingLoc() {
@@ -83,8 +83,7 @@ class UserData {
     return _name;
   }
 
-  Future saveSeating() async {
-    print(getSeatingLocString().substring(getSeatingLocString().length - 1));
+  Future saveSeatingLoc() async {
     final body = jsonEncode({
       "section": int.parse(getSeatingLocString().substring(getSeatingLocString().length - 1)),
       "is_sharing_loc": _isSharingLoc,
