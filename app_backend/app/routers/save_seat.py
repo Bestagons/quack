@@ -1,4 +1,4 @@
-from sections import Sections
+from ..models.sections import Sections
 from dotenv import load_dotenv
 import os
 from database import Database
@@ -9,14 +9,9 @@ from app.auth_handler import decodeJWT
 from fastapi import APIRouter, Response, status, Depends, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-
-
 router = APIRouter(prefix="/seating")
 security = JWTBearer()
 resp = Response
-
-
-
 
 @router.post("/dct-seating-section", status_code=status.HTTP_201_CREATED)
 async def set_seating_info(resp: Response, seating_info: SaveSeating, token: HTTPAuthorizationCredentials = Security(security), dry_run=False):
@@ -38,7 +33,7 @@ async def set_seating_info(resp: Response, seating_info: SaveSeating, token: HTT
 
     payload: dict = decodeJWT(token)
     user_id = payload["user_id"]
-    user: User = User().get_user_by_id(user_id)
+    user = User().get_user_by_id(user_id)
 
     # checks if location value is valid
     if seating_info.section == None: # no number specified
