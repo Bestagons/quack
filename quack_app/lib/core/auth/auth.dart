@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 
 class Auth {
   static final Auth _auth = Auth._internal();
-  //static const String baseUrl = "quack-app-backend.herokuapp.com";
-  static const String baseUrl = "127.0.0.1:8000";
+  // static const String baseUrl = "quack-app-backend.herokuapp.com";
+  static const String baseUrl = "127.0.0.1:8001";
   static bool istest = false;
 
   factory Auth() {

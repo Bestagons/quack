@@ -10,7 +10,7 @@ class MenuData {
   List<String> _stations = List.empty();
   List<String> _serveTimes = List.empty();
   Map<String, dynamic> _data = {};
-  static const String baseUrl = "dct-api.herokuapp.com";
+  static const String baseUrl = "127.0.0.1:8000"; // "dct-api.herokuapp.com";
   static final MenuData _menuData = MenuData._internal();
   bool isTest = false;
   Map<String, Map<String, Object>> testData = {
