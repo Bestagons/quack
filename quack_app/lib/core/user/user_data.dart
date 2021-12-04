@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:quack_app/core/auth/auth.dart';
 import 'package:quack_app/core/seating/seating_locations.dart';
 
@@ -10,6 +11,9 @@ class UserData {
   String _password = "";
   String _token = "";
   String _name = "";
+  List<String> _favorites = [];
+  static const String baseUrl = "quack-app-backend.herokuapp.com";
+  // static const String baseUrl = "127.0.0.1:8000";
 
   SeatingLocation _currentLoc = SeatingLocation.none_0;
   bool _isSharingLoc = false;
@@ -37,20 +41,59 @@ class UserData {
 
   Future<bool> initialize(String user_data) async {
     final Map data = jsonDecode(user_data);
+    debugPrint(data.toString());
     _currentLoc = SeatingLocation.none_0.fromInt(data["loc"]);
     _isSharingLoc = data["is_sharing_location"];
     _friends = await loadFriends();
+    // If the type of data["favorites"] is List<String>, then assign it to _favorites
+    // Otherwise, if it is List<dynamic>, then convert it to List<String>
+    if (data["favorites"] is List<String>) {
+      _favorites = data["favorites"];
+    }
 
     return Future.value(true);
   }
 
-  Future<bool> toggleFavorite(String name) async {
-    // TODO: Send backend update here
-    return Future.value(true);
+  Future<bool> toggleFavorite(String name, bool state) async {
+    final Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $_token',
+    };
+    debugPrint(headers.toString());
+
+    final Map<String, dynamic> json = {
+      'food_name': name,
+      'state': state
+    };
+
+    debugPrint(json.toString());
+
+    String url = "https://$baseUrl/favorites/toggle-favorite/";
+
+    final http.Response response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: jsonEncode(json),
+    );
+
+    debugPrint(response.statusCode.toString());
+    debugPrint(response.body);
+
+    // If the response code is 200, return true
+    if (response.statusCode == 200) {
+      return Future.value(true);
+    } else {
+      return Future.value(false);
+    }
   }
 
   List<UserData> getFriends() {
     return _friends;
+  }
+
+  List<String> getFavorites() {
+    return _favorites;
   }
 
   void toggleShareLoc() {

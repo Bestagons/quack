@@ -16,7 +16,7 @@ class TestAuth {
 
     await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.enterText(find.byType(TextFormField).first, "test@emory.edu");
-    await tester.enterText(find.byType(TextFormField).last, "fakepassword1!");
+    await tester.enterText(find.byType(TextFormField).last, "password1!");
     await tester.tap(find.byType(ElevatedButton));
     await tester.pumpAndSettle(
       const Duration(milliseconds: 100),
