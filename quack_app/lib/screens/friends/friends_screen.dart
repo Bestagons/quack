@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,6 +5,7 @@ import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/core/user/user.dart';
 import 'package:quack_app/core/user/user_data.dart';
 import 'package:quack_app/screens/friends/subscreens/set_location_screen.dart';
+import 'package:quack_app/screens/friends/subscreens/add_friends_screen.dart';
 
 class FriendsScreen extends StatefulWidget {
   final bool isSharing = false;
@@ -26,19 +25,37 @@ class _FriendsScreenState extends State<FriendsScreen> {
       body: Column(
         children: [
           const SizedBox(height: 15),
-          Align(
-            alignment: Alignment.topCenter,
-            child: ElevatedButton(
-              onPressed: () async {
-                await Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                  return const SetLocationScreen();
-                }));
-                setState(() {});
-              },
-              child: AutoSizeText(
-                  "Share Location (${User().userData.getSeatingLocString()})"),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+                Align(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const SetLocationScreen();
+                      }));
+                      setState(() {});
+                    },
+                    child: AutoSizeText(
+                        "Share Location (${User().userData.getSeatingLocString()})"),
+                  ),
+                ),
+                Align(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const AddFriendsScreen();
+                      }));
+                      setState(() {});
+                    },
+                    child: const AutoSizeText(
+                        "Add Friend"
+                      ),
+                  ),
+                ),
+            ],
           ),
           const SizedBox(height: 20),
           Expanded(
@@ -46,7 +63,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   color: Constants.kBackgroundGrey,
                   child: SingleChildScrollView(
                       physics: const ClampingScrollPhysics(),
-                      child: Column(children: getFriendsList())))),
+                      child: Column(children: getFriendsList())
+                  )
+              )
+          ),
         ],
       ),
     );
