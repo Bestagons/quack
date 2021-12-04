@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:quack_app/core/food/food_item.dart';
+import 'package:quack_app/core/auth/test_auth.dart';
+import 'package:golden_toolkit/golden_toolkit.dart';
 
 void main() {
   group("Item", () {
@@ -22,11 +24,12 @@ void main() {
       expect(item.getStation(), "Station1");
     });
 
-    test("toggle favorite", () async {
-      FoodItem item = FoodItem(
-          "Fries", ["Potato"], true, false, "Breakfast", "Empty", 5, 5);
-      await item.toggleFavorite();
-      expect(item.isFavorite(), false);
-    });
+    // testGoldens("toggle favorite", (WidgetTester tester) async {
+    //   await TestAuth().authenticateTest(tester);
+    //   FoodItem item = FoodItem(
+    //       "Fries", ["Potato"], true, false, "Breakfast", "Empty", 5, 5);
+    //   await item.toggleFavorite();
+    //   expect(item.isFavorite(), false);
+    // });
   });
 }

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import favorites, friends, user
+from .routers import favorites, friends, user, save_seat
 from fastapi.middleware.cors import CORSMiddleware
 import firebase_admin
 from firebase_admin import credentials
@@ -22,6 +22,7 @@ app.add_middleware(
 app.include_router(favorites.router)
 app.include_router(friends.router)
 app.include_router(user.router)
+app.include_router(save_seat.router)
 
 
 @app.get("/")
