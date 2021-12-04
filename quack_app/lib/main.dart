@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:quack_app/screens/loading/loading_screen.dart';
 import 'package:quack_app/screens/login/login_screen.dart';
 import 'package:quack_app/screens/register/register_screen.dart';
@@ -6,7 +7,7 @@ import 'package:quack_app/screens/register/register_screen.dart';
 import 'components/navbar.dart';
 
 void main() async {
-  runApp(const MyApp());
+  runApp(Phoenix(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

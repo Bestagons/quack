@@ -44,7 +44,7 @@ class Auth {
     }
   }
 
-  Future<bool> register(String name, email, password) async {
+  Future<Map> register(String name, email, password) async {
     // TODO: verify
     var body = jsonEncode({
       "name": name,
@@ -55,18 +55,20 @@ class Auth {
     final uri = Uri.http(baseUrl, "/user/register");
     final response = await http.post(uri,
         headers: {"Content-Type": "application/json"}, body: body);
+    final details = jsonDecode(response.body);
+    print(details);
     if (response.statusCode == 201) {
       print("[core/auth] Successfully registered user ${response.body}");
-      return Future.value(true);
+      return Future.value(details);
     }
     print("[core/auth] Failed to register user ${response.body}");
-    return Future.value(false);
+    return Future.value(details);
   }
 
   Future<List> authenticate(String email, password) async {
     if (istest) {
       return Future.value([
-        "",
+        {},
         {"access_token": ""},
         jsonEncode({
           "_id": {"\$oid": "61882c265f992e7f6d141036"},
@@ -98,6 +100,7 @@ class Auth {
         return Future.value(r);
       }
       print("[core/auth] Failed to login ${response.body}");
+      return Future.value(jsonDecode(response.body));
     }
 
     return Future.value([]);
