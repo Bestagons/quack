@@ -59,6 +59,9 @@ class DCT():
         # Checks to see whether the station of the food item has been created and adds item to the station
         # If not, creates then add item to station
         if station in self.stations.keys():
+            for fitem in self.stations[station].menu:
+                if fitem.name == item.name:
+                    return item
             self.stations[station].add_food_item(item)
         else:
             self.save_station(station)
