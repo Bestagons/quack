@@ -164,6 +164,7 @@ class UserData {
     }
 
     final String friendName = response.body;
+    print(friendName);
     return Future.value(friendName);
   }
 }

@@ -34,7 +34,8 @@ class AddFriendsScreenState extends State<AddFriendsScreen> {
           elevation: 4.0,
           onSubmitted: (query) async {
             searchedEmail = query;
-            response = await User().userData.searchFriend(query);
+            response = await User().userData.searchFriend(searchedEmail);
+            setState(() {});
           },
           transitionCurve: Curves.easeInOut,
           transitionDuration: const Duration(milliseconds: 500),

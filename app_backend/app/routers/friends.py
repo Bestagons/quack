@@ -29,7 +29,7 @@ security = JWTBearer()
         Response.status: int
             The status code for the request
 """
-@router.post("/search-friend", status_code=status.HTTP_201_CREATED)
+@router.post("/search-friend", status_code=status.HTTP_200_OK)
 async def search_friend(resp: Response, friend: AddFriend):
     if friend.friend_email == "":
         resp.status_code = status.HTTP_400_BAD_REQUEST
