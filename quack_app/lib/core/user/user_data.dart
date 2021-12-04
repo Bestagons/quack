@@ -131,4 +131,37 @@ class UserData {
 
     return Future.value([]);
   }
+
+  Future addFriend(String friendEmail) async {
+    final body = jsonEncode({
+      "friend_email": friendEmail
+    });
+    final uri = Uri.http(Auth().getBaseURL(), "/friends/new-friend");
+    final response = await http.post(uri,
+          headers: {
+            "Authorization": "Bearer " + _token,
+            "Content-Type": "application/json"
+          },
+          body: body);
+  }
+
+  Future<String> searchFriend(String friendEmail) async {
+    final body = jsonEncode({
+      "friend_email": friendEmail
+    });
+    final uri = Uri.http(Auth().getBaseURL(), "/friends/search-friend");
+    final response = await http.post(uri,
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: body);
+
+    if (response.statusCode == 404) {
+      return Future.value("User with this email does not exist");
+    }
+
+    final String friendName = response.body;
+    print(friendName);
+    return Future.value(friendName);
+  }
 }

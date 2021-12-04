@@ -15,14 +15,16 @@ def test_new_friend():
             self.expects_err = expects_err
 
     # Remove all friends first
-    token = authenticate_test()
-    headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
+ 
     test_cases = [Params("", status.HTTP_400_BAD_REQUEST, True),
                   Params(None, status.HTTP_422_UNPROCESSABLE_ENTITY, True),
-                  Params("new.friend@emory.edu", status.HTTP_201_CREATED, False),
+                  Params("new.friend@emory.edu", status.HTTP_404_NOT_FOUND, True),
                   Params("mitchie@emory.edu", status.HTTP_412_PRECONDITION_FAILED, True),
-                  Params("new.friend2@emory.edu", status.HTTP_201_CREATED, False)]
-
+                  Params("new.friend2@emory.edu", status.HTTP_404_NOT_FOUND, True),
+                  Params("bruce.lee@emory.edu", status.HTTP_201_CREATED, False)]
+                  
+    token = authenticate_test()
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
     for test_case in test_cases:
         payload ={"dry_run": True}
         if test_case.friend_email is not None:
