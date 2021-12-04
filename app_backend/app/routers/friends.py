@@ -107,7 +107,7 @@ async def add_friend(resp: Response, friend: AddFriend, token: HTTPAuthorization
         Response.status: int
             The status code for the request
 """
-@router.post("/remove-friend/", status_code=status.HTTP_200_OK)
+@router.post("/remove-friend", status_code=status.HTTP_200_OK)
 async def remove_friend(resp: Response, friend: AddFriend, token: HTTPAuthorizationCredentials = Security(security), dry_run: bool = False):
     payload: dict = decodeJWT(token)
     user_id = payload["user_id"]
