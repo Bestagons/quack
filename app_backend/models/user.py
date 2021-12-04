@@ -67,4 +67,5 @@ class User(BaseModel):
 
     def save(self):
         if not db.test_mode:
-            db.db.users.update_one({"_id": self.id}, {"$set": self.to_dict()}, upsert=True)
+            result = db.db.users.update_one({"_id": self.id}, {"$set": self.to_dict()}, upsert=True)
+            print(result)
