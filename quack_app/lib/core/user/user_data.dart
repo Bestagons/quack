@@ -45,7 +45,11 @@ class UserData {
     _currentLoc = SeatingLocation.none_0.fromInt(data["loc"]);
     _isSharingLoc = data["is_sharing_location"];
     _friends = await loadFriends();
-    _favorites = data["favorites"];
+    // If the type of data["favorites"] is List<String>, then assign it to _favorites
+    // Otherwise, if it is List<dynamic>, then convert it to List<String>
+    if (data["favorites"] is List<String>) {
+      _favorites = data["favorites"];
+    }
 
     return Future.value(true);
   }
