@@ -48,6 +48,10 @@ class FoodItem {
     return _isFavorite;
   }
 
+  void setIsFavorite(bool isFavorite) {
+    _isFavorite = isFavorite;
+  }
+
   bool isCurrentlyBeingServed() {
     return _isCurrentlyBeingServed;
   }

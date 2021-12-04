@@ -11,6 +11,7 @@ class UserData {
   String _password = "";
   String _token = "";
   String _name = "";
+  List<String> _favorites = [];
   static const String baseUrl = "quack-app-backend.herokuapp.com";
   // static const String baseUrl = "127.0.0.1:8000";
 
@@ -40,9 +41,11 @@ class UserData {
 
   Future<bool> initialize(String user_data) async {
     final Map data = jsonDecode(user_data);
+    debugPrint(data.toString());
     _currentLoc = SeatingLocation.none_0.fromInt(data["loc"]);
     _isSharingLoc = data["is_sharing_location"];
     _friends = await loadFriends();
+    _favorites = data["favorites"];
 
     return Future.value(true);
   }
@@ -83,6 +86,10 @@ class UserData {
 
   List<UserData> getFriends() {
     return _friends;
+  }
+
+  List<String> getFavorites() {
+    return _favorites;
   }
 
   void toggleShareLoc() {
