@@ -47,9 +47,8 @@ class UserData {
     _friends = await loadFriends();
     // If the type of data["favorites"] is List<String>, then assign it to _favorites
     // Otherwise, if it is List<dynamic>, then convert it to List<String>
-    if (data["favorites"] is List<String>) {
-      _favorites = data["favorites"];
-    }
+    // debugPrint(data["favorites"].runtimeType.toString());
+    _favorites = List<String>.from(data["favorites"]);
 
     return Future.value(true);
   }
@@ -82,6 +81,11 @@ class UserData {
 
     // If the response code is 200, return true
     if (response.statusCode == 200) {
+      if (!_favorites.contains(name) && state) {
+        _favorites.add(name);
+      } else if (_favorites.contains(name) && !state) {
+        _favorites.remove(name);
+      }
       return Future.value(true);
     } else {
       return Future.value(false);
