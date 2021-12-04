@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:quack_app/core/auth/auth.dart';
 import 'package:quack_app/core/seating/seating_locations.dart';
 
@@ -51,19 +52,23 @@ class UserData {
       'Accept': 'application/json',
       'Authorization': 'Bearer $_token',
     };
+    debugPrint(headers.toString());
 
     final Map<String, dynamic> json = {
       'food_name': name,
       'state': state
     };
 
-    String url = "https://$baseUrl/api/v1/user/toggle_favorite";
+    String url = "https://$baseUrl/favorites/toggle-favorite/";
 
     final http.Response response = await http.post(
       Uri.parse(url),
       headers: headers,
       body: jsonEncode(json),
     );
+
+    debugPrint(response.statusCode.toString());
+    debugPrint(response.body);
 
     // If the response code is 200, return true
     if (response.statusCode == 200) {
