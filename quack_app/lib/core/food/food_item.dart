@@ -34,6 +34,7 @@ class FoodItem {
       // If backend updated, show UI update
       _isFavorite = !_isFavorite;
     }
+    return Future.value();
   }
 
   String getName() {

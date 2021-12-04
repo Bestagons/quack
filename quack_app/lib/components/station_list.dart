@@ -103,9 +103,8 @@ class _StationListState extends State<StationList> {
                               item: stationCurrentItems[index],
                               group: _group,
                               onFavoritePressed: () {
-                                setState(() {
-                                  stationList = getStationList();
-                                });
+                                stationList = getStationList();
+                                setState(() {});
                               });
                         }),
                   ),

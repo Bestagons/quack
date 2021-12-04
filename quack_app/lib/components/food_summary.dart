@@ -43,11 +43,10 @@ class _FoodSummaryState extends State<FoodSummary> {
                 : const Icon(Constants.kFavorite),
             iconSize: 30,
             splashRadius: 0.01,
-            onPressed: () {
-              setState(() {
-                widget.item.toggleFavorite();
-                widget.onFavoritePressed();
-              });
+            onPressed: () async {
+              await widget.item.toggleFavorite();
+              widget.onFavoritePressed();
+              setState(() {});
             }),
       )),
     ]);
