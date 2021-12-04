@@ -14,6 +14,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String errMsg = "";
+
   void authenticate() async {
     String auth = await Auth().getAuth();
     if (auth != "" && auth.contains(",")) {
@@ -142,6 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  Text(errMsg, style: const TextStyle(color: Colors.red)),
                   const SizedBox(
                     height: 30.0,
                   ),
@@ -169,7 +173,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                             final List response = await Auth().authenticate(
                                 emailController.text, passwordController.text);
-                            if (response.isNotEmpty) {
+                            if (response.isNotEmpty &&
+                                !response.first.containsKey("err")) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -189,6 +194,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       }),
                                 ),
                               );
+                            } else {
+                              setState(() {
+                                errMsg = response.first["err"];
+                              });
                             }
                           },
                         ),

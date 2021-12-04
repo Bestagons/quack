@@ -41,8 +41,9 @@ class Database():
 
         login_info["verified"] = False
         login_info["friends"] = []
-        login_info["is_sharing_loc"] = False
-        login_info["loc"] = "None"
+        login_info["favorites"] = []
+        login_info["is_sharing_location"] = False
+        login_info["loc"] = 0
 
         if not self.test_mode:
             users.insert_one(login_info)

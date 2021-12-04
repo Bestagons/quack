@@ -29,11 +29,11 @@ class FoodItem {
 
   // Toggle the item as a favorite or not
   Future<void> toggleFavorite() async {
-    bool ok = await User().userData.toggleFavorite(getName());
-    if (ok) {
-      // If backend updated, show UI update
-      _isFavorite = !_isFavorite;
-    }
+    await User().userData.toggleFavorite(getName(), !_isFavorite).then((response) => {
+      if (response) {
+        this._isFavorite = !this._isFavorite
+      }
+    });
   }
 
   String getName() {
@@ -46,6 +46,10 @@ class FoodItem {
 
   bool isFavorite() {
     return _isFavorite;
+  }
+
+  void setIsFavorite(bool isFavorite) {
+    _isFavorite = isFavorite;
   }
 
   bool isCurrentlyBeingServed() {

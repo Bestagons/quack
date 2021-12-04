@@ -45,8 +45,10 @@ class _FoodSummaryState extends State<FoodSummary> {
             splashRadius: 0.01,
             onPressed: () {
               setState(() {
-                widget.item.toggleFavorite();
-                widget.onFavoritePressed();
+                debugPrint("On press executed");
+                widget.item.toggleFavorite().then((_) => {
+                  widget.onFavoritePressed()
+                });
               });
             }),
       )),

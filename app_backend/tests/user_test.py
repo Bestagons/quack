@@ -17,6 +17,7 @@ def test_login():
             self.expects_err= expects_err
         def to_json(self):
             return {"name": self.name, "email": self.email, "password": self.password}
+
     test_cases = [
         Params('Bruce Lee', 'bruce.lee@emory.edu', 'Password1!', status.HTTP_200_OK, False),
         Params('Bruce Lee', 'DNE@emory.edu', 'Password1!', status.HTTP_400_BAD_REQUEST, True),

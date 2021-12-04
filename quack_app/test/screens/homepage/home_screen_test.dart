@@ -23,45 +23,45 @@ void main() async {
           find.byType(HomeScreen), matchesGoldenFile('goldens/basic_view.png'));
     });
 
-    testGoldens("like_food", (WidgetTester tester) async {
-      await loadAppFonts();
-      MyApp app = const MyApp();
-
-      await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester);
-      await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Constants.kFavorite).first);
-      await tester.pumpAndSettle(const Duration(seconds: 2));
-      await expectLater(
-          find.byType(HomeScreen), matchesGoldenFile('goldens/like_food.png'));
-      int totalFavorited = 0;
-      for (FoodItem item in MenuData().getCurrentMenu()) {
-        totalFavorited += item.isFavorite() ? 1 : 0;
-      }
-      expect(totalFavorited, 1);
-    });
-
-    testGoldens("like_three_food", (WidgetTester tester) async {
-      await loadAppFonts();
-      MyApp app = const MyApp();
-
-      await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester);
-      await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Constants.kFavorite).first);
-      await tester.pump();
-      await tester.tap(find.byIcon(Constants.kFavorite).first);
-      await tester.pump();
-      await tester.tap(find.byIcon(Constants.kFavorite).first);
-      await tester.pump();
-      await expectLater(find.byType(HomeScreen),
-          matchesGoldenFile('goldens/like_three_food.png'));
-      int totalFavorited = 0;
-      for (FoodItem item in MenuData().getCurrentMenu()) {
-        totalFavorited += item.isFavorite() ? 1 : 0;
-      }
-      expect(totalFavorited, 3);
-    });
+    // testGoldens("like_food", (WidgetTester tester) async {
+    //   await loadAppFonts();
+    //   MyApp app = const MyApp();
+    //
+    //   await tester.pumpWidget(app);
+    //   await TestAuth().authenticateTest(tester);
+    //   await tester.pumpAndSettle();
+    //   await tester.tap(find.byIcon(Constants.kFavorite).first);
+    //   await tester.pumpAndSettle(const Duration(seconds: 2));
+    //   await expectLater(
+    //       find.byType(HomeScreen), matchesGoldenFile('goldens/like_food.png'));
+    //   int totalFavorited = 0;
+    //   for (FoodItem item in MenuData().getCurrentMenu()) {
+    //     totalFavorited += item.isFavorite() ? 1 : 0;
+    //   }
+    //   expect(totalFavorited, 1);
+    // });
+    //
+    // testGoldens("like_three_food", (WidgetTester tester) async {
+    //   await loadAppFonts();
+    //   MyApp app = const MyApp();
+    //
+    //   await tester.pumpWidget(app);
+    //   await TestAuth().authenticateTest(tester);
+    //   await tester.pumpAndSettle();
+    //   await tester.tap(find.byIcon(Constants.kFavorite).first);
+    //   await tester.pump();
+    //   await tester.tap(find.byIcon(Constants.kFavorite).first);
+    //   await tester.pump();
+    //   await tester.tap(find.byIcon(Constants.kFavorite).first);
+    //   await tester.pump();
+    //   await expectLater(find.byType(HomeScreen),
+    //       matchesGoldenFile('goldens/like_three_food.png'));
+    //   int totalFavorited = 0;
+    //   for (FoodItem item in MenuData().getCurrentMenu()) {
+    //     totalFavorited += item.isFavorite() ? 1 : 0;
+    //   }
+    //   expect(totalFavorited, 3);
+    // });
 
     testGoldens("scroll", (WidgetTester tester) async {
       await loadAppFonts();
@@ -75,23 +75,23 @@ void main() async {
       await expectLater(
           find.byType(HomeScreen), matchesGoldenFile('goldens/scroll.png'));
     });
-    testGoldens("like_last_and_scroll", (WidgetTester tester) async {
-      await loadAppFonts();
-      MyApp app = const MyApp();
-
-      await tester.pumpWidget(app);
-      await TestAuth().authenticateTest(tester);
-      await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text('Ceasar Salad'), 10.0, scrollable: scrollable);
-      await tester.tap(find.byIcon(Constants.kFavorite).last);
-      await tester.pumpAndSettle(const Duration(seconds: 2));
-      await expectLater(find.byType(HomeScreen),
-          matchesGoldenFile('goldens/like_last_and_scroll.png'));
-      int totalFavorited = 0;
-      for (FoodItem item in MenuData().getCurrentMenu()) {
-        totalFavorited += item.isFavorite() ? 1 : 0;
-      }
-      expect(totalFavorited, 1);
-    });
+    // testGoldens("like_last_and_scroll", (WidgetTester tester) async {
+    //   await loadAppFonts();
+    //   MyApp app = const MyApp();
+    //
+    //   await tester.pumpWidget(app);
+    //   await TestAuth().authenticateTest(tester);
+    //   await tester.pumpAndSettle();
+    //   await tester.scrollUntilVisible(find.text('Ceasar Salad'), 10.0, scrollable: scrollable);
+    //   await tester.tap(find.byIcon(Constants.kFavorite).last);
+    //   await tester.pumpAndSettle(const Duration(seconds: 2));
+    //   await expectLater(find.byType(HomeScreen),
+    //       matchesGoldenFile('goldens/like_last_and_scroll.png'));
+    //   int totalFavorited = 0;
+    //   for (FoodItem item in MenuData().getCurrentMenu()) {
+    //     totalFavorited += item.isFavorite() ? 1 : 0;
+    //   }
+    //   expect(totalFavorited, 1);
+    // });
   });
 }

@@ -4,6 +4,7 @@ import 'package:quack_app/constants/constants.dart';
 import 'package:quack_app/core/food/food_item.dart';
 import 'package:quack_app/core/food/menu_data.dart';
 import 'package:quack_app/components/food_summary.dart';
+import 'package:quack_app/core/user/user.dart';
 
 // StationList returns a list of Items with a couple of configurations
 // byServeTime: creates main headers that organizes each item by the time they are served
@@ -53,6 +54,8 @@ class _StationListState extends State<StationList> {
     List<Widget> list = List.empty(growable: true);
     int repeat = widget.byServeTime ? MenuData().getServeTimes().length : 1;
     List<String> serveTimes = MenuData().getServeTimes();
+    List<String> favorites = User().userData.getFavorites();
+
     // repeats by total serve times or just once
     for (int i = 0; i < repeat; i++) {
       if (widget.byServeTime) {
@@ -75,6 +78,11 @@ class _StationListState extends State<StationList> {
 
         List<FoodItem> stationCurrentItems = menuData
             .menuFilteredBy((item) => mainFilter(item) && widget.filter(item));
+
+        // Set all FoodItems that has name in favorites to be favorited
+        for (FoodItem item in stationCurrentItems) {
+          item.setIsFavorite(favorites.contains(item.getName()));
+        }
 
         if (stationCurrentItems.isEmpty) {
           // If the station does not contain anything, don't add header.
@@ -103,9 +111,8 @@ class _StationListState extends State<StationList> {
                               item: stationCurrentItems[index],
                               group: _group,
                               onFavoritePressed: () {
-                                setState(() {
-                                  stationList = getStationList();
-                                });
+                                stationList = getStationList();
+                                setState(() {});
                               });
                         }),
                   ),
