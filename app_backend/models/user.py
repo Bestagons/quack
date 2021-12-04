@@ -52,7 +52,10 @@ class User(BaseModel):
 
     def get_user_by_email(self, email):
         user_dict = db.db.users.find_one({"email": email})
-        user = User(**user_dict)
+        if user_dict != None:
+            user = User(**user_dict)
+        else:
+            user = User()
         return user
     def to_dict(self):
         return {"_id": self.id,

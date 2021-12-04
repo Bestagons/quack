@@ -135,10 +135,7 @@ class UserData {
   Future<List<UserData>> loadFriends() async {
     if (Auth().isTest()) {
       return [
-        UserData.friend("", "Rafael", SeatingLocation.section_1, true),
-        UserData.friend("", "Miles", SeatingLocation.section_6, true),
         UserData.friend("", "Brenda", SeatingLocation.section_9, true),
-        UserData.friend("", "Mimi", SeatingLocation.section_7, true),
         UserData.friend("", "Ore", SeatingLocation.section_4, true),
         UserData.friend("", "David", SeatingLocation.section_3, false)
       ];
@@ -165,5 +162,38 @@ class UserData {
     }
 
     return Future.value([]);
+  }
+
+  Future addFriend(String friendEmail) async {
+    final body = jsonEncode({
+      "friend_email": friendEmail
+    });
+    final uri = Uri.http(Auth().getBaseURL(), "/friends/new-friend");
+    final response = await http.post(uri,
+          headers: {
+            "Authorization": "Bearer " + _token,
+            "Content-Type": "application/json"
+          },
+          body: body);
+  }
+
+  Future<String> searchFriend(String friendEmail) async {
+    final body = jsonEncode({
+      "friend_email": friendEmail
+    });
+    final uri = Uri.http(Auth().getBaseURL(), "/friends/search-friend");
+    final response = await http.post(uri,
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: body);
+
+    if (response.statusCode == 404) {
+      return Future.value("User with this email does not exist");
+    }
+
+    final String friendName = response.body;
+    print(friendName);
+    return Future.value(friendName);
   }
 }
