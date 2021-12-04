@@ -12,6 +12,7 @@ class UserData {
   String _token = "";
   String _name = "";
   static const String baseUrl = "quack-app-backend.herokuapp.com";
+  // static const String baseUrl = "127.0.0.1:8000";
 
   SeatingLocation _currentLoc = SeatingLocation.none_0;
   bool _isSharingLoc = false;
@@ -58,6 +59,8 @@ class UserData {
       'food_name': name,
       'state': state
     };
+
+    debugPrint(json.toString());
 
     String url = "https://$baseUrl/favorites/toggle-favorite/";
 
