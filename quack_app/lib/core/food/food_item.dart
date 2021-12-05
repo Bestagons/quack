@@ -31,6 +31,7 @@ class FoodItem {
   Future<void> toggleFavorite() async {
     await User().userData.toggleFavorite(getName(), !_isFavorite).then((response) => {
       if (response) {
+
         this._isFavorite = !this._isFavorite
       }
     });

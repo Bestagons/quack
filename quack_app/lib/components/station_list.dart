@@ -80,7 +80,9 @@ class _StationListState extends State<StationList> {
             .menuFilteredBy((item) => mainFilter(item) && widget.filter(item));
 
         // Set all FoodItems that has name in favorites to be favorited
+        // debugPrint(favorites.toString());
         for (FoodItem item in stationCurrentItems) {
+          // debugPrint(item.getName());
           item.setIsFavorite(favorites.contains(item.getName()));
         }
 
