@@ -5,6 +5,7 @@ import re
 import json
 from bson import BSON
 from bson import json_util, ObjectId
+import bcrypt
 
 from app.auth_handler import signJWT
 from database import db
@@ -35,20 +36,34 @@ async def login(login: UserLogin, resp: Response):
     email = login.email
     password = login.password
 
-    user = {
-        "email": email,
-        "password": password
-    }
+    # get user with email
+    user = db.get_user_by_email(email, display_password=True)
 
-    db_user: dict = db.get_user(user)
-
-    if db_user is None:
+    # check if user exists
+    if user is None:
         resp.status_code = status.HTTP_400_BAD_REQUEST
-        return {"err": "This user does not exist. Please try different credentials."}, {}, None
+        return {"err": "Invalid email or password."}
 
-    db_user["_id"] = str(db_user['_id'])
+    # check if password is correct
+    try:
+        if user['password'] != password and not bcrypt.checkpw(password.encode('utf-8'), user['password']):
+            resp.status_code = status.HTTP_400_BAD_REQUEST
+            return {"err": "Invalid email or password."}
+    except TypeError:
+        resp.status_code = status.HTTP_400_BAD_REQUEST
+        return {"err": "Invalid email or password."}
 
-    return {"msg": "Successfully logged in"}, signJWT(db_user['_id'], email), json.dumps(db_user, sort_keys=True, indent=4, default=json_util.default)
+    # if db_user is None:
+    #     resp.status_code = status.HTTP_400_BAD_REQUEST
+    #     return {"err": "This user does not exist. Please try different credentials."}, {}, None
+
+    user["_id"] = str(user['_id'])
+
+    # drop password from user
+    user.pop("password")
+
+    return {"msg": "Successfully logged in"}, signJWT(user['_id'], email), \
+           json.dumps(user, sort_keys=True, indent=4, default=json_util.default)
 
 """
     register implements the /register/ route
@@ -91,11 +106,14 @@ async def register(login: UserRegister, resp: Response):
         resp.status_code = status.HTTP_400_BAD_REQUEST
         return {"err": "Invalid password. It must be 8 to 20 characters and have at least one upper case letter, one lower case letter, and one digit."}
 
+    # hash the password
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
     # adds user to the database
     new_user = {
         "name": name,
         "email": email,
-        "password": password
+        "password": hashed_password
     }
 
     msg = db.save_user_in_db(new_user)

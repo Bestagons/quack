@@ -59,10 +59,12 @@ class Database():
         users = self.db["users"]
         return users.find_one({"_id": ObjectId(uuid)}, {"password": 0})
 
-    def get_user_by_email(self, email):
+    def get_user_by_email(self, email, display_password=False):
         users = self.db["users"]
-        return users.find_one({'email': email}, {"password": 0})
-
+        if display_password:
+            return users.find_one({"email": email})
+        else:
+            return users.find_one({'email': email}, {"password": 0})
 
     def get_user(self, login_info: dict):
         users = self.db["users"]
