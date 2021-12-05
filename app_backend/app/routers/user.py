@@ -5,6 +5,7 @@ import re
 import json
 from bson import BSON
 from bson import json_util, ObjectId
+import bcrypt
 
 from app.auth_handler import signJWT
 from database import db
