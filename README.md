@@ -1,6 +1,5 @@
 # Bestagons Micro-Charter
 
-![Prod Deployment](https://github.com/Bestagons/quack/actions/workflows/deploy_prod.yml/badge.svg)
 [![Code Coverage](https://codecov.io/gh/Bestagons/quack/branch/production/graph/badge.svg?token=5P5LCVSM2V)](https://codecov.io/gh/Bestagons/quack)
 ![Flutter CI](https://github.com/Bestagons/quack/actions/workflows/flutter_ci.yml/badge.svg)
 [![App Backend CI](https://github.com/Bestagons/quack/actions/workflows/app_backend_CI.yml/badge.svg)](https://github.com/Bestagons/quack/actions/workflows/app_backend_CI.yml)
