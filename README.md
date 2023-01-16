@@ -9,6 +9,10 @@
 
 Quack
 
+### Website:
+
+https://quack-app.github.io/
+
 ### Mission Statement:
 
 Bestagons are a 6-person team dedicated to developing the experience and skills necessary for a common project to build up their resumes. Centered around their shared experience as Emory students, they hope to add value to some of the lives of their community through their work.
